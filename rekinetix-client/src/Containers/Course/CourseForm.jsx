@@ -59,8 +59,8 @@ const CourseForm = () => (
           <label htmlFor="diagnosis">Функциональный диагноз</label>
           <Field name="diagnosis" type="text" className="form-control" />
 
-          <label htmlFor="kinesitherapist">Кинезитерапевт</label>
-          <Field name="kinesitherapist" type="text" className="form-control" />
+          <label htmlFor="kinesiotherapist">Кинезиотерапевт</label>
+          <Field name="kinesiotherapist" type="text" className="form-control" />
 
           <div>
             <DatePicker
