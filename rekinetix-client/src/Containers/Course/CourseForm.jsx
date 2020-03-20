@@ -72,15 +72,14 @@ class CourseForm extends Component {
   };
 
   handleAddAttendance = () => {
-    const course = {...this.state.course};
-    const dates = [...course.attendancesSchedule, { attendanceDate: '' }]
-    // const newAttendance = { attendanceDate: '' };
+    const newAttendance = { attendanceDate: new Date() };
     this.setState((prevState) => ({
       ...prevState,
       course: {
         ...prevState.course,
         attendancesSchedule: [
-          ...dates,
+          ...prevState.course.attendancesSchedule,
+          newAttendance,
         ],
       },
     }));
