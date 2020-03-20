@@ -9,7 +9,14 @@ class Attendance extends Component {
       <Container className="mt-5">
         <h3>Приём</h3>
         <Formik 
-          initialValues={{patientName: "", medicName: "", manipulations: [{manipulationName: ""}], patienthood: "", painScale: ""}} 
+          initialValues={{
+            patientName: "", 
+            medicName: "", 
+            manipulations: [{manipulationName: ""}], 
+            homeExcercising: [{excerciseName: ""}], 
+            patienthood: "", 
+            painScale: ""
+          }} 
           onSubmit={data => {
           console.log(data);
         }}>
@@ -17,26 +24,45 @@ class Attendance extends Component {
             <Form>
               <Field placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
               <Field placeholder="ФИО принимающего специалиста" name="medicName" type="input" as={Input}/>
-              <Field placeholder="Состояние пациента после терапии" name="patienthood" type="input" as={Input}/>
               <FieldArray name="manipulations">
                 {arrayHelpers => (
-                  <div>
-                    <Button onClick={() => arrayHelpers.push({manipulationName: ""})}>Добавить процедуру</Button>
+                  <div> Процедуры и упражнения
                     {values.manipulations.map((manipulation, index) => {
                       return (
                         <div key={index} className="d-flex">
                           <Field
-                            placeholder="Процедура"
+                            placeholder="Процедура/упражнение"
                             name={`manipulations.${index}.manipulationName`}
                             as={Input}
                           />
-                          <Button onClick={() => arrayHelpers.remove(index)}>x</Button>
+                          <Button onClick={() => arrayHelpers.remove(index)}>X</Button>
                         </div>
                       );
                     })}
+                    <Button onClick={() => arrayHelpers.push({manipulationName: ""})}>Добавить процедуру/упражнение</Button>
                   </div>
                 )}
               </FieldArray>
+              <FieldArray name="homeExcercising">
+                {arrayHelpers => (
+                  <div> Упражнения на дому
+                    {values.homeExcercising.map((excercise, index) => {
+                      return (
+                        <div key={index} className="d-flex">
+                          <Field
+                            placeholder="Упражнение"
+                            name={`homeExcercising.${index}.excerciseName`}
+                            as={Input}
+                          />
+                          <Button onClick={() => arrayHelpers.remove(index)}>X</Button>
+                        </div>
+                      );
+                    })}
+                    <Button onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить упражнение</Button>
+                  </div>
+                )}
+              </FieldArray>
+              <Field placeholder="Состояние пациента после терапии" name="patienthood" type="input" as={Input}/>
               <h6>Шкала боли</h6>
               <Field name="painScale" as="select">
                 <option value="0">0</option>
