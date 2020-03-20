@@ -1,61 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import DatePicker from 'react-datepicker';
-import PropTypes from 'prop-types';
+import { Formik, Form, Field } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
-import FormInput from './components/FormInput';
-import FormTextarea from './components/FormTextarea';
 
 class CourseForm extends Component {
   state = {
     course: {
-      title: '',
-      patient: {
-        fullName: '',
-        age: '',
-      },
-      patientCategory: '',
-      primaryAssessmentDate: '',
-      physician: '',
-      diagnosis: '',
-      kinesiotherapist: '',
-      startDate: new Date(),
-      endDate: new Date(),
-      courseAim: '',
-      result: '',
       attendancesSchedule: [{ attendanceDate: new Date() }],
-      administratorName: '',
     },
-  };
-
-  inputChangeHandler = (event) => {
-    const { target } = event;
-    const { value, name } = target;
-    this.setState((prevState) => ({
-      course: { ...prevState.course, [name]: value },
-    }));
-  };
-
-  patientFieldChangeHandler = (event) => {
-    const { target } = event;
-    const { value, name } = target;
-    this.setState((prevState) => ({
-      course: {
-        ...prevState.course,
-        patient: {
-          ...prevState.course.patient,
-          [name]: value,
-        },
-      },
-    }));
-  };
-
-  dateChangeHandler = (name) => (date) => {
-    return this.setState((prevState) => ({
-      course: {
-        ...prevState.course,
-        [name]: date,
-      },
-    }));
   };
 
   attendancesChangeHandler = (index) => (date) => {
@@ -101,67 +53,89 @@ class CourseForm extends Component {
   render() {
     return (
       <div className="container">
-        <form>
-          <FormInput
-            propertyName="title"
-            inputType="text"
-            title="Название курса"
-            value={this.state.course.title}
-            handleChange={this.inputChangeHandler}
-            placeholder="Название курса с указанием запланированного количества приёмов"
-          />
-          <FormInput
-            propertyName="fullName"
-            inputType="text"
-            title="ФИО пациента:"
-            value={this.state.course.patient.fullName}
-            handleChange={this.patientFieldChangeHandler}
-            placeholder=""
-          />
-          <FormInput
-            propertyName="age"
-            inputType="text"
-            title="Возраст:"
-            value={this.state.course.patient.age}
-            handleChange={this.patientFieldChangeHandler}
-            placeholder=""
-          />
-          <FormInput
-            propertyName="patientCategory"
-            inputType="text"
-            title="Категория пациента"
-            value={this.state.course.patientCategory}
-            handleChange={this.inputChangeHandler}
-            placeholder=""
-          />
-          <div>
-            <DatePicker
-              selected={this.state.course.startDate}
-              onChange={this.dateChangeHandler('startDate')}
-            />
-          </div>
-          <div>
-            <DatePicker
-              selected={this.state.course.endDate}
-              onChange={this.dateChangeHandler('endDate')}
-            />
-          </div>
-          <FormInput
-            propertyName="courseAim"
-            inputType="text"
-            title="Категория пациента"
-            value={this.state.course.patientCategory}
-            handleChange={this.inputChangeHandler}
-            placeholder=""
-          />
-          <FormTextarea
-            propertyName="result"
-            title="Результат"
-            value={this.state.result}
-            rows={2}
-            handleChange={this.inputChangeHandler}
-          />
+        <h1>Форма курса приёмов</h1>
+        <Formik
+          initialValues={{
+            title: '',
+            patient: {
+              fullName: '',
+              age: '',
+            },
+            patientCategory: '',
+            primaryAssessmentDate: '',
+            physician: '',
+            diagnosis: '',
+            kinesiotherapist: '',
+            startDate: new Date(),
+            endDate: new Date(),
+            courseAim: '',
+            result: '',
+            attendancesSchedule: [{ attendanceDate: new Date() }],
+            administratorName: '',
+          }}
+          onSubmit={(values) => console.dir(values)}
+        >
+          {({ values, setFieldValue }) => (
+            <Form>
+              <label htmlFor="title">Название курса</label>
+              <Field
+                name="title"
+                type="text"
+                placeholder="Название курса с указанием запланированного количества приёмов"
+              />
 
+              <label htmlFor="patient.fullName">ФИО пациента:</label>
+              <Field name="patient.fullName" type="text" />
+
+              <label htmlFor="patient.age">Возраст:</label>
+              <Field name="patient.age" type="text" />
+
+              <label htmlFor="patientCategory">Категория пациента:</label>
+              <Field name="patientCategory" type="text" />
+
+              <label htmlFor="primaryAssessmentDate">
+                Дата первичного приёма
+              </label>
+              <Field name="primaryAssessmentDate" type="text" />
+
+              <label htmlFor="physician">Врач</label>
+              <Field name="physician" type="text" />
+
+              <label htmlFor="diagnosis">Функциональный диагноз</label>
+              <Field name="diagnosis" type="text" />
+
+              <label htmlFor="kinesitherapist">Кинезитерапевт</label>
+              <Field name="kinesitherapist" type="text" />
+
+              <div>
+                <DatePicker
+                  selected={values.startDate}
+                  onChange={(date) => setFieldValue('startDate', date)}
+                />
+              </div>
+              <div>
+                <DatePicker
+                  selected={values.endDate}
+                  onChange={(date) => setFieldValue('endDate', date)}
+                />
+              </div>
+
+              <label htmlFor="courseAim">Цель курса</label>
+              <Field name="courseAim" type="text" />
+
+              <label htmlFor="result">Результат</label>
+              <Field name="result" as="textarea" />
+
+              <label htmlFor="administratorName">ФИО администратора</label>
+              <Field name="administratorName" type="text" />
+
+              <button type="submit" className="btn btn-primary">
+                Сохранить форму
+              </button>
+            </Form>
+          )}
+        </Formik>
+        <form>
           <div>
             <h4>График прохождения курса</h4>
             {this.state.course.attendancesSchedule.map(
@@ -191,16 +165,6 @@ class CourseForm extends Component {
               Добавить поле
             </button>
           </div>
-
-          <FormInput
-            propertyName="administratorName"
-            inputType="text"
-            title="Категория пациента"
-            value={this.state.course.administratorName}
-            handleChange={this.inputChangeHandler}
-            placeholder=""
-          />
-          <button type="submit" className="btn btn-primary">Сохранить форму</button>
         </form>
       </div>
     );
