@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Input, Container, CardImg } from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
+import DatePicker from 'react-date-picker';
 
 class Attendance extends Component {
 
@@ -10,6 +11,7 @@ class Attendance extends Component {
         <h3>Приём</h3>
         <Formik 
           initialValues={{
+            date: "",
             patientName: "", 
             medicName: "", 
             manipulations: [{manipulationName: ""}], 
@@ -20,8 +22,12 @@ class Attendance extends Component {
           onSubmit={data => {
           console.log(data);
         }}>
-          {({values}) => (
+          {({values, setFieldValue}) => (
             <Form>
+              <DatePicker
+                value={values.date}
+                onChange={date => setFieldValue("date", date)}
+              />
               <Field placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
               <Field placeholder="ФИО принимающего специалиста" name="medicName" type="input" as={Input}/>
               <FieldArray name="manipulations">
