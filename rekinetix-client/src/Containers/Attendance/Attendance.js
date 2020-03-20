@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Input, Container, CardImg } from "reactstrap";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, FieldArray, Form } from "formik";
 
 class Attendance extends Component {
 
@@ -9,15 +9,34 @@ class Attendance extends Component {
       <Container className="mt-5">
         <h3>Приём</h3>
         <Formik 
-          initialValues={{patientName: "", medicName: "", patienthood: "", painScale: ""}} 
+          initialValues={{patientName: "", medicName: "", manipulations: [{manipulationName: ""}], patienthood: "", painScale: ""}} 
           onSubmit={data => {
           console.log(data);
         }}>
-          {({}) => (
+          {({values}) => (
             <Form>
               <Field placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
               <Field placeholder="ФИО принимающего специалиста" name="medicName" type="input" as={Input}/>
               <Field placeholder="Состояние пациента после терапии" name="patienthood" type="input" as={Input}/>
+              <FieldArray name="manipulations">
+                {arrayHelpers => (
+                  <div>
+                    <Button onClick={() => arrayHelpers.push({manipulationName: ""})}>Добавить процедуру</Button>
+                    {values.manipulations.map((manipulation, index) => {
+                      return (
+                        <div key={index} className="d-flex">
+                          <Field
+                            placeholder="Процедура"
+                            name={`manipulations.${index}.manipulationName`}
+                            as={Input}
+                          />
+                          <Button onClick={() => arrayHelpers.remove(index)}>x</Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </FieldArray>
               <h6>Шкала боли</h6>
               <Field name="painScale" as="select">
                 <option value="0">0</option>
