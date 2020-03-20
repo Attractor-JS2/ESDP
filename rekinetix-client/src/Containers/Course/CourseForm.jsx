@@ -36,30 +36,31 @@ const CourseForm = () => (
             name="title"
             type="text"
             placeholder="Название курса с указанием запланированного количества приёмов"
+            className="form-control"
           />
 
           <label htmlFor="patient.fullName">ФИО пациента:</label>
-          <Field name="patient.fullName" type="text" />
+          <Field name="patient.fullName" type="text" className="form-control" />
 
           <label htmlFor="patient.age">Возраст:</label>
-          <Field name="patient.age" type="text" />
+          <Field name="patient.age" type="text" className="form-control" />
 
           <label htmlFor="patientCategory">Категория пациента:</label>
-          <Field name="patientCategory" type="text" />
+          <Field name="patientCategory" type="text" className="form-control" />
 
           <label htmlFor="primaryAssessmentDate">
             Дата первичного приёма
           </label>
-          <Field name="primaryAssessmentDate" type="text" />
+          <Field name="primaryAssessmentDate" type="text" className="form-control" />
 
           <label htmlFor="physician">Врач</label>
-          <Field name="physician" type="text" />
+          <Field name="physician" type="text" className="form-control" />
 
           <label htmlFor="diagnosis">Функциональный диагноз</label>
-          <Field name="diagnosis" type="text" />
+          <Field name="diagnosis" type="text" className="form-control" />
 
           <label htmlFor="kinesitherapist">Кинезитерапевт</label>
-          <Field name="kinesitherapist" type="text" />
+          <Field name="kinesitherapist" type="text" className="form-control" />
 
           <div>
             <DatePicker
@@ -75,10 +76,10 @@ const CourseForm = () => (
           </div>
 
           <label htmlFor="courseAim">Цель курса</label>
-          <Field name="courseAim" type="text" />
+          <Field name="courseAim" type="text" className="form-control" />
 
           <label htmlFor="result">Результат</label>
-          <Field name="result" as="textarea" />
+          <Field name="result" as="textarea" className="form-control" />
 
           <FieldArray
             name="attendancesSchedule"
@@ -96,7 +97,7 @@ const CourseForm = () => (
                           />
                           <button
                             type="button"
-                            className="btn btn-secondary"
+                            className="btn btn-secondary btn-sm"
                             onClick={() => remove(index)}
                           >
                             Удалить поле
@@ -107,7 +108,7 @@ const CourseForm = () => (
                   : null}
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-sm"
                   onClick={() => push({ attendanceDate: new Date() })}
                 >
                   Добавить поле
@@ -117,7 +118,7 @@ const CourseForm = () => (
           />
 
           <label htmlFor="administratorName">ФИО администратора</label>
-          <Field name="administratorName" type="text" />
+          <Field name="administratorName" type="text" className="form-control" />
 
           <button type="submit" className="btn btn-primary">
             Сохранить форму
