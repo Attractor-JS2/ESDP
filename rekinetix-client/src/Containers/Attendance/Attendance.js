@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Input, Container, CardImg } from "reactstrap";
+import { Button, Input, Container, CardImg, Col, Row } from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
 import DatePicker from 'react-date-picker';
 
@@ -11,7 +11,7 @@ class Attendance extends Component {
         <h3>Приём</h3>
         <Formik 
           initialValues={{
-            date: "",
+            date: new Date(),
             patientName: "", 
             medicName: "", 
             manipulations: [{manipulationName: ""}], 
@@ -28,20 +28,21 @@ class Attendance extends Component {
                 value={values.date}
                 onChange={date => setFieldValue("date", date)}
               />
-              <Field placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
-              <Field placeholder="ФИО принимающего специалиста" name="medicName" type="input" as={Input}/>
+              <Field className="mt-2 mb-2" placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
+              <Field className="mb-2" placeholder="ФИО принимающего специалиста" name="medicName" type="input" as={Input}/>
               <FieldArray name="manipulations">
                 {arrayHelpers => (
-                  <div> Процедуры и упражнения
+                  <div className="mb-3 mt-3"> Процедуры и упражнения
                     {values.manipulations.map((manipulation, index) => {
                       return (
                         <div key={index} className="d-flex">
                           <Field
+                            className="mb-2"
                             placeholder="Процедура/упражнение"
                             name={`manipulations.${index}.manipulationName`}
                             as={Input}
                           />
-                          <Button onClick={() => arrayHelpers.remove(index)}>X</Button>
+                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}></Button>
                         </div>
                       );
                     })}
@@ -51,16 +52,17 @@ class Attendance extends Component {
               </FieldArray>
               <FieldArray name="homeExcercising">
                 {arrayHelpers => (
-                  <div> Упражнения на дому
+                  <div className="mb-3"> Упражнения на дому
                     {values.homeExcercising.map((excercise, index) => {
                       return (
                         <div key={index} className="d-flex">
                           <Field
+                            className="mb-2"
                             placeholder="Упражнение"
                             name={`homeExcercising.${index}.excerciseName`}
                             as={Input}
                           />
-                          <Button onClick={() => arrayHelpers.remove(index)}>X</Button>
+                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}></Button>
                         </div>
                       );
                     })}
@@ -68,8 +70,8 @@ class Attendance extends Component {
                   </div>
                 )}
               </FieldArray>
-              <Field placeholder="Состояние пациента после терапии" name="patienthood" type="input" as={Input}/>
-              <h6>Шкала боли</h6>
+              <Field className="mb-3" placeholder="Состояние пациента после терапии" name="patienthood" type="input" as={Input}/>
+              <p className="d-inline-block pr-3">Шкала боли</p>
               <Field name="painScale" as="select">
                 <option value="0">0</option>
                 <option value="1">1</option>
@@ -83,8 +85,7 @@ class Attendance extends Component {
                 <option value="9">9</option>
                 <option value="10">10</option>
               </Field>
-              <CardImg src="painscale.jpg" alt=""/>
-
+              <img className="d-block mb-3" style={{height: 100, width: 400}} src="painscale.jpg" alt=""/>
               <div></div>
               <Button type="submit">Сохранить</Button>
             </Form>
