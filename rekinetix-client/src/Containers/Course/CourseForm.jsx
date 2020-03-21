@@ -1,9 +1,9 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
-import {
-  Formik, Form, Field, FieldArray,
-} from 'formik';
+import { Formik, Form, FieldArray } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
+
+import FormInput from './components/FormInput';
 
 const CourseForm = () => (
   <div className="container">
@@ -31,55 +31,55 @@ const CourseForm = () => (
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <label htmlFor="title">Название курса</label>
-          <Field
+          <FormInput
             name="title"
             type="text"
+            label="Название курса"
             placeholder="Название курса с указанием запланированного количества приёмов"
-            className="form-control"
           />
 
-          <label htmlFor="patient.fullName">ФИО пациента:</label>
-          <Field name="patient.fullName" type="text" className="form-control" />
+          <FormInput
+            name="patient.fullName"
+            type="text"
+            label="ФИО пациента:"
+          />
 
-          <label htmlFor="patient.age">Возраст:</label>
-          <Field name="patient.age" type="text" className="form-control" />
+          <FormInput name="patient.age" type="text" label="Возраст:" />
 
-          <label htmlFor="patientCategory">Категория пациента:</label>
-          <Field name="patientCategory" type="text" className="form-control" />
+          <FormInput
+            name="patientCategory"
+            type="text"
+            label="Категория пациента:"
+          />
 
-          <label htmlFor="primaryAssessmentDate">
-            Дата первичного приёма
-          </label>
-          <Field name="primaryAssessmentDate" type="text" className="form-control" />
+          <FormInput
+            name="primaryAssessmentDate"
+            type="text"
+            label="Дата первичного приёма"
+          />
 
-          <label htmlFor="physician">Врач</label>
-          <Field name="physician" type="text" className="form-control" />
+          <FormInput name="physician" type="text" label="Врач" />
 
-          <label htmlFor="diagnosis">Функциональный диагноз</label>
-          <Field name="diagnosis" type="text" className="form-control" />
+          <FormInput name="diagnosis" type="text" label="Функциональный диагноз" />
 
-          <label htmlFor="kinesiotherapist">Кинезиотерапевт</label>
-          <Field name="kinesiotherapist" type="text" className="form-control" />
+          <FormInput name="kinesiotherapist" type="text" label="Кинезиотерапевт" />
 
-          <div>
+          <div className="mb-3">
             <DatePicker
               selected={values.startDate}
               onChange={(date) => setFieldValue('startDate', date)}
             />
           </div>
-          <div>
+          <div className="mb-3">
             <DatePicker
               selected={values.endDate}
               onChange={(date) => setFieldValue('endDate', date)}
             />
           </div>
 
-          <label htmlFor="courseAim">Цель курса</label>
-          <Field name="courseAim" type="text" className="form-control" />
+          <FormInput name="courseAim" type="text" label="Цель курса" />
 
-          <label htmlFor="result">Результат</label>
-          <Field name="result" as="textarea" className="form-control" />
+          <FormInput name="result" as="textarea" label="Результат" />
 
           <FieldArray
             name="attendancesSchedule"
@@ -87,22 +87,22 @@ const CourseForm = () => (
               <div>
                 <h2>График прохождения курса</h2>
                 {values.attendancesSchedule
-                  && values.attendancesSchedule.length > 0
+                && values.attendancesSchedule.length > 0
                   ? values.attendancesSchedule.map(
                     ({ attendanceDate }, index) => (
-                        <div key={index}>
-                          <DatePicker
-                            selected={attendanceDate}
-                            onChange={(date) => replace(index, { attendanceDate: date })}
-                          />
-                          <button
-                            type="button"
-                            className="btn btn-secondary btn-sm"
-                            onClick={() => remove(index)}
-                          >
-                            Удалить поле
-                          </button>
-                        </div>
+                      <div key={index}>
+                        <DatePicker
+                          selected={attendanceDate}
+                          onChange={(date) => replace(index, { attendanceDate: date })}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => remove(index)}
+                        >
+                          Удалить поле
+                        </button>
+                      </div>
                     ),
                   )
                   : null}
@@ -117,8 +117,11 @@ const CourseForm = () => (
             )}
           />
 
-          <label htmlFor="administratorName">ФИО администратора</label>
-          <Field name="administratorName" type="text" className="form-control" />
+          <FormInput
+            name="administratorName"
+            type="text"
+            label="ФИО администратора"
+          />
 
           <button type="submit" className="btn btn-primary">
             Сохранить форму

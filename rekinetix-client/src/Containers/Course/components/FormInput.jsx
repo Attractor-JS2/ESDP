@@ -1,30 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useField } from 'formik';
 
-const FormInput = ({
-  propertyName,
-  title,
-  inputType,
-  value,
-  handleChange,
-  placeholder,
-}) => (
-  <div className="form-group">
-    <label htmlFor={propertyName} className="form-label">
-      {title}
-    </label>
-    <input
-      className="form-control"
-      id={propertyName}
-      name={propertyName}
-      type={inputType}
-      value={value}
-      onChange={handleChange}
-      placeholder={placeholder}
-    />
-  </div>
-);
-
-FormInput.propTypes = {};
+const FormInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <div className="form-group">
+      <label htmlFor={props.id || props.name} className="form-label">
+        {label}
+      </label>
+      <input
+        className="form-control"
+        { ...field }
+        { ... props }
+      />
+      {meta.touched && meta.error
+        && (<div className="error">{meta.error}</div>)}
+    </div>
+  );
+};
 
 export default FormInput;
