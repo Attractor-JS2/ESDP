@@ -1,10 +1,13 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import { Formik, Form, FieldArray } from 'formik';
+import { ru } from 'date-fns/esm/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import FormInput from './components/FormInput';
 import FormTextarea from './components/FormTextarea';
+
+registerLocale('ru', ru);
 
 const CourseForm = () => (
   <div className="container">
@@ -59,6 +62,7 @@ const CourseForm = () => (
               id="primaryAssessmentDate"
               selected={values.primaryAssessmentDate}
               onChange={(date) => setFieldValue('primaryAssessmentDate', date)}
+              locale="ru"
             />
           </div>
 
@@ -82,6 +86,7 @@ const CourseForm = () => (
               id="startDate"
               selected={values.startDate}
               onChange={(date) => setFieldValue('startDate', date)}
+              locale="ru"
             />
           </div>
           <div className="mb-3">
@@ -90,6 +95,7 @@ const CourseForm = () => (
               id="endDate"
               selected={values.endDate}
               onChange={(date) => setFieldValue('endDate', date)}
+              locale="ru"
             />
           </div>
 
@@ -112,6 +118,7 @@ const CourseForm = () => (
                             onChange={(date) =>
                               replace(index, { attendanceDate: date })
                             }
+                            locale="ru"
                           />
                           <button
                             type="button"
