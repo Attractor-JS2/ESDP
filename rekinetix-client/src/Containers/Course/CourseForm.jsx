@@ -17,7 +17,7 @@ const CourseForm = () => (
           age: '',
         },
         patientCategory: '',
-        primaryAssessmentDate: '',
+        primaryAssessmentDate: new Date(),
         physician: '',
         diagnosis: '',
         kinesiotherapist: '',
