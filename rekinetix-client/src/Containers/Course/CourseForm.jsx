@@ -63,6 +63,7 @@ const CourseForm = () => (
               selected={values.primaryAssessmentDate}
               onChange={(date) => setFieldValue('primaryAssessmentDate', date)}
               locale="ru"
+              dateFormat="d MMMM, yyyy"
             />
           </div>
 
@@ -87,6 +88,7 @@ const CourseForm = () => (
               selected={values.startDate}
               onChange={(date) => setFieldValue('startDate', date)}
               locale="ru"
+              dateFormat="d MMMM, yyyy"
             />
           </div>
           <div className="mb-3">
@@ -96,6 +98,7 @@ const CourseForm = () => (
               selected={values.endDate}
               onChange={(date) => setFieldValue('endDate', date)}
               locale="ru"
+              dateFormat="d MMMM, yyyy"
             />
           </div>
 
@@ -120,6 +123,7 @@ const CourseForm = () => (
                             }
                             showTimeSelect
                             locale="ru"
+                            dateFormat="d MMMM, yyyy, HH:mm"
                           />
                           <button
                             type="button"
