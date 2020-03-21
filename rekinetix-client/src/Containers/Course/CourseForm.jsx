@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import FormInput from './components/FormInput';
 import FormTextarea from './components/FormTextarea';
+import config from './configs/config';
 
 registerLocale('ru', ru);
 
@@ -63,7 +64,7 @@ const CourseForm = () => (
               selected={values.primaryAssessmentDate}
               onChange={(date) => setFieldValue('primaryAssessmentDate', date)}
               locale="ru"
-              dateFormat="d MMMM, yyyy"
+              dateFormat={config.dateFormats.date}
             />
           </div>
 
@@ -88,7 +89,7 @@ const CourseForm = () => (
               selected={values.startDate}
               onChange={(date) => setFieldValue('startDate', date)}
               locale="ru"
-              dateFormat="d MMMM, yyyy"
+              dateFormat={config.dateFormats.date}
             />
           </div>
           <div className="mb-3">
@@ -98,7 +99,7 @@ const CourseForm = () => (
               selected={values.endDate}
               onChange={(date) => setFieldValue('endDate', date)}
               locale="ru"
-              dateFormat="d MMMM, yyyy"
+              dateFormat={config.dateFormats.date}
             />
           </div>
 
@@ -123,7 +124,7 @@ const CourseForm = () => (
                             }
                             showTimeSelect
                             locale="ru"
-                            dateFormat="d MMMM, yyyy, HH:mm"
+                            dateFormat={config.dateFormats.dateWithTime}
                           />
                           <button
                             type="button"
