@@ -118,6 +118,7 @@ const CourseForm = () => (
                             onChange={(date) =>
                               replace(index, { attendanceDate: date })
                             }
+                            showTimeSelect
                             locale="ru"
                           />
                           <button
