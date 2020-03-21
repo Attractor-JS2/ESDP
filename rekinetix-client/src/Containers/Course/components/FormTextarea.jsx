@@ -1,28 +1,18 @@
 import React from 'react';
+import { useField } from 'formik';
 
-const TextArea = ({
-  title,
-  propertyName,
-  rows,
-  cols,
-  value,
-  handleChange,
-  placeholder,
-}) => (
-  <div className="form-group">
-    <label className="form-label" htmlFor={propertyName}>
-      {title}
-    </label>
-    <textarea
-      className="form-control"
-      name={propertyName}
-      rows={rows}
-      cols={cols}
-      value={value}
-      onChange={handleChange}
-      placeholder={placeholder}
-    />
-  </div>
-);
+const TextArea = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <div className="form-group">
+      <label className="form-label" htmlFor={props.id || props.name}>
+        {label}
+      </label>
+      <textarea className="form-control" {...field} {...props} />
+      {meta.touched && meta.error && <div className="error">{meta.error}</div>}
+    </div>
+  );
+};
 
 export default TextArea;

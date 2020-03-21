@@ -4,6 +4,7 @@ import { Formik, Form, FieldArray } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import FormInput from './components/FormInput';
+import FormTextarea from './components/FormTextarea';
 
 const CourseForm = () => (
   <div className="container">
@@ -79,7 +80,7 @@ const CourseForm = () => (
 
           <FormInput name="courseAim" type="text" label="Цель курса" />
 
-          <FormInput name="result" as="textarea" label="Результат" />
+          <FormTextarea name="result" label="Результат" />
 
           <FieldArray
             name="attendancesSchedule"
