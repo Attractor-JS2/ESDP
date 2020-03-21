@@ -53,26 +53,41 @@ const CourseForm = () => (
             label="Категория пациента:"
           />
 
-          <FormInput
-            name="primaryAssessmentDate"
-            type="text"
-            label="Дата первичного приёма"
-          />
+          <div className="mb-3">
+            <label htmlFor="primaryAssessmentDate">Дата первичного приёма</label>
+            <DatePicker
+              id="primaryAssessmentDate"
+              selected={values.primaryAssessmentDate}
+              onChange={(date) => setFieldValue('primaryAssessmentDate', date)}
+            />
+          </div>
 
           <FormInput name="physician" type="text" label="Врач" />
 
-          <FormInput name="diagnosis" type="text" label="Функциональный диагноз" />
+          <FormInput
+            name="diagnosis"
+            type="text"
+            label="Функциональный диагноз"
+          />
 
-          <FormInput name="kinesiotherapist" type="text" label="Кинезиотерапевт" />
+          <FormInput
+            name="kinesiotherapist"
+            type="text"
+            label="Кинезиотерапевт"
+          />
 
           <div className="mb-3">
+            <label htmlFor="startDate">Дата начала курса</label>
             <DatePicker
+              id="startDate"
               selected={values.startDate}
               onChange={(date) => setFieldValue('startDate', date)}
             />
           </div>
           <div className="mb-3">
+            <label htmlFor="endDate">Дата окончания курса</label>
             <DatePicker
+              id="endDate"
               selected={values.endDate}
               onChange={(date) => setFieldValue('endDate', date)}
             />
@@ -87,25 +102,27 @@ const CourseForm = () => (
             render={({ replace, remove, push }) => (
               <div>
                 <h2>График прохождения курса</h2>
-                {values.attendancesSchedule
-                && values.attendancesSchedule.length > 0
+                {values.attendancesSchedule &&
+                values.attendancesSchedule.length > 0
                   ? values.attendancesSchedule.map(
-                    ({ attendanceDate }, index) => (
-                      <div key={index}>
-                        <DatePicker
-                          selected={attendanceDate}
-                          onChange={(date) => replace(index, { attendanceDate: date })}
-                        />
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-sm"
-                          onClick={() => remove(index)}
-                        >
-                          Удалить поле
-                        </button>
-                      </div>
-                    ),
-                  )
+                      ({ attendanceDate }, index) => (
+                        <div key={index}>
+                          <DatePicker
+                            selected={attendanceDate}
+                            onChange={(date) =>
+                              replace(index, { attendanceDate: date })
+                            }
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => remove(index)}
+                          >
+                            Удалить поле
+                          </button>
+                        </div>
+                      ),
+                    )
                   : null}
                 <button
                   type="button"
