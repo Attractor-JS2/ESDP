@@ -58,7 +58,9 @@ const CourseForm = () => (
           />
 
           <div className="mb-3">
-            <label htmlFor="primaryAssessmentDate">Дата первичного приёма</label>
+            <label htmlFor="primaryAssessmentDate">
+              Дата первичного приёма
+            </label>
             <DatePicker
               id="primaryAssessmentDate"
               selected={values.primaryAssessmentDate}
@@ -107,10 +109,9 @@ const CourseForm = () => (
 
           <FormTextarea name="result" label="Результат" />
 
-          <FieldArray
-            name="attendancesSchedule"
-            render={({ replace, remove, push }) => (
-              <div>
+          <FieldArray name="attendancesSchedule">
+            {({ replace, remove, push }) => (
+              <div className="mb-3">
                 <h2>График прохождения курса</h2>
                 {values.attendancesSchedule &&
                 values.attendancesSchedule.length > 0
@@ -146,7 +147,7 @@ const CourseForm = () => (
                 </button>
               </div>
             )}
-          />
+          </FieldArray>
 
           <FormInput
             name="administratorName"
