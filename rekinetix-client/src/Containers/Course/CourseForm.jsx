@@ -2,7 +2,6 @@ import React from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { Formik, Form, FieldArray } from 'formik';
 import { ru } from 'date-fns/esm/locale';
-import 'react-datepicker/dist/react-datepicker.css';
 
 import FormInput from './components/FormInput';
 import FormTextarea from './components/FormTextarea';
