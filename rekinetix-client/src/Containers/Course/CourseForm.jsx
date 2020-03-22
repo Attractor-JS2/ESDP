@@ -37,24 +37,15 @@ const CourseForm = () => (
         <Form>
           <FormInput
             name="title"
-            type="text"
             label="Название курса"
             placeholder="Название курса с указанием запланированного количества приёмов"
           />
 
-          <FormInput
-            name="patient.fullName"
-            type="text"
-            label="ФИО пациента:"
-          />
+          <FormInput name="patient.fullName" label="ФИО пациента:" />
 
-          <FormInput name="patient.age" type="text" label="Возраст:" />
+          <FormInput name="patient.age" label="Возраст:" />
 
-          <FormInput
-            name="patientCategory"
-            type="text"
-            label="Категория пациента:"
-          />
+          <FormInput name="patientCategory" label="Категория пациента:" />
 
           <div className="mb-3">
             <label htmlFor="primaryAssessmentDate">
@@ -69,19 +60,11 @@ const CourseForm = () => (
             />
           </div>
 
-          <FormInput name="physician" type="text" label="Врач" />
+          <FormInput name="physician" label="Врач" />
 
-          <FormInput
-            name="diagnosis"
-            type="text"
-            label="Функциональный диагноз"
-          />
+          <FormInput name="diagnosis" label="Функциональный диагноз" />
 
-          <FormInput
-            name="kinesiotherapist"
-            type="text"
-            label="Кинезиотерапевт"
-          />
+          <FormInput name="kinesiotherapist" label="Кинезиотерапевт" />
 
           <div className="mb-3">
             <label htmlFor="startDate">Дата начала курса</label>
@@ -104,7 +87,7 @@ const CourseForm = () => (
             />
           </div>
 
-          <FormInput name="courseAim" type="text" label="Цель курса" />
+          <FormInput name="courseAim" label="Цель курса" />
 
           <FormTextarea name="result" label="Результат" />
 
@@ -148,11 +131,7 @@ const CourseForm = () => (
             )}
           </FieldArray>
 
-          <FormInput
-            name="administratorName"
-            type="text"
-            label="ФИО администратора"
-          />
+          <FormInput name="administratorName" label="ФИО администратора" />
 
           <button type="submit" className="btn btn-primary">
             Сохранить форму
