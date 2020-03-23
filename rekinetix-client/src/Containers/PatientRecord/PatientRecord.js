@@ -33,7 +33,7 @@ class PatientRecord extends Component {
             <Field className="mt-2 mb-2" label="ФИО принимающего специалиста"  placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
         <Field className="mb-2" label="Адрес проживание пациента" placeholder="Адрес проживание пациента" name="patientAddress" type="input" as={Input}/>
         <Field className="mb-2" label="Дата рождение пациента" placeholder="Дата рождение пациента" name="dateOfBirth" type="date" as={Input}/>
-        <Field label="Пол пациента" placeholder="Пол пациента" name="patientGender" as="select">
+        <Field label="Пол пациента"  name="patientGender" as="select">
             <option value="Мужчина">Мужчина</option>
         <option value="Женчина">Женчина</option>
         </Field>
