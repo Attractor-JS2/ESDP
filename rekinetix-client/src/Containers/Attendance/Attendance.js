@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Input, Container, CardImg, Col, Row } from "reactstrap";
+import { Button, Input, Container } from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
 import DatePicker from 'react-date-picker';
 
@@ -42,11 +42,11 @@ class Attendance extends Component {
                             name={`manipulations.${index}.manipulationName`}
                             as={Input}
                           />
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}></Button>
+                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                         </div>
                       );
                     })}
-                    <Button onClick={() => arrayHelpers.push({manipulationName: ""})}>Добавить процедуру/упражнение</Button>
+                    <Button className="d-block" onClick={() => arrayHelpers.push({manipulationName: ""})}>Добавить процедуру/упражнение</Button>
                   </div>
                 )}
               </FieldArray>
@@ -62,11 +62,11 @@ class Attendance extends Component {
                             name={`homeExcercising.${index}.excerciseName`}
                             as={Input}
                           />
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}></Button>
+                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                         </div>
                       );
                     })}
-                    <Button onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить упражнение</Button>
+                    <Button className="d-block" onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить упражнение</Button>
                   </div>
                 )}
               </FieldArray>
@@ -86,7 +86,6 @@ class Attendance extends Component {
                 <option value="10">10</option>
               </Field>
               <img className="d-block mb-3" style={{height: 100, width: 400}} src="painscale.jpg" alt=""/>
-              <div></div>
               <Button type="submit">Сохранить</Button>
             </Form>
           )}
