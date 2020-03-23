@@ -11,8 +11,10 @@
     "formik": "^2.1.4",
     "react": "^16.13.0",
     "react-datepicker": "^2.14.0",
+    "react-date-picker": "^7.10.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "reactstrap": "^8.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,6 +36,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }
