@@ -9,7 +9,20 @@ class PatientRecord extends Component {
             <Container className="mt-5">
             <h3>Анкетные данные</h3>
             <Formik
+        initialValues={{
+                patientName: "",
+                medicName: "",
+                patientAddress: "",
+                dateOfBirth: "",
+                patientGender: "",
+                patientAge: "",
+                patientContactPhone: "",
+                patientHeigt: "",
+                patientWeight: ""
+        }}
        
+            </Form>
+        )}
     </Formik>
         </Container>
     );
