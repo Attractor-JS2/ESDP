@@ -6,7 +6,12 @@ class PatientRecord extends Component {
 
     render() {
         return (
-
+            <Container className="mt-5">
+            <h3>Анкетные данные</h3>
+            <Formik
+       
+    </Formik>
+        </Container>
     );
     }
 }
