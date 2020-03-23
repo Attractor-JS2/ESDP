@@ -6,7 +6,7 @@ import CourseForm from './Containers/Course/CourseForm';
 function App() {
   return (
     <div className="App">
-      <CourseForm />
+      
     </div>
   );
 }
