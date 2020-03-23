@@ -41,6 +41,7 @@ class PatientRecord extends Component {
         <Field className="mb-2" placeholder="Контактный телефон пациента" name="patientContactPhone" type="input" as={Input}/>
         <Field className="mb-2" placeholder="Рост пациента" name="patientHeigt" type="input" as={Input}/>
         <Field className="mb-2" placeholder="Вес пациента" name="patientWeight" type="input" as={Input}/>
+        <Button type="submit">Сохранить</Button>
             </Form>
         )}
     </Formik>
