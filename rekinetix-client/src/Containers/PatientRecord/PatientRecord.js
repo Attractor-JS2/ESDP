@@ -23,7 +23,14 @@ class PatientRecord extends Component {
         onSubmit={data => {
             console.log(data);
         }}>
-       
+        {() => (
+            <Form>
+            <Field  placeholder="ФИО принимающего специалиста" name="medicName" as="select">
+            <option value="Мария Ивановна">Мария Ивановна</option>
+        <option value="Генади Головкин">Генади Головкин</option>
+        <option value="Евгени Петровичь">Евгени Петровичь</option>
+        </Field>
+            
             </Form>
         )}
     </Formik>
