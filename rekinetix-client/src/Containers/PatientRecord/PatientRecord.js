@@ -20,6 +20,9 @@ class PatientRecord extends Component {
                 patientHeigt: "",
                 patientWeight: ""
         }}
+        onSubmit={data => {
+            console.log(data);
+        }}>
        
             </Form>
         )}
