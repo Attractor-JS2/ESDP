@@ -36,6 +36,11 @@ class PatientRecord extends Component {
         <Field className="mb-2" label="Адрес проживание пациента" placeholder="Адрес проживание пациента" name="patientAddress" type="input" as={Input}/>
         <Field className="mb-2" label="Дата рождение пациента" placeholder="Дата рождение пациента" name="dateOfBirth" type="date" as={Input}/>
         <Field label="Пол пациента"  name="patientGender" as="select">
+        <DatePicker
+            id="dateOfBirth"
+            selected={values.dateOfBirth}
+            onChange={(date)=>{const age =  moment().diff(date, 'years');setFieldValue("dateOfBirth", date); setFieldValue("patientAge",  age + " лет") }}
+      />
             <option value="Мужчина">Мужчина</option>
         <option value="Женчина">Женчина</option>
         </Field>
