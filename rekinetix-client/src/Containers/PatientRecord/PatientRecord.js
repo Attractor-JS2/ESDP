@@ -69,7 +69,6 @@ class PatientRecord extends Component {
 
               <div> Пол пациента </div>
               <Field label="Пол пациента" name="patientGender" as="select">
-                <div className="mb-2"> JJJ </div>
                 <option value="Мужчина">Мужчина</option>
                 <option value="Женщина">Женщина</option>
               </Field>
