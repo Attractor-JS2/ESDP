@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Input, Container } from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
 import DatePicker from 'react-date-picker';
-import {necessaryProcedures} from './procedures'
+import {necessaryProcedures, units} from './procedures'
 
 class Attendance extends Component {
   render() {
@@ -14,7 +14,7 @@ class Attendance extends Component {
             date: new Date(),
             patientName: "", 
             medicName: "", 
-            manipulations: [{manipulation: {manipulationStage: '', manipulationName: ''}}],
+            manipulations: [{manipulation: {manipulationStage: '', manipulationName: '', manipulationAmount: 0, manipulationUnits: ''}}],
             homeExcercising: [{excerciseName: ""}],
             patienthood: "", 
             painScale: ""
@@ -46,7 +46,7 @@ class Attendance extends Component {
                             })}
                           </Field>
                           <Field
-                            className="mb-2"
+                            className="ml-3 mb-2"
                             name={`manipulations.${index}.manipulation.manipulationName`}
                             as={'select'}
                           >
@@ -57,11 +57,23 @@ class Attendance extends Component {
                               })
                             }
                           </Field>
+                          <Field className="mb-2 ml-2" placeholder="Количество" name={`manipulations.${index}.manipulation.manipulationAmount`} type="number" as={Input}/>
+                          <Field
+                            className="ml-3 mb-2"
+                            name={`manipulations.${index}.manipulation.manipulationUnits`}
+                            as={'select'}
+                          >
+                            {
+                             units.map((unit, i) => {
+                                return <option key={i} value={unit}>{unit}</option>
+                              })
+                            }
+                          </Field>
                           <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                         </div>
                       );
                     })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: ''}})}>Добавить процедуру/упражнение</Button>
+                    <Button className="d-block" onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: ''}})}>Добавить процедуру/упражнение</Button>
                   </div>
                 )}
               </FieldArray>
