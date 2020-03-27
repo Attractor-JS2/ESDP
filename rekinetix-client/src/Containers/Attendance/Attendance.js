@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Button, Input, Container } from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
 import DatePicker from 'react-date-picker';
+import {necessaryProcedures} from './procedures'
 
 class Attendance extends Component {
-
   render() {
     return (
       <Container className="mt-5">
@@ -14,8 +14,8 @@ class Attendance extends Component {
             date: new Date(),
             patientName: "", 
             medicName: "", 
-            manipulations: [{manipulationName: ""}], 
-            homeExcercising: [{excerciseName: ""}], 
+            manipulations: [{manipulation: {manipulationStage: '', manipulationName: ''}}],
+            homeExcercising: [{excerciseName: ""}],
             patienthood: "", 
             painScale: ""
           }} 
@@ -38,15 +38,19 @@ class Attendance extends Component {
                         <div key={index} className="d-flex">
                           <Field
                             className="mb-2"
-                            placeholder="Процедура/упражнение"
-                            name={`manipulations.${index}.manipulationName`}
-                            as={Input}
-                          />
+                            name={`manipulations.${index}.manipulation.manipulationStage`}
+                            as={'select'}
+                          >
+                            {Object.keys(necessaryProcedures).map((key, i) => {
+                              return <option key={i} value={key}>{key}</option>
+                            })}
+                          </Field>
+                          
                           <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                         </div>
                       );
                     })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({manipulationName: ""})}>Добавить процедуру/упражнение</Button>
+                    <Button className="d-block" onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: ''}})}>Добавить процедуру/упражнение</Button>
                   </div>
                 )}
               </FieldArray>
@@ -72,7 +76,7 @@ class Attendance extends Component {
               </FieldArray>
               <Field className="mb-3" placeholder="Состояние пациента после терапии" name="patienthood" type="input" as={Input}/>
               <p className="d-inline-block pr-3">Шкала боли</p>
-              <Field name="painScale" as="select">
+              <Field name="painScale"  as="select">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
