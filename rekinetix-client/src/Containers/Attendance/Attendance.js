@@ -41,11 +41,22 @@ class Attendance extends Component {
                             name={`manipulations.${index}.manipulation.manipulationStage`}
                             as={'select'}
                           >
-                            {Object.keys(necessaryProcedures).map((key, i) => {
-                              return <option key={i} value={key}>{key}</option>
+                            {Object.keys(necessaryProcedures).map((stage, i) => {
+                              return <option key={i} value={stage}>{stage}</option>
                             })}
                           </Field>
-                          
+                          <Field
+                            className="mb-2"
+                            name={`manipulations.${index}.manipulation.manipulationName`}
+                            as={'select'}
+                          >
+                            {
+                              values.manipulations[index].manipulation.manipulationStage &&
+                              necessaryProcedures[values.manipulations[index].manipulation.manipulationStage].map((manipulation, i) => {
+                                return <option key={i} value={manipulation}>{manipulation}</option>
+                              })
+                            }
+                          </Field>
                           <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                         </div>
                       );
