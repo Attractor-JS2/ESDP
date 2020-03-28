@@ -3,6 +3,7 @@ import {Button, Input, Container} from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
 import DatePicker from 'react-date-picker';
 import {necessaryProcedures, units, availableProcedures} from './procedures'
+import {Persist} from "formik-persist";
 
 class Attendance extends Component {
   render() {
@@ -18,7 +19,7 @@ class Attendance extends Component {
             homeExcercising: [{excerciseName: ""}],
             patienthood: "", 
             painScale: ""
-          }} 
+          } && JSON.parse(localStorage.getItem('attendance-form')).values}
           onSubmit={data => {
           console.log(data);
         }}>
@@ -37,8 +38,8 @@ class Attendance extends Component {
                     {values.manipulations.map((manipulation, index) => {
                       return (
                         <div key={index} style={values.manipulations[index].manipulation.isNew ? {backgroundColor: 'rgba(38, 150, 38, 0.62)'} : null} className='d-flex p-2 mb-1'>
+                          
                           <Field
-                           
                             name={`manipulations.${index}.manipulation.manipulationStage`}
                             as={'select'}
                           >
@@ -48,6 +49,7 @@ class Attendance extends Component {
                               return <option key={i} value={stage}>{stage}</option>
                             })}
                           </Field>
+                          
                           <Field
                             className="ml-3"
                             name={`manipulations.${index}.manipulation.manipulationName`}
@@ -62,9 +64,11 @@ class Attendance extends Component {
                               })
                             }
                           </Field>
+                          
                           <Field className=" ml-2" placeholder="Количество"
                                  name={`manipulations.${index}.manipulation.manipulationAmount`} type="number"
                                  as={Input}/>
+                                 
                           <Field
                             className="ml-3 col-3"
                             name={`manipulations.${index}.manipulation.manipulationUnits`}
@@ -78,6 +82,7 @@ class Attendance extends Component {
                               })
                             }
                           </Field>
+                          
                           <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                         </div>
                       );
@@ -128,6 +133,10 @@ class Attendance extends Component {
               </Field>
               <img className="d-block mb-3" style={{height: 100, width: 400}} src="./painscale.jpg" alt=""/>
               <Button type="submit" color='success'>Сохранить</Button>
+              <pre>
+                {JSON.stringify(values, null, 2)}
+              </pre>
+              <Persist name='attendance-form'/>
             </Form>
           )}
         </Formik>
