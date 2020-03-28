@@ -10,20 +10,25 @@ class Attendance extends Component {
     return (
       <Container className="mt-5">
         <h3>Приём</h3>
-        <Formik 
-          initialValues={{
+        <Formik
+          initialValues={
+            (JSON.parse(localStorage.getItem('attendance-form')) !== null) ? JSON.parse(localStorage.getItem('attendance-form')).values : (
+            {
             date: new Date(),
-            patientName: "", 
-            medicName: "", 
+            patientName: "",
+            medicName: "",
             manipulations: [{manipulation: {manipulationStage: '', manipulationName: '', manipulationAmount: 0, manipulationUnits: ''}}],
             homeExcercising: [{excerciseName: ""}],
-            patienthood: "", 
+            patienthood: "",
             painScale: ""
-          } && JSON.parse(localStorage.getItem('attendance-form')).values}
-          onSubmit={data => {
+          })}
+          onSubmit={(data, {resetForm}) => {
           console.log(data);
+            localStorage.setItem('attendance-form', null);
+          resetForm()
+          
         }}>
-          {({values, setFieldValue}) => (
+          {({values, setFieldValue, resetForm}) => (
             <Form>
               <DatePicker
                 value={values.date}
@@ -35,7 +40,8 @@ class Attendance extends Component {
               <FieldArray name="manipulations">
                 {arrayHelpers => (
                   <div className="mb-3 mt-3"> Процедуры и упражнения
-                    {values.manipulations.map((manipulation, index) => {
+                    {
+                      values.manipulations.map((manipulation, index) => {
                       return (
                         <div key={index} style={values.manipulations[index].manipulation.isNew ? {backgroundColor: 'rgba(38, 150, 38, 0.62)'} : null} className='d-flex p-2 mb-1'>
                           
@@ -132,7 +138,10 @@ class Attendance extends Component {
                 <option value="10">10</option>
               </Field>
               <img className="d-block mb-3" style={{height: 100, width: 400}} src="./painscale.jpg" alt=""/>
-              <Button type="submit" color='success'>Сохранить</Button>
+              <div className='d-flex justify-content-between'>
+                <Button type="submit" color='success'>Сохранить</Button>
+                <Button onClick={resetForm} color='danger'>Очистить</Button>
+              </div>
               <pre>
                 {JSON.stringify(values, null, 2)}
               </pre>
