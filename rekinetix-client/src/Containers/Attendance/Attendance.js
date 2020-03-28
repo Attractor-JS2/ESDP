@@ -6,8 +6,6 @@ import {necessaryProcedures, units, availableProcedures} from './procedures'
 
 class Attendance extends Component {
   render() {
-   
-    
     return (
       <Container className="mt-5">
         <h3>Приём</h3>
@@ -32,14 +30,15 @@ class Attendance extends Component {
               />
               <Field className="mt-2 mb-2" placeholder="ФИО пациента" name="patientName" type="input" as={Input}/>
               <Field className="mb-2" placeholder="ФИО принимающего специалиста" name="medicName" type="input" as={Input}/>
+              
               <FieldArray name="manipulations">
                 {arrayHelpers => (
                   <div className="mb-3 mt-3"> Процедуры и упражнения
                     {values.manipulations.map((manipulation, index) => {
                       return (
-                        <div key={index} className="d-flex">
+                        <div key={index} style={values.manipulations[index].manipulation.isNew ? {backgroundColor: 'rgba(38, 150, 38, 0.62)'} : null} className='d-flex p-2 mb-1'>
                           <Field
-                            className="mb-2"
+                           
                             name={`manipulations.${index}.manipulation.manipulationStage`}
                             as={'select'}
                           >
@@ -50,7 +49,7 @@ class Attendance extends Component {
                             })}
                           </Field>
                           <Field
-                            className="ml-3 mb-2"
+                            className="ml-3"
                             name={`manipulations.${index}.manipulation.manipulationName`}
                             as={'select'}
                           >
@@ -63,11 +62,11 @@ class Attendance extends Component {
                               })
                             }
                           </Field>
-                          <Field className="mb-2 ml-2" placeholder="Количество"
+                          <Field className=" ml-2" placeholder="Количество"
                                  name={`manipulations.${index}.manipulation.manipulationAmount`} type="number"
                                  as={Input}/>
                           <Field
-                            className="ml-3 mb-2 col-3"
+                            className="ml-3 col-3"
                             name={`manipulations.${index}.manipulation.manipulationUnits`}
                             as={'select'}
                           >
@@ -84,13 +83,14 @@ class Attendance extends Component {
                       );
                     })}
                     <div className='d-flex justify-content-between'>
-                      <Button color='success' onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: ''}})}>Добавить процедуру/упражнение</Button>
+                      <Button color='primary' onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: ''}})}>Добавить процедуру/упражнение</Button>
                       <Button onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: '', isNew: true}})}>Больше процедур</Button>
                     </div>
                     
                   </div>
                 )}
               </FieldArray>
+              
               <FieldArray name="homeExcercising">
                 {arrayHelpers => (
                   <div className="mb-3"> Упражнения на дому
@@ -107,7 +107,7 @@ class Attendance extends Component {
                         </div>
                       );
                     })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить упражнение</Button>
+                    <Button className="d-block" color='primary' onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить упражнение</Button>
                   </div>
                 )}
               </FieldArray>
@@ -126,8 +126,8 @@ class Attendance extends Component {
                 <option value="9">9</option>
                 <option value="10">10</option>
               </Field>
-              <img className="d-block mb-3" style={{height: 100, width: 400}} src="painscale.jpg" alt=""/>
-              <Button type="submit">Сохранить</Button>
+              <img className="d-block mb-3" style={{height: 100, width: 400}} src="./painscale.jpg" alt=""/>
+              <Button type="submit" color='success'>Сохранить</Button>
             </Form>
           )}
         </Formik>
