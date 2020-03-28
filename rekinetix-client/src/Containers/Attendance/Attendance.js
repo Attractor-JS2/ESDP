@@ -6,6 +6,8 @@ import {necessaryProcedures, units} from './procedures'
 
 class Attendance extends Component {
   render() {
+   
+    
     return (
       <Container className="mt-5">
         <h3>Приём</h3>
@@ -41,6 +43,7 @@ class Attendance extends Component {
                             name={`manipulations.${index}.manipulation.manipulationStage`}
                             as={'select'}
                           >
+                            <option value={''}>Выберите этап</option>
                             {Object.keys(necessaryProcedures).map((stage, i) => {
                               return <option key={i} value={stage}>{stage}</option>
                             })}
@@ -50,6 +53,7 @@ class Attendance extends Component {
                             name={`manipulations.${index}.manipulation.manipulationName`}
                             as={'select'}
                           >
+                            <option value={''}>Выберите манипуляцию</option>
                             {
                               values.manipulations[index].manipulation.manipulationStage &&
                               necessaryProcedures[values.manipulations[index].manipulation.manipulationStage].map((manipulation, i) => {
@@ -59,10 +63,12 @@ class Attendance extends Component {
                           </Field>
                           <Field className="mb-2 ml-2" placeholder="Количество" name={`manipulations.${index}.manipulation.manipulationAmount`} type="number" as={Input}/>
                           <Field
-                            className="ml-3 mb-2"
+                            className="ml-3 mb-2 col-3"
                             name={`manipulations.${index}.manipulation.manipulationUnits`}
                             as={'select'}
                           >
+                            <option value={''}>Eдиница измерения</option>
+  
                             {
                              units.map((unit, i) => {
                                 return <option key={i} value={unit}>{unit}</option>
