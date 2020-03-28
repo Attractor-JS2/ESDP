@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Button, Input, Container } from "reactstrap";
+import {Button, Input, Container} from "reactstrap";
 import { Formik, Field, FieldArray, Form } from "formik";
 import DatePicker from 'react-date-picker';
-import {necessaryProcedures, units} from './procedures'
+import {necessaryProcedures, units, availableProcedures} from './procedures'
 
 class Attendance extends Component {
   render() {
@@ -44,7 +44,8 @@ class Attendance extends Component {
                             as={'select'}
                           >
                             <option value={''}>Выберите этап</option>
-                            {Object.keys(necessaryProcedures).map((stage, i) => {
+                            {
+                              Object.keys(values.manipulations[index].manipulation.isNew ? availableProcedures : necessaryProcedures).map((stage, i) => {
                               return <option key={i} value={stage}>{stage}</option>
                             })}
                           </Field>
@@ -56,21 +57,24 @@ class Attendance extends Component {
                             <option value={''}>Выберите манипуляцию</option>
                             {
                               values.manipulations[index].manipulation.manipulationStage &&
-                              necessaryProcedures[values.manipulations[index].manipulation.manipulationStage].map((manipulation, i) => {
+                              (values.manipulations[index].manipulation.isNew ?
+                                availableProcedures : necessaryProcedures)[values.manipulations[index].manipulation.manipulationStage].map((manipulation, i) => {
                                 return <option key={i} value={manipulation}>{manipulation}</option>
                               })
                             }
                           </Field>
-                          <Field className="mb-2 ml-2" placeholder="Количество" name={`manipulations.${index}.manipulation.manipulationAmount`} type="number" as={Input}/>
+                          <Field className="mb-2 ml-2" placeholder="Количество"
+                                 name={`manipulations.${index}.manipulation.manipulationAmount`} type="number"
+                                 as={Input}/>
                           <Field
                             className="ml-3 mb-2 col-3"
                             name={`manipulations.${index}.manipulation.manipulationUnits`}
                             as={'select'}
                           >
                             <option value={''}>Eдиница измерения</option>
-  
+        
                             {
-                             units.map((unit, i) => {
+                              units.map((unit, i) => {
                                 return <option key={i} value={unit}>{unit}</option>
                               })
                             }
@@ -79,7 +83,11 @@ class Attendance extends Component {
                         </div>
                       );
                     })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: ''}})}>Добавить процедуру/упражнение</Button>
+                    <div className='d-flex justify-content-between'>
+                      <Button color='success' onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: ''}})}>Добавить процедуру/упражнение</Button>
+                      <Button onClick={() => arrayHelpers.push({manipulation: {manipulationName: '', manipulationStage: '', manipulationAmount: 0, manipulationUnits: '', isNew: true}})}>Больше процедур</Button>
+                    </div>
+                    
                   </div>
                 )}
               </FieldArray>
