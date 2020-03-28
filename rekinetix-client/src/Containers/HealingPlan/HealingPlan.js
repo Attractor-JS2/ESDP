@@ -1,11 +1,12 @@
 import React, {Component} from "react";
 import {Button, Container} from "reactstrap";
-import {Formik, Field, FieldArray, Form} from "formik";
+import {Formik,  Form} from "formik";
 import "./HealingPlan.css";
+import HealingPart from "./Components/HealingPart";
 
 class HealingPlan extends Component {
   render() {
-    const firstPartHealingItem= ["Выбор мышцы","-","Надостная мышца","Подостная мышца","Подлопаточная мышца","Малая круглая","Большая круглая","Широчайшая мышца спины","Малая грудная","Большая грудная","Подключичная","Поднимающая лопатку","Малая ромбовидная","Большая ромбовидная","Верхняя порция трапеции","Средняя порция трапеции","Нижняя порция трапеции","Передняя зубчатая","Задняя зубчатая","Дельтовидная передняя","Дельтовидная средняя","Дельтовидная задняя","Клювовидно плечевая","Длинная головка бицепса","Короткая головка бицепса","Трехглавая мышца плеча","Плечевая мышца (брохиалис)","Мышцы латерального мыщелка","Мышцы медиального мыщелка"];
+    const firstPartHealingItem=["Выбор мышцы","-","Надостная мышца","Подостная мышца","Подлопаточная мышца","Малая круглая","Большая круглая","Широчайшая мышца спины","Малая грудная","Большая грудная","Подключичная","Поднимающая лопатку","Малая ромбовидная","Большая ромбовидная","Верхняя порция трапеции","Средняя порция трапеции","Нижняя порция трапеции","Передняя зубчатая","Задняя зубчатая","Дельтовидная передняя","Дельтовидная средняя","Дельтовидная задняя","Клювовидно плечевая","Длинная головка бицепса","Короткая головка бицепса","Трехглавая мышца плеча","Плечевая мышца (брохиалис)","Мышцы латерального мыщелка","Мышцы медиального мыщелка"];
     const firstPartMethods=["Выбор метода","-","Функциональный массаж"];
     const secondPartHealingItem= ["Выбор отдела","-","Грудной отдел позвоночника","Шейный отдел позвоночника","Поясничный отдел позвоночника"];
     const secondPartMethods=["Выбор метода","-","Функциональный массаж","Нефункциональный массаж"];
@@ -13,7 +14,7 @@ class HealingPlan extends Component {
     const thirdPartMethods=["Выбор метода","-","Функциональный массаж","Немассаж"];
     const fourthPartHealingItem= ["Выбор отдела","-","Передняя лента","Задняя лента"];
     const fourthPartMethods=["Выбор метода","-","Функциональный массаж","Немассаж"];
-    const fifthPartHealingItem= ["Выбор отдела","-","Упражнения","Задания","Лекарства"];
+    const fifthPartHealingItem= ["Выбор действия","-","Упражнения","Задания","Лекарства"];
     const fifthPartMethods=["Выбор Упражнения","-","Ходьба","Бег", "Прыжки"];
     const recommendationPartHealingItem=["Рекоммендации","-","Продолжать заниматься"];
     const recommendationPartMethods=["Выбор рекомендации", "-","Не сдаваться"];
@@ -40,16 +41,19 @@ class HealingPlan extends Component {
         firstStepHealingMethod.push(<option key={index} value={item}>{item}</option>)
       )
     });
+
     secondPartHealingItem.map((item,index) => {
       return (
         secondStepHealingData.push(<option key={index} value={item}>{item}</option>)
       )
     });
+
     secondPartMethods.map((item,index) => {
       return (
         secondStepHealingMethod.push(<option key={index} value={item}>{item}</option>)
       )
     });
+
     thirdPartHealingItem.map((item,index) => {
       return (
         thirdStepHealingData.push(<option key={index} value={item}>{item}</option>)
@@ -110,195 +114,61 @@ class HealingPlan extends Component {
           }}>
           {({values, setFieldValue}) => (
             <Form>
-              <FieldArray name="firstPartData">
-                {arrayHelpers => (
-                  <div className="mb-3 mt-3"> <p className="firstPart">Этап 1: Обезболивание/противовоспалительные мероприятия</p>
-                    {values.firstPartData.map((firstPartData, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            name={`firstPartData.${index}.firstPartData`}
-                            component="select"
-                          >
-                            {firstStepHealingData}
-                          </Field>
-                          <label> Метод:
-                            <Field
-                              className="mb-2"
-                              name={`firstPartData.${index}.firstPartMethod`}
-                              component="select"
-                            >
-                              {firstStepHealingMethod}
-                            </Field>
-                          </label>
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({})}>Добавить</Button>
-                  </div>
-                )}
-              </FieldArray>
-              <FieldArray name="secondPartData">
-                {arrayHelpers => (
-                  <div className="mb-3 mt-3"> <p className="secondPart">Этап 2: Мобилизация</p>
-                    {values.secondPartData.map((secondPartData, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            name={`secondPartData.${index}.secondPartData`}
-                            component="select"
-                          >
-                            {secondStepHealingData}
-                          </Field>
-                          <label> Метод:
-                            <Field
-                              className="mb-2"
-                              name={`secondPartData.${index}.secondPartMethod`}
-                              component="select"
-                            >
-                              {secondStepHealingMethod}
-                            </Field>
-                          </label>
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({
-
-                    })}>Добавить</Button>
-                  </div>
-                )}
-              </FieldArray>
-              <FieldArray name="thirdPartData">
-                {arrayHelpers => (
-                  <div className="mb-3 mt-3"> <p className="thirdPart">Этап 3: НМА и Стабилизация</p>
-                    {values.thirdPartData.map((thirdPartData, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            name={`thirdPartData.${index}.thirdPartData`}
-                            component="select"
-                          >
-                            {thirdStepHealingData}
-                          </Field>
-                          <label> Метод:
-                            <Field
-                              className="mb-2"
-                              name={`thirdPartData.${index}.thirdPartMethod`}
-                              component="select"
-                            >
-                              {thirdStepHealingMethod}
-                            </Field>
-                          </label>
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({})}>Добавить</Button>
-                  </div>
-                )}
-              </FieldArray>
-              <FieldArray name="fourthPartData">
-                {arrayHelpers => (
-                  <div className="mb-3 mt-3"> <p className="fourthPart">Этап 4: Восстановление функций в МФЛ</p>
-                    {values.fourthPartData.map((fourthPartData, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            name={`fourthPartData.${index}.fourthPartData`}
-                            component="select"
-                          >
-                            {fourthStepHealingData}
-                          </Field>
-                          <label> Метод:
-                            <Field
-                              className="mb-2"
-                              name={`fourthPartData.${index}.fourthPartMethod`}
-                              component="select"
-                            >
-                              {fourthStepHealingMethod}
-                            </Field>
-                          </label>
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({})}>Добавить</Button>
-                  </div>
-                )}
-              </FieldArray>
-              <FieldArray name="fifthPartData">
-                {arrayHelpers => (
-                  <div className="mb-3 mt-3"> <p className="fifthPart">Этап 5: Профилактика</p>
-                    {values.fifthPartData.map((fifthPartData, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            name={`fifthPartData.${index}.fifthPartData`}
-                            component="select"
-                          >
-                            {fifthStepHealingData}
-                          </Field>
-                          <label> Метод:
-                            <Field
-                              className="mb-2"
-                              name={`fifthPartData.${index}.fifthPartMethod`}
-                              component="select"
-                            >
-                              {fifthStepHealingMethod}
-                            </Field>
-                          </label>
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({})}>Добавить</Button>
-                  </div>
-                )}
-              </FieldArray>
-              <FieldArray name="recommendationData">
-                {arrayHelpers => (
-                  <div className="mb-3 mt-3"> <p className="recommendationPart">Рекоммендации: </p>
-                    {values.recommendationData.map((recommendationData, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            name={`recommendationData.${index}.recommendationData`}
-                            component="select"
-                          >
-                            {recommendationStepHealingData}
-                          </Field>
-                          <label> Метод:
-                            <Field
-                              className="mb-2"
-                              name={`recommendationData.${index}.recommendationMethod`}
-                              component="select"
-                            >
-                              {recommendationStepHealingMethod}
-                            </Field>
-                          </label>
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" onClick={() => arrayHelpers.push({})}>Добавить</Button>
-                  </div>
-                )}
-              </FieldArray>
+              <HealingPart
+                name = "firstPartData"
+                userClassName = "firstPart"
+                title = "Этап 1: Обезболивание/противовоспалительные мероприятия"
+                partOne = {values.firstPartData}
+                firstData =  {firstStepHealingData}
+                firstMethod = {firstStepHealingMethod}
+              />
+              <HealingPart
+                name = "secondPartData"
+                userClassName = "secondPart"
+                title = "Этап 2: Мобилизация"
+                partOne = {values.secondPartData}
+                firstData =  {secondStepHealingData}
+                firstMethod = {secondStepHealingMethod}
+              />
+              <HealingPart
+                name = "thirdPartData"
+                userClassName = "thirdPart"
+                title = "Этап 3: НМА и Стабилизация"
+                partOne = {values.thirdPartData}
+                firstData =  {thirdStepHealingData}
+                firstMethod = {thirdStepHealingMethod}
+              />
+              <HealingPart
+                name = "fourthPartData"
+                userClassName = "fourthPart"
+                title = "Этап 4: Восстановление функций в МФЛ"
+                partOne = {values.fourthPartData}
+                firstData =  {fourthStepHealingData}
+                firstMethod = {fourthStepHealingMethod}
+              />
+              <HealingPart
+                name = "fifthPartData"
+                userClassName = "fifthPart"
+                title = "Этап 5: Профилактика"
+                partOne = {values.fifthPartData}
+                firstData =  {fifthStepHealingData}
+                firstMethod = {fifthStepHealingMethod}
+              />
+              <HealingPart
+                name = "recommendationData"
+                userClassName = "recommendationPart"
+                title = "Рекоммендации: "
+                partOne = {values.recommendationData}
+                firstData =  {recommendationStepHealingData}
+                firstMethod = {recommendationStepHealingMethod}
+              />
               <Button type="submit">Сохранить</Button>
             </Form>
           )}
         </Formik>
       </Container>
     )
-  }
+  };
 }
 
 export default HealingPlan;
