@@ -12,7 +12,6 @@ class Attendance extends Component {
         <h3>Приём</h3>
         <Formik
           initialValues={
-            (JSON.parse(localStorage.getItem('attendance-form')) !== null) ? JSON.parse(localStorage.getItem('attendance-form')).values : (
               {
                 date: new Date(),
                 patientName: "",
@@ -28,12 +27,16 @@ class Attendance extends Component {
                 homeExcercising: [{excerciseName: ""}],
                 patienthood: "",
                 painScale: ""
-              })}
-          onSubmit={(data, {resetForm}) => {
+              }}
+          onSubmit={async (data, {resetForm}) => {
             console.log(data);
-            localStorage.setItem('attendance-form', null);
-            resetForm()
-          }}>
+            await resetForm({});
+            localStorage.removeItem('attendance-form');
+          }}
+          onReset={async () => {
+            await localStorage.removeItem('attendance-form');
+          }}
+        >
           {({values, setFieldValue, resetForm}) => (
             <Form>
               <DatePicker
