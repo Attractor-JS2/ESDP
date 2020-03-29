@@ -116,6 +116,7 @@ class HealingPlan extends Component {
             <Form>
               <HealingPart
                 name = "firstPartData"
+                method = "firstPartMethod"
                 userClassName = "firstPart"
                 title = "Этап 1: Обезболивание/противовоспалительные мероприятия"
                 partOne = {values.firstPartData}
@@ -124,6 +125,7 @@ class HealingPlan extends Component {
               />
               <HealingPart
                 name = "secondPartData"
+                method = "secondPartMethod"
                 userClassName = "secondPart"
                 title = "Этап 2: Мобилизация"
                 partOne = {values.secondPartData}
@@ -132,6 +134,7 @@ class HealingPlan extends Component {
               />
               <HealingPart
                 name = "thirdPartData"
+                method = "thirdPartMethod"
                 userClassName = "thirdPart"
                 title = "Этап 3: НМА и Стабилизация"
                 partOne = {values.thirdPartData}
@@ -140,6 +143,7 @@ class HealingPlan extends Component {
               />
               <HealingPart
                 name = "fourthPartData"
+                method = "fourthPartMethod"
                 userClassName = "fourthPart"
                 title = "Этап 4: Восстановление функций в МФЛ"
                 partOne = {values.fourthPartData}
@@ -148,6 +152,7 @@ class HealingPlan extends Component {
               />
               <HealingPart
                 name = "fifthPartData"
+                method = "fifthPartMethod"
                 userClassName = "fifthPart"
                 title = "Этап 5: Профилактика"
                 partOne = {values.fifthPartData}
@@ -156,6 +161,7 @@ class HealingPlan extends Component {
               />
               <HealingPart
                 name = "recommendationData"
+                method = "recommendationMethod"
                 userClassName = "recommendationPart"
                 title = "Рекоммендации: "
                 partOne = {values.recommendationData}
