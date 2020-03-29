@@ -14,7 +14,7 @@ const HealingPart = (props) => {
                 <div key={index} className="d-flex">
                   <Field
                     className="mb-2"
-                    name={`firstPartData.${index}.firstPartData`}
+                    name={`${props.name}.${index}.${props.name}`}
                     component="select"
                   >
                     {props.firstData}
@@ -22,7 +22,7 @@ const HealingPart = (props) => {
                   <label> Метод:
                     <Field
                       className="mb-2"
-                      name={`firstPartData.${index}.firstPartMethod`}
+                      name={`${props.name}.${index}.${props.method}`}
                       component="select"
                     >
                       {props.firstMethod}
