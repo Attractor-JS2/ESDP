@@ -40,6 +40,7 @@ class Attendance extends Component {
           {({values, setFieldValue, resetForm}) => (
             <Form>
               <DatePicker
+                disabled
                 value={values.date}
                 onChange={date => setFieldValue("date", date)}
               />
@@ -168,9 +169,6 @@ class Attendance extends Component {
                 <Button type="submit" color='success'>Сохранить</Button>
                 <Button onClick={resetForm} color='danger'>Очистить</Button>
               </div>
-              <pre>
-                {JSON.stringify(values, null, 2)}
-              </pre>
               <Persist name='attendance-form'/>
             </Form>
           )}
