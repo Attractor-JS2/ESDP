@@ -17,4 +17,4 @@ const middleware = [thunkMiddleware, routerMiddleware(history)];
 
 const enhancers = composeEnhancers(applyMiddleware(...middleware));
 
-export const store = createStore(rootReducer, persistedState, enhancers);
+export const store = createStore(rootReducer, enhancers);
