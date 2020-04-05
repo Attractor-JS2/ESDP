@@ -1,0 +1,31 @@
+.checkbox {
+    display: none;
+}
+label {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    display: block;
+    cursor: pointer;
+}
+.fake-checkbox {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #3c7e5e;
+    margin-top: -2px;
+    margin-right: 4px;
+    top: 18px;
+    left: 30px;
+}
+.checkbox:checked + .fake-checkbox::before {
+    content: "✓";
+    font-size: 20px;
+    color: red;
+    display: block;
+    font-weight: bold;
+    margin-top: -10px;
+}
+.fake-checkbox {
+    position: relative;
+}
