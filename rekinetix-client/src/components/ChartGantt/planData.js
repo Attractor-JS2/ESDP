@@ -10,8 +10,8 @@ export const healingPlanByPatient = {
         planned: '3',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -22,8 +22,8 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '3',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -34,8 +34,8 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 03, 04),
+          new Date(2020, 2, 23),
+          new Date(2020, 3, 4),
         ]
       },
     ]
@@ -51,8 +51,8 @@ export const healingPlanByPatient = {
         planned: '3',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -63,8 +63,8 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '3',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -75,8 +75,8 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 03, 04),
+          new Date(2020, 2, 23),
+          new Date(2020, 3, 4),
         ]
       },
     ]
@@ -92,8 +92,8 @@ export const healingPlanByPatient = {
         planned: '3',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -104,8 +104,8 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '3',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -116,8 +116,8 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 03, 04),
+          new Date(2020, 2, 23),
+          new Date(2020, 3, 4),
         ]
       },
     ]
@@ -133,8 +133,8 @@ export const healingPlanByPatient = {
         planned: '3',
         completed: '2',
         dates: [
-          new Date(2020, 02, 23),
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 23),
+          new Date(2020, 2, 25),
         ]
       },
     ]
@@ -150,7 +150,7 @@ export const healingPlanByPatient = {
         planned: '3',
         completed: '1',
         dates: [
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -161,7 +161,7 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '1',
         dates: [
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 25),
         ]
       },
       {
@@ -172,7 +172,7 @@ export const healingPlanByPatient = {
         planned: '5',
         completed: '1',
         dates: [
-          new Date(2020, 02, 25),
+          new Date(2020, 2, 25),
         ]
       },
     ]
