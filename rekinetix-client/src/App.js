@@ -6,6 +6,7 @@ import HealingPlan from "./Containers/HealingPlan/HealingPlan";
 import ChartGantt from './components/ChartGantt/ChartGantt';
 
 import { healingPlanByPatient } from './components/ChartGantt/planData';
+import ChartTable from './components/ChartTable/ChartTable';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
           <Route path='/plan' component={HealingPlan} />
           <Route path='/chart'>
             <ChartGantt healingPlan={healingPlanByPatient} />
+          </Route>
+          <Route path="/table">
+            <ChartTable healingPlan={healingPlanByPatient} />
           </Route>
         </Switch>
   );
