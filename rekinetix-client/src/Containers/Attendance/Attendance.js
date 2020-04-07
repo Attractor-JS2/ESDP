@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Input, Container, Label} from "reactstrap";
+import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
 import {necessaryProcedures, availableProcedures, availableHealingPlaces, necessaryHealingPlaces} from './procedures'
 import {Persist} from "formik-persist";
@@ -9,6 +9,8 @@ class Attendance extends Component {
   state= {
     medicName: "Петров Иван Сидорович",
     patientName: "Сидоров Петр Иванович",
+    necessaryProceduresState: necessaryProcedures,
+    necessaryHealingPlacesState: necessaryHealingPlaces
   }
   render() {
     const formattedDate = () => {
@@ -26,27 +28,40 @@ class Attendance extends Component {
     }
     return (
       <Container className="mt-5">
-      <h3>Отчет по приёму {formattedDate()}</h3>
+        <h3>Отчет по приёму {formattedDate()}</h3>
         <Formik
           initialValues={
-              {
-                date: formattedDate(),
-                patientName: this.state.patientName,
-                medicName: this.state.medicName,
-                isNew: false,
-                manipulations: [{
-                  manipulation: {
-                    manipulationStage: '',
-                    manipulationName: '',
-                    manipulationPlace:'',
-                    manipulationAmount: 0,
-                    manipulationUnits: '',
-                  }
-                }],
-                homeExcercising: [{excerciseName: ""}],
-                patienthood: "",
-                painScale: ""
-              }}
+            {
+              firstPartData: [
+                {},
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+              ],
+              secondPartData: [
+                {},
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+              ],
+              thirdPartData: [
+                {},
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+              ],
+              fourthPartData: [
+                {},
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+              ],
+              fifthPartData: [
+                {},
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+              ],
+              date: formattedDate(),
+              patientName: this.state.patientName,
+              medicName: this.state.medicName,
+              homeExcercising: [{excerciseName: ""}],
+              patientFeelings: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}],
+              patientHoodBefore: "",
+              patientHoodAfter: "",
+              painScaleBefore: "",
+              painScaleAfter: ""
+            }}
           onSubmit={async (data, {resetForm}) => {
             console.log(data);
             await resetForm({});
@@ -58,22 +73,24 @@ class Attendance extends Component {
         >
           {({values, setFieldValue, resetForm}) => (
             <Form>
-            <p className="mt-2 mb-2" name="patientName"> Пациент: {this.state.patientName}</p>
-            <p className="mb-2" name="medicName">Врач: {this.state.medicName}</p>
+              <p className="mt-2 mb-2" name="patientName"> Пациент: {this.state.patientName}</p>
+              <p className="mb-2" name="medicName">Врач: {this.state.medicName}</p>
               <AttendancePlan
                 attendanceTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
-                attendanceName="manipulations"
-                attendance={values.manipulations}
-                necessaryProcedures={necessaryProcedures["firstStage"]}
+                attendanceName="firstPartData"
+                attendance={values.firstPartData}
+                dynamics={values.firstDynamicsData}
+                necessaryProcedures={this.state.necessaryProceduresState["firstStage"]}
                 availableProcedures={availableProcedures["firstStage"]}
-                necessaryPlace={necessaryHealingPlaces["firstStage"]}
+                necessaryPlace={this.state.necessaryHealingPlacesState["firstStage"]}
                 availablePlace={availableHealingPlaces["firstStage"]}
                 stage="firstStage"
               />
               <AttendancePlan
                 attendanceTitle="Этап 2: Мобилизационнные мероприятия"
-                attendanceName="manipulations"
-                attendance={values.manipulations}
+                attendanceName="secondPartData"
+                attendance={values.secondPartData}
+                dynamics={values.secondDynamicsData}
                 necessaryProcedures={necessaryProcedures["secondStage"]}
                 availableProcedures={availableProcedures["secondStage"]}
                 necessaryPlace={necessaryHealingPlaces["secondStage"]}
@@ -82,8 +99,9 @@ class Attendance extends Component {
               />
               <AttendancePlan
                 attendanceTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
-                attendanceName="manipulations"
-                attendance={values.manipulations}
+                attendanceName="thirdPartData"
+                attendance={values.thirdPartData}
+                dynamics={values.thirdDynamicsData}
                 necessaryProcedures={necessaryProcedures["thirdStage"]}
                 availableProcedures={availableProcedures["thirdStage"]}
                 necessaryPlace={necessaryHealingPlaces["thirdStage"]}
@@ -92,8 +110,9 @@ class Attendance extends Component {
               />
               <AttendancePlan
                 attendanceTitle="Этап 4: Восстановление функций в МФЛ"
-                attendanceName="manipulations"
-                attendance={values.manipulations}
+                attendanceName="fourthPartData"
+                attendance={values.fourthPartData}
+                dynamics={values.fourthDynamicsData}
                 necessaryProcedures={necessaryProcedures["fourthStage"]}
                 availableProcedures={availableProcedures["fourthStage"]}
                 necessaryPlace={necessaryHealingPlaces["fourthStage"]}
@@ -102,94 +121,15 @@ class Attendance extends Component {
               />
               <AttendancePlan
                 attendanceTitle="Этап 5: Профилактика"
-                attendanceName="manipulations"
-                attendance={values.manipulations}
+                attendanceName="fifthPartData"
+                attendance={values.fifthPartData}
+                dynamics={values.fifthDynamicsData}
                 necessaryProcedures={necessaryProcedures["fifthStage"]}
                 availableProcedures={availableProcedures["fifthStage"]}
                 necessaryPlace={necessaryHealingPlaces["fifthStage"]}
                 availablePlace={availableHealingPlaces["fifthStage"]}
                 stage="fifthStage"
               />
-
-              {/*<FieldArray name="manipulations">*/}
-              {/*  {arrayHelpers => (*/}
-              {/*    <div className="mb-3 mt-3"> Процедуры и упражнения*/}
-              {/*      {*/}
-              {/*        values.manipulations.map((manipulation, index) => {*/}
-              {/*          return (*/}
-              {/*            <div key={index}*/}
-              {/*                 style={values.manipulations[index].manipulation.isNew ? {backgroundColor: 'rgba(38, 150, 38, 0.62)'} : null}*/}
-              {/*                 className='d-flex p-2 mb-1'>*/}
-              {/*              */}
-              {/*              <Field*/}
-              {/*                name={`manipulations.${index}.manipulation.manipulationStage`}*/}
-              {/*                as={'select'}*/}
-              {/*              >*/}
-              {/*                <option value={''}>Выберите этап</option>*/}
-              {/*                {*/}
-              {/*                  Object.keys(values.manipulations[index].manipulation.isNew ? availableProcedures : necessaryProcedures).map((stage, i) => {*/}
-              {/*                    return <option key={i} value={stage}>{stage}</option>*/}
-              {/*                  })}*/}
-              {/*              </Field>*/}
-              {/*              */}
-              {/*              <Field*/}
-              {/*                className="ml-3"*/}
-              {/*                name={`manipulations.${index}.manipulation.manipulationName`}*/}
-              {/*                as={'select'}*/}
-              {/*              >*/}
-              {/*                <option value={''}>Выберите манипуляцию</option>*/}
-              {/*                {*/}
-              {/*                  values.manipulations[index].manipulation.manipulationStage &&*/}
-              {/*                  (values.manipulations[index].manipulation.isNew ?*/}
-              {/*                    availableProcedures : necessaryProcedures)[values.manipulations[index].manipulation.manipulationStage].map((manipulation, i) => {*/}
-              {/*                    return <option key={i} value={manipulation}>{manipulation}</option>*/}
-              {/*                  })*/}
-              {/*                }*/}
-              {/*              </Field>*/}
-              {/*              */}
-              {/*              <Field className=" ml-2" placeholder="Количество"*/}
-              {/*                     name={`manipulations.${index}.manipulation.manipulationAmount`} min={0} type="number"*/}
-              {/*                     as={Input}/>*/}
-              {/*              */}
-              {/*              <Field*/}
-              {/*                className="ml-3 col-3"*/}
-              {/*                name={`manipulations.${index}.manipulation.manipulationUnits`}*/}
-              {/*                as={'select'}>*/}
-              {/*                <option value={''}>Eдиница измерения</option>*/}
-              {/*                */}
-              {/*                {units.map((unit, i) => {*/}
-              {/*                  return <option key={i} value={unit}>{unit}</option>*/}
-              {/*                })}*/}
-              {/*              </Field>*/}
-              {/*              */}
-              {/*              <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>*/}
-              {/*            </div>*/}
-              {/*          );*/}
-              {/*        })}*/}
-              {/*      <div className='d-flex justify-content-between'>*/}
-              {/*        <Button color='primary' onClick={() => arrayHelpers.push({*/}
-              {/*          manipulation: {*/}
-              {/*            manipulationName: '',*/}
-              {/*            manipulationStage: '',*/}
-              {/*            manipulationAmount: 0,*/}
-              {/*            manipulationUnits: ''*/}
-              {/*          }*/}
-              {/*        })}>Добавить процедуру/упражнение</Button>*/}
-              {/*        <Button onClick={() => arrayHelpers.push({*/}
-              {/*          manipulation: {*/}
-              {/*            manipulationName: '',*/}
-              {/*            manipulationStage: '',*/}
-              {/*            manipulationAmount: 0,*/}
-              {/*            manipulationUnits: '',*/}
-              {/*            isNew: true*/}
-              {/*          }*/}
-              {/*        })}>Больше процедур</Button>*/}
-              {/*      </div>*/}
-              {/*    */}
-              {/*    </div>*/}
-              {/*  )}*/}
-              {/*</FieldArray>*/}
-              
               <FieldArray name="homeExcercising">
                 {arrayHelpers => (
                   <div className="mb-3"> Упражнения на дому
@@ -208,16 +148,34 @@ class Attendance extends Component {
                     })}
                     <Button className="d-block" color='primary' onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить
                       упражнение</Button>
+
                   </div>
                 )}
               </FieldArray>
-              <div className='d-flex p-2 mb-1'><p>Динамика со слов пациента: </p>
-                <label><Input className="checkbox" name="patientFeelings" value='better' type="radio"/><span className="fake-checkbox"></span>Лучше</label>
-                <label><Input className="checkbox" name="patientFeelings" value='notChanged' type="radio"/><span className="fake-checkbox"></span>Так же</label>
-                <label><Input className="checkbox" name="patientFeelings" value='worster' type="radio"/><span className="fake-checkbox"></span>Хуже</label>
-              </div>
+              <FieldArray name ="patientFeelings">
+                {arrayHelpers => (
+                  <div className='d-flex p-2 mb-1'><p>Динамика со слов пациента: </p>
+                    {values.patientFeelings.map((field, index) => {
+                      return (
+                        <Field key={index} render={({field}) =>
+                          <label>
+                            <Input className="checkbox" type="radio" onClick={() =>  {
+                              values.patientFeelings[0].value = false;
+                              values.patientFeelings[1].value = false;
+                              values.patientFeelings[2].value = false;
+                              values.patientFeelings[index].value = true
+                            }} name="patientFeelings" /><span className="fake-checkbox"></span>
+                            {values.patientFeelings[index].title}
+                          </label> } />
+                      )
+                    })}
+                  </div>
+                )}
+
+
+              </FieldArray>
               <img className="d-block mb-3" style={{height: 100, width: 400}} src="./painscale.jpg" alt=""/>
-              <Field className="mb-3" placeholder="Состояние пациента до приема/Жалобы" name="patienthoodBefore" type="input"
+              <Field className="mb-3" placeholder="Состояние пациента до приема/Жалобы" name="patientHoodBefore" type="input"
                      as={Input} />
               <p className="d-inline-block pr-3">Шкала боли</p>
               <Field name="painScaleBefore" as="select">
@@ -234,7 +192,7 @@ class Attendance extends Component {
                 <option value="10">10</option>
               </Field>
 
-              <Field className="mb-3" placeholder="Состояние пациента после приема/Жалобы" name="patienthoodAfter" type="input"
+              <Field className="mb-3" placeholder="Состояние пациента после приема/Жалобы" name="patientHoodAfter" type="input"
                      as={Input}/>
               <p className="d-inline-block pr-3">Шкала боли</p>
               <Field name="painScaleAfter" as="select">
