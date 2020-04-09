@@ -33,24 +33,24 @@ class Attendance extends Component {
           initialValues={
             {
               firstPartData: [
-                {},
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
+                {newManipulation: [{}]}
               ],
               secondPartData: [
-                {},
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
+                {newManipulation: [{}]}
               ],
               thirdPartData: [
-                {},
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
+                {newManipulation: [{}]}
               ],
               fourthPartData: [
-                {},
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
+                {newManipulation: [{}]}
               ],
               fifthPartData: [
-                {},
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}
+                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
+                {newManipulation: [{}]}
               ],
               date: formattedDate(),
               patientName: this.state.patientName,
