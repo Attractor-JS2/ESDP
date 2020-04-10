@@ -16,34 +16,29 @@ const HealingPlanChart = ({ healingPlan }) => {
   const columns = useMemo(
     () => [
       {
-        Header: 'План лечения',
-        columns: [
-          {
-            id: 'procedureTitle',
-            Header: 'Что делаем',
-            accessor: 'title',
-          },
-          {
-            id: 'procedureTarget',
-            Header: 'На что направлено',
-            accessor: 'targetArea',
-          },
-          {
-            id: 'procedureStatus',
-            Header: 'Статус',
-            accessor: 'status',
-          },
-          {
-            id: 'procedurePlan',
-            Header: 'План',
-            accessor: 'planned',
-          },
-          {
-            id: 'procedureFact',
-            Header: 'Факт',
-            accessor: 'completed',
-          },
-        ],
+        id: 'procedureTitle',
+        Header: 'Что делаем',
+        accessor: 'title',
+      },
+      {
+        id: 'procedureTarget',
+        Header: 'На что направлено',
+        accessor: 'targetArea',
+      },
+      {
+        id: 'procedureStatus',
+        Header: 'Статус',
+        accessor: 'status',
+      },
+      {
+        id: 'procedurePlan',
+        Header: 'План',
+        accessor: 'planned',
+      },
+      {
+        id: 'procedureFact',
+        Header: 'Факт',
+        accessor: 'completed',
       },
     ],
     [],
@@ -59,6 +54,6 @@ const HealingPlanChart = ({ healingPlan }) => {
       {data && data.length > 0 && <Table columns={columns} data={data} />}
     </div>
   );
-}
+};
 
 export default HealingPlanChart;
