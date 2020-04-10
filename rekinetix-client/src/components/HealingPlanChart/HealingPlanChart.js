@@ -53,8 +53,9 @@ const HealingPlanChart = ({ healingPlan }) => {
         Header: 'Факт',
         accessor: 'completed',
       },
+      ...dateHeaderTitles,
     ],
-    [],
+    [dateHeaderTitles],
   );
 
   useEffect(() => {
@@ -68,12 +69,13 @@ const HealingPlanChart = ({ healingPlan }) => {
     const formattedDates = attendedDates.map((dateString) => {
       return format(new Date(dateString), 'yyyy-MM-dd');
     });
-    setHeaderTitles([...formattedDates]);
+    const dynamicColumns = formattedDates.map((title) => ({
+      id: title,
+      Header: title,
+      accessor: 'status'
+    }))
+    setHeaderTitles([...dynamicColumns]);
   }, [attendedDates]);
-
-  useEffect(() => {
-    console.log(dateHeaderTitles);
-  }, [dateHeaderTitles])
 
   return (
     <div>
