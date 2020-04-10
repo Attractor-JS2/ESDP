@@ -1,9 +1,12 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { format } from 'date-fns';
 
 import Table from './Table/Table';
 
 const HealingPlanChart = ({ healingPlan }) => {
-  const [data, setChartData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+  const [attendedDates, setAttendedDates] = useState([]);
+  const [dateHeaderTitles, setHeaderTitles] = useState([]);
 
   const getProcedures = (planData) => [
     ...planData.firstStage.procedures,
@@ -12,6 +15,16 @@ const HealingPlanChart = ({ healingPlan }) => {
     ...planData.fourthStage.procedures,
     ...planData.fifthStage.procedures,
   ];
+
+  const getDates = (proceduresArray) => {
+    return proceduresArray.reduce((acc, { dates }) => {
+      const allDates = dates.map((date) => date.toString());
+      const uniqueDates = allDates.filter((curDate) => {
+        if (!acc.includes(curDate)) return curDate;
+      });
+      return [...acc, ...uniqueDates];
+    }, []);
+  };
 
   const columns = useMemo(
     () => [
@@ -46,12 +59,25 @@ const HealingPlanChart = ({ healingPlan }) => {
 
   useEffect(() => {
     const procedures = getProcedures(healingPlan);
+    const dynamicHeaders = getDates(procedures);
     setChartData([...procedures]);
+    setAttendedDates([...dynamicHeaders]);
   }, [healingPlan]);
+
+  useEffect(() => {
+    const formattedDates = attendedDates.map((dateString) => {
+      return format(new Date(dateString), 'yyyy-MM-dd');
+    });
+    setHeaderTitles([...formattedDates]);
+  }, [attendedDates]);
+
+  useEffect(() => {
+    console.log(dateHeaderTitles);
+  }, [dateHeaderTitles])
 
   return (
     <div>
-      {data && data.length > 0 && <Table columns={columns} data={data} />}
+      {chartData && chartData.length > 0 && <Table columns={columns} data={chartData} />}
     </div>
   );
 };

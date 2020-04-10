@@ -37,7 +37,7 @@ const ChartTable = ({ healingPlan }) => {
 
   const getChartData = (proceduresArray, datesArray) => {
     return proceduresArray.reduce(
-      (acc, { id, title, targetArea, status, planned, completed, dates }) => {
+      (acc, { title, targetArea, status, planned, completed, dates }) => {
         const rowData = datesArray.map((curColumnDate) => {
           if (dates.map(date => date.toString()).includes(curColumnDate)) return status;
           return '';
