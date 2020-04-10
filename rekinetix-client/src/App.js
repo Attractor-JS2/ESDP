@@ -3,10 +3,11 @@ import './App.css';
 import {Route, Switch} from "react-router-dom";
 import Attendance from "./Containers/Attendance/Attendance";
 import HealingPlan from "./Containers/HealingPlan/HealingPlan";
-import ChartGantt from './components/ChartGantt/ChartGantt';
 
+import ChartGantt from './components/ChartGantt/ChartGantt';
 import { healingPlanByPatient } from './components/ChartGantt/planData';
 import ChartTable from './components/ChartTable/ChartTable';
+import HealingPlanChart from './components/HealingPlanChart/HealingPlanChart';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route path="/table">
             <ChartTable healingPlan={healingPlanByPatient} />
+          </Route>
+          <Route path="/react-table">
+            <HealingPlanChart healingPlan={healingPlanByPatient} />
           </Route>
         </Switch>
   );
