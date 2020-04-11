@@ -26,6 +26,30 @@ const HealingPlanChart = ({ healingPlan }) => {
     }, []);
   };
 
+  const getChartData = (allProcedures, dateTitles) => {
+    return allProcedures.reduce((acc, procedure) => {
+      const { attendances } = procedure;
+      const reducedDates = attendances.reduce(
+        (acc, { dateTime, dynamic }) => {
+          const stringDate = format(new Date(dateTime), 'yyyy-MM-dd');
+          return { ...acc, [stringDate]: dynamic };
+        }, {}
+      );
+
+      const rowData = {
+        ...procedure,
+        ...dateTitles.reduce((acc, currentDate) => {
+          const curAttendance = {
+            [currentDate]: reducedDates[currentDate] || '',
+          };
+          return { ...acc, ...curAttendance };
+        }, {}),
+      };
+
+      return [...acc, rowData];
+    }, []);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -61,7 +85,6 @@ const HealingPlanChart = ({ healingPlan }) => {
   useEffect(() => {
     const procedures = getProcedures(healingPlan);
     const dynamicHeaders = getDates(procedures);
-    setChartData([...procedures]);
     setAttendedDates([...dynamicHeaders]);
   }, [healingPlan]);
 
@@ -72,14 +95,21 @@ const HealingPlanChart = ({ healingPlan }) => {
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
       Header: title,
-      accessor: 'status'
-    }))
+      accessor: `${title}`,
+    }));
+
+    const procedures = getProcedures(healingPlan);
+    const dynamicData = getChartData(procedures, formattedDates);
+
     setHeaderTitles([...dynamicColumns]);
+    setChartData([...dynamicData]);
   }, [attendedDates]);
 
   return (
     <div>
-      {chartData && chartData.length > 0 && <Table columns={columns} data={chartData} />}
+      {chartData && chartData.length > 0 && (
+        <Table columns={columns} data={chartData} />
+      )}
     </div>
   );
 };

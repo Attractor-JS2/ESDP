@@ -12,11 +12,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'положительная',
           }
         ]
       },
@@ -30,11 +30,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'положительная',
           }
         ]
       },
@@ -48,11 +48,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 3, 4),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -71,11 +71,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -89,11 +89,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -107,11 +107,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'негативная',
           },
           {
             dateTime: new Date(2020, 3, 4),
-            dynamic: 'stable',
+            dynamic: 'положительная',
           }
         ]
       },
@@ -130,11 +130,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -148,11 +148,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -166,11 +166,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 3, 4),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -189,11 +189,11 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           },
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -212,7 +212,7 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -226,7 +226,7 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
@@ -240,7 +240,7 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 25),
-            dynamic: 'stable',
+            dynamic: 'стабильная',
           }
         ]
       },
