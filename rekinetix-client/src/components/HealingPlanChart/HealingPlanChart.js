@@ -56,7 +56,7 @@ const HealingPlanChart = ({ healingPlan }) => {
 
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    title: rowTitle,
+    title: (<span className="h6">{rowTitle}</span>),
     targetArea: '',
     status: '',
     planned: '',
@@ -121,7 +121,7 @@ const HealingPlanChart = ({ healingPlan }) => {
   }, [attendedDates]);
 
   return (
-    <div>
+    <div className="container">
       {chartData && chartData.length > 0 && (
         <Table columns={columns} data={chartData} />
       )}
