@@ -107,7 +107,7 @@ export const healingPlanByPatient = {
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
-            dynamic: 'негативная',
+            dynamic: 'отрицательная',
           },
           {
             dateTime: new Date(2020, 3, 4),

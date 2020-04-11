@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { format } from 'date-fns';
 
 import Table from './Table/Table';
+import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 
 const HealingPlanChart = ({ healingPlan }) => {
   const [chartData, setChartData] = useState([]);
@@ -96,6 +97,7 @@ const HealingPlanChart = ({ healingPlan }) => {
       id: title,
       Header: title,
       accessor: `${title}`,
+      Cell: ({ cell: { value }}) => <DynamicBadges values={value} />,
     }));
 
     const procedures = getProcedures(healingPlan);
