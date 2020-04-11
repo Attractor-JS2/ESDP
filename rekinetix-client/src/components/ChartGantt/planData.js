@@ -9,9 +9,15 @@ export const healingPlanByPatient = {
         status: 'Завершено',
         planned: '3',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -21,9 +27,15 @@ export const healingPlanByPatient = {
         status: 'Прервано',
         planned: '5',
         completed: '3',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -33,9 +45,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '5',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 3, 4),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 3, 4),
+            dynamic: 'stable',
+          }
         ]
       },
     ]
@@ -50,9 +68,15 @@ export const healingPlanByPatient = {
         status: 'Приостановлено',
         planned: '3',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -62,9 +86,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '5',
         completed: '3',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -74,9 +104,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '5',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 3, 4),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 3, 4),
+            dynamic: 'stable',
+          }
         ]
       },
     ]
@@ -91,9 +127,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '3',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -103,9 +145,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '5',
         completed: '3',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -115,9 +163,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '5',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 3, 4),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 3, 4),
+            dynamic: 'stable',
+          }
         ]
       },
     ]
@@ -132,9 +186,15 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '3',
         completed: '2',
-        dates: [
-          new Date(2020, 2, 23),
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          },
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
     ]
@@ -149,8 +209,11 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '3',
         completed: '1',
-        dates: [
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 23),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -160,8 +223,11 @@ export const healingPlanByPatient = {
         status: 'Действует',
         planned: '5',
         completed: '1',
-        dates: [
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
       {
@@ -171,8 +237,11 @@ export const healingPlanByPatient = {
         status: 'Прервано',
         planned: '5',
         completed: '1',
-        dates: [
-          new Date(2020, 2, 25),
+        attendances: [
+          {
+            dateTime: new Date(2020, 2, 25),
+            dynamic: 'stable',
+          }
         ]
       },
     ]

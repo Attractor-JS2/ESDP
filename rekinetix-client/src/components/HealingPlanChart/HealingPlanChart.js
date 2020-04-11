@@ -17,8 +17,8 @@ const HealingPlanChart = ({ healingPlan }) => {
   ];
 
   const getDates = (proceduresArray) => {
-    return proceduresArray.reduce((acc, { dates }) => {
-      const allDates = dates.map((date) => date.toString());
+    return proceduresArray.reduce((acc, { attendances }) => {
+      const allDates = attendances.map(({ dateTime }) => dateTime.toString());
       const uniqueDates = allDates.filter((curDate) => {
         if (!acc.includes(curDate)) return curDate;
       });
