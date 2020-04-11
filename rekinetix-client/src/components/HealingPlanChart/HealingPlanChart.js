@@ -10,10 +10,15 @@ const HealingPlanChart = ({ healingPlan }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
 
   const getProcedures = (planData) => [
+    getRowGroupHeader(planData.firstStage.title),
     ...planData.firstStage.procedures,
+    getRowGroupHeader(planData.secondStage.title),
     ...planData.secondStage.procedures,
+    getRowGroupHeader(planData.thirdStage.title),
     ...planData.thirdStage.procedures,
+    getRowGroupHeader(planData.fourthStage.title),
     ...planData.fourthStage.procedures,
+    getRowGroupHeader(planData.fifthStage.title),
     ...planData.fifthStage.procedures,
   ];
 
@@ -30,12 +35,10 @@ const HealingPlanChart = ({ healingPlan }) => {
   const getChartData = (allProcedures, dateTitles) => {
     return allProcedures.reduce((acc, procedure) => {
       const { attendances } = procedure;
-      const reducedDates = attendances.reduce(
-        (acc, { dateTime, dynamic }) => {
-          const stringDate = format(new Date(dateTime), 'yyyy-MM-dd');
-          return { ...acc, [stringDate]: dynamic };
-        }, {}
-      );
+      const reducedDates = attendances.reduce((acc, { dateTime, dynamic }) => {
+        const stringDate = format(new Date(dateTime), 'yyyy-MM-dd');
+        return { ...acc, [stringDate]: dynamic };
+      }, {});
 
       const rowData = {
         ...procedure,
@@ -50,6 +53,16 @@ const HealingPlanChart = ({ healingPlan }) => {
       return [...acc, rowData];
     }, []);
   };
+
+  const getRowGroupHeader = (rowTitle) => ({
+    id: rowTitle,
+    title: rowTitle,
+    targetArea: '',
+    status: '',
+    planned: '',
+    completed: '',
+    attendances: [],
+  });
 
   const columns = useMemo(
     () => [
@@ -97,7 +110,7 @@ const HealingPlanChart = ({ healingPlan }) => {
       id: title,
       Header: title,
       accessor: `${title}`,
-      Cell: ({ cell: { value }}) => <DynamicBadges values={value} />,
+      Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
     }));
 
     const procedures = getProcedures(healingPlan);
