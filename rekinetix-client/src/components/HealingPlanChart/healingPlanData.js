@@ -1,6 +1,6 @@
 export const healingPlanByPatient = {
   firstStage: {
-    title: "1. Обезболивание/противовоспадительная",
+    title: "1. Обезболивание/противовоспалительная",
     procedures: [
       {
         id: '001',
