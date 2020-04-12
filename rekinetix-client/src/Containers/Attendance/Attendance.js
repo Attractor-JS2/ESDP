@@ -1,17 +1,22 @@
 import React, {Component} from "react";
 import {Button, Input, Container} from "reactstrap";
-import {Formik, Field, FieldArray, Form} from "formik";
+import {Formik, Field, FieldArray, Form, useField} from "formik";
 import {necessaryProcedures, availableProcedures, availableHealingPlaces, necessaryHealingPlaces} from './procedures'
 import {Persist} from "formik-persist";
 import AttendancePlan from "./Component/AttendancePlan";
 
+export const DYNAMICS_DATA = [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}];
+
 class Attendance extends Component {
+
   state= {
     medicName: "Петров Иван Сидорович",
     patientName: "Сидоров Петр Иванович",
     necessaryProceduresState: necessaryProcedures,
     necessaryHealingPlacesState: necessaryHealingPlaces
   }
+
+
   render() {
     const formattedDate = () => {
       const attendanceDate = new Date();
@@ -33,24 +38,36 @@ class Attendance extends Component {
           initialValues={
             {
               firstPartData: [
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
-                {newManipulation: [{}]}
+                {
+                  procedureItem: "Расслабление",
+                  necessaryPlace: "Надостная мышца",
+                  dynamicsData: DYNAMICS_DATA,
+                  isNew: false,
+                },
+                {
+                  procedureItem: "Ультразвук",
+                  necessaryPlace: "Подлопаточная мышца",
+                  dynamicsData: DYNAMICS_DATA,
+                  isNew: false,
+                },
+                {
+                  procedureItem: "Плазмолифтинг",
+                  necessaryPlace: "Латеральная связка",
+                  dynamicsData: DYNAMICS_DATA,
+                  isNew: false,
+                },
               ],
               secondPartData: [
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
-                {newManipulation: [{}]}
+                {dynamicsData: DYNAMICS_DATA,}
               ],
               thirdPartData: [
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
-                {newManipulation: [{}]}
+                {dynamicsData: DYNAMICS_DATA,}
               ],
               fourthPartData: [
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
-                {newManipulation: [{}]}
+                {dynamicsData: DYNAMICS_DATA,}
               ],
               fifthPartData: [
-                {dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]},
-                {newManipulation: [{}]}
+                {dynamicsData: DYNAMICS_DATA,}
               ],
               date: formattedDate(),
               patientName: this.state.patientName,
@@ -71,10 +88,10 @@ class Attendance extends Component {
             await localStorage.removeItem('attendance-form');
           }}
         >
-          {({values, setFieldValue, resetForm}) => (
-            <Form>
-              <p className="mt-2 mb-2" name="patientName"> Пациент: {this.state.patientName}</p>
-              <p className="mb-2" name="medicName">Врач: {this.state.medicName}</p>
+          {({values, handleSubmit, handleChange, resetForm}) => (
+            <Form onSubmit={handleSubmit}>
+              <p className="mt-2 mb-2" name="patientName"> Пациент: {values.patientName}</p>
+              <p className="mb-2" name="medicName">Врач: {values.medicName}</p>
               <AttendancePlan
                 attendanceTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
                 attendanceName="firstPartData"
@@ -171,8 +188,6 @@ class Attendance extends Component {
                     })}
                   </div>
                 )}
-
-
               </FieldArray>
               <img className="d-block mb-3" style={{height: 100, width: 400}} src="./painscale.jpg" alt=""/>
               <Field className="mb-3" placeholder="Состояние пациента до приема/Жалобы" name="patientHoodBefore" type="input"
@@ -213,6 +228,7 @@ class Attendance extends Component {
                 <Button onClick={resetForm} color='danger'>Очистить</Button>
               </div>
               <Persist name='attendance-form'/>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>

@@ -2,133 +2,106 @@ import React from 'react';
 import {Field, FieldArray} from "formik";
 import {Button, Input} from "reactstrap";
 import './AttendancePlan.css';
+import {DYNAMICS_DATA} from "../Attendance";
+
 
 const AttendancePlan = (props) => {
-  console.log(props)
   return (
     <>
       <FieldArray name={props.attendanceName}>
-        {arrayHelpers => (
-          <div>
-          <div className="mb-3 mt-3"><p>{props.attendanceTitle}</p>
-            {
-              props.necessaryProcedures.map((procedureItem, index) => {
-                return (
-                  <div key={`${index}${props.stage}`} className='d-flex p-2 mb-1'>
-                    <div className='d-flex p-2 mb-1'>
-                    <input type="text" className="ml-3" size="35" name="action" disabled value={procedureItem}/>
-                    <input type="text" className="ml-2" size="50" name="action" disabled value={props.necessaryPlace[index]}/>
-                    <div>
-                      {props.attendance[0].dynamicsData.map((field, zIndex) => {
-                        return (
-                          <Field key={`${zIndex}${props.stage}`} render={() =>
-                        <label>
-                          <Input className="checkbox" name={props.attendanceName+procedureItem+props.necessaryPlace[index]} type="radio" onClick={() =>  {
-                            props.attendance[0].dynamicsData[0].value = false;
-                            props.attendance[0].dynamicsData[1].value = false;
-                            props.attendance[0].dynamicsData[2].value = false;
-                            props.attendance[0].dynamicsData[zIndex].value = true;
-                          }
-                          } />
-                          <span className="fake-checkbox"></span>{props.attendance[0].dynamicsData[zIndex].title}</label> } />
-                      )})}
-                    </div>
-                  </div>
-                  </div>
-                )
-              })}
-            </div>
+        {arrayHelpers => {
+         console.log(arrayHelpers);
+          return (
             <div>
+              <div className="mb-3 mt-3"><p>{props.attendanceTitle}</p>
+                {
+                  arrayHelpers.form.values[props.attendanceName].map((procedureItem, index) => {
+                    const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
+                    // console.log(arrayHelpers.form.initialValues[props.attendanceName][index]);
+                    return (
+                      <div key={`${index}${props.stage}`} className='d-flex p-2 mb-1'>
+                          <div className='d-flex p-2 mb-1'>
+                            {
+                              !CURRENT_FIELD.isNew ? <Field
+                                  className="ml-3"
+                                  size="35"
+                                  name={CURRENT_FIELD.procedureItem}
+                                  disabled={!CURRENT_FIELD.isNew}
+                                  value={CURRENT_FIELD.procedureItem}
+                                />:<Field
+                                  className="ml-3"
+                                  name={CURRENT_FIELD.procedureItem}
+                                  disabled={!CURRENT_FIELD.isNew}
+                                  component={'select'}
+                                >
+                                  <option value={''}>-- Выбор --</option>
+                                  {
+                                   props.availableProcedures.map((procedureItem, i) => {
+                                      return <option key={i} name={procedureItem} value={procedureItem}>{procedureItem}</option>
+                                    })
+                                  }
+                                </Field>
+                            }
+                            {
+                              !CURRENT_FIELD.isNew ? <Field
+                                  className="ml-2"
+                                  size="50"
+                                  name={CURRENT_FIELD.necessaryPlace}
+                                  disabled={!CURRENT_FIELD.isNew}
+                                  value={CURRENT_FIELD.necessaryPlace}
+                                />:<Field
+                                    className="ml-2"
+                                    name={CURRENT_FIELD.necessaryPlace}
+                                    disabled={!CURRENT_FIELD.isNew}
+                                    component={'select'}
+                                  >
+                                    <option value={''}>-- Выбор --</option>
+                                    {
+                                      props.availablePlace.map((procedurePlace, i) => {
+                                        return <option key={i} name={procedurePlace} value={procedurePlace}>{procedurePlace}</option>
+                                      })
+                                    }
+                                  </Field>
+                            }
+                            <div>
+                              { CURRENT_FIELD.dynamicsData && CURRENT_FIELD.dynamicsData.map((field, zIndex) => {
+                                return (
+                                  <Field key={`${zIndex}${props.stage}`} render={() =>
+                                    <label>
+                                      <Input className="checkbox" name={`${props.attendanceName}.${index}.${procedureItem}.${props.necessaryPlace[index]}`} type="radio" onClick={() =>  {
+                                        let newValue = [...CURRENT_FIELD.dynamicsData];
+                                        newValue.forEach(option => option.value = false);
+                                        newValue[zIndex].value = true;
+                                        arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`, newValue)
+                                      }
+                                      } />
+                                      <span className="fake-checkbox"></span>{CURRENT_FIELD.dynamicsData[zIndex].title}</label> } />
+                                )})}
+                            </div>
+                          </div>
+                        {!CURRENT_FIELD.isNew ? null : <Button className="mb-2" close onClick={() => {
+                          return(
+                          arrayHelpers.remove(index)
+                          )}}/>}
+                        </div>
+                    )})}
 
-
-            {/*<Field*/}
-            {/*  className="ml-3"*/}
-            {/*  name={`manipulations.${index}.manipulation.manipulationName`}*/}
-            {/*  as={'select'}*/}
-            {/*>*/}
-            {/*  <option value={''}>-- Выбор --</option>*/}
-            {/*  {*/}
-            {/*    values.manipulations[index].manipulation.manipulationStage &&*/}
-            {/*    (values.manipulations[index].manipulation.isNew ?*/}
-            {/*      availableProcedures : necessaryProcedures)[values.manipulations[index].manipulation.manipulationStage].map((manipulation, i) => {*/}
-            {/*      return <option key={i} value={manipulation}>{manipulation}</option>*/}
-            {/*    })*/}
-            {/*  }*/}
-            {/*</Field>*/}
-
-              {
-                props.attendance[1].newManipulation.isNew ? props.attendance[1].newManipulation.map((manipulation, newIndex) => {
-                  return (
-                    <div key={`${newIndex}${props.stage}`}
-                       style={{backgroundColor: 'rgba(149,246,149,0.62)'}}
-                       className='d-flex p-2 mb-1'>
-                    </div>
-                  )
-              }) : null
-              }
-              {/*<Button onClick={() => arrayHelpers.push({*/}
-              {/*          manipulation: {*/}
-              {/*            manipulationName: '',*/}
-              {/*            manipulationStage: '',*/}
-              {/*            manipulationAmount: 0,*/}
-              {/*            manipulationUnits: '',*/}
-              {/*            isNew: true*/}
-              {/*          }*/}
-                <Button onClick={() => arrayHelpers.push(`${props.attendance[1][{newManipulation: {name: '', stage:'', isNew: true},dynamicsData: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}]}]}`)
-                }>Добавить</Button>
+              </div>
+              <div>
+                <Button onClick={() => {
+                  return (arrayHelpers.push({
+                    procedureItem: '',
+                    necessaryPlace: '',
+                    dynamicsData: DYNAMICS_DATA,
+                    isNew: true})
+                  )}
+                }
+                >Добавить</Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}}
       </FieldArray>
     </>
   )
 }
 export default AttendancePlan;
-
-//    {/*{*/}
-//               // props.attendance[0].manipulations.map((manipulation, index) => {
-//               //   console.log(manipulation);
-//               //   return (
-//               //       <div className='d-flex justify-content-between'>
-//               //       <Button onClick={(index) => arrayHelpers.push(`${props.attendance[0].manipulations}`)}>Добавить</Button>
-//               //     </div>
-//               //   )
-//           {/*
-//           {/*          <Field*/}
-//           {/*            className="ml-3"*/}
-//           {/*            name={`${props.attendance}.${index}.${props.attendance}`}*/}
-//           {/*            as={'select'}*/}
-//           {/*          >*/}
-//           {/*            <option value={''}>Выберите манипуляцию</option>*/}
-//           {/*            {*/}
-//           {/*              ( props.availableProcedures.map((manipulation, i) => {*/}
-//           {/*                return <option key={i} value={manipulation}>{manipulation}</option>*/}
-//           {/*              }))*/}
-//           {/*            }*/}
-//           {/*          </Field>*/}
-//           {/*          <Field*/}
-//           {/*            className="ml-3"*/}
-//           {/*            name={`${props.attendance}.${index}.manipulationPlace`}*/}
-//           {/*            as={'select'}*/}
-//           {/*          >*/}
-//           {/*            <option value={''}>Выберите объект воздействия</option>*/}
-//           {/*            {*/}
-//           {/*                props.availablePlace.map((manipulation, i) => {*/}
-//           {/*                return <option key={i} value={manipulation}>{manipulation}</option>*/}
-//           {/*              })*/}
-//           {/*            }*/}
-//           {/*          </Field>*/}
-//           {/*          <div>*/}
-//           {/*            <label><input className="checkbox" name={props.attendanceName[index]+manipulation+props.necessaryPlace[index]} value='better' type="radio"/><span className="fake-checkbox"></span>Лучше</label>*/}
-//           {/*            <label><input className="checkbox" name={props.attendanceName[index]+manipulation+props.necessaryPlace[index]} value='notChanged' type="radio"/><span className="fake-checkbox"></span>Так же</label>*/}
-//           {/*            <label><input className="checkbox" name={props.attendanceName[index]+manipulation+props.necessaryPlace[index]} value='worster' type="radio"/><span className="fake-checkbox"></span>Хуже</label>*/}
-//           {/*          </div>*/}
-//           {/*          <Button className="mb-2" close onClick={() => arrayHelpers.remove(`${props.attendanceName[index].manipulations}`)}/>*/}
-//           {/*        </div>*/}
-//           {/*      );*/}
-//           {/*    })}*/}
-//           {/*  <div className='d-flex justify-content-between'>*/}
-//           {/*    <Button onClick={(index) => arrayHelpers.push(`${props.attendanceName[index].manipulations[index]}`)}>Добавить</Button>*/}
-//           {/*  </div>*/}
-//
-//           // </div>
