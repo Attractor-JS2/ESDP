@@ -58,22 +58,18 @@ class Attendance extends Component {
                 },
               ],
               secondPartData: [
-                {dynamicsData: DYNAMICS_DATA,}
               ],
               thirdPartData: [
-                {dynamicsData: DYNAMICS_DATA,}
               ],
               fourthPartData: [
-                {dynamicsData: DYNAMICS_DATA,}
               ],
               fifthPartData: [
-                {dynamicsData: DYNAMICS_DATA,}
               ],
               date: formattedDate(),
               patientName: this.state.patientName,
               medicName: this.state.medicName,
               homeExcercising: [{excerciseName: ""}],
-              patientFeelings: [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}],
+              patientFeelings: {dynamicsData: DYNAMICS_DATA},
               patientHoodBefore: "",
               patientHoodAfter: "",
               painScaleBefore: "",
@@ -172,17 +168,26 @@ class Attendance extends Component {
               <FieldArray name ="patientFeelings">
                 {arrayHelpers => (
                   <div className='d-flex p-2 mb-1'><p>Динамика со слов пациента: </p>
-                    {values.patientFeelings.map((field, index) => {
+                    {values.patientFeelings.dynamicsData.map((field, index) => {
                       return (
-                        <Field key={index} render={({field}) =>
+                        <Field key={index} render={() =>
                           <label>
-                            <Input className="checkbox" type="radio" onClick={() =>  {
-                              values.patientFeelings[0].value = false;
-                              values.patientFeelings[1].value = false;
-                              values.patientFeelings[2].value = false;
-                              values.patientFeelings[index].value = true
-                            }} name="patientFeelings" /><span className="fake-checkbox"></span>
-                            {values.patientFeelings[index].title}
+                            <Input className="checkbox" name="patientFeelings" type="radio" onClick={() =>  {
+
+                              let newValue = [...values.patientFeelings.dynamicsData];
+                              newValue.forEach(option => option.value = false);
+                              newValue[index].value = true;
+                              arrayHelpers.form.setFieldValue("patientFeelings.dynamicsData", newValue)
+
+                              // values.patientFeelings[0].value = false;
+                              // values.patientFeelings[1].value = false;
+                              // values.patientFeelings[2].value = false;
+                              // values.patientFeelings[index].value = true
+
+                            }
+                            }  />
+                            <span className="fake-checkbox"></span>{values.patientFeelings.dynamicsData[index].title}
+
                           </label> } />
                       )
                     })}

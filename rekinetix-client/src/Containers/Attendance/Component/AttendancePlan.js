@@ -17,7 +17,6 @@ const AttendancePlan = (props) => {
                 {
                   arrayHelpers.form.values[props.attendanceName].map((procedureItem, index) => {
                     const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
-                    // console.log(arrayHelpers.form.initialValues[props.attendanceName][index]);
                     return (
                       <div key={`${index}${props.stage}`} className='d-flex p-2 mb-1'>
                           <div className='d-flex p-2 mb-1'>
@@ -30,7 +29,7 @@ const AttendancePlan = (props) => {
                                   value={CURRENT_FIELD.procedureItem}
                                 />:<Field
                                   className="ml-3"
-                                  name={CURRENT_FIELD.procedureItem}
+                                  name={`${props.attendanceName}[${index}].procedureItem`}
                                   disabled={!CURRENT_FIELD.isNew}
                                   component={'select'}
                                 >
@@ -51,14 +50,14 @@ const AttendancePlan = (props) => {
                                   value={CURRENT_FIELD.necessaryPlace}
                                 />:<Field
                                     className="ml-2"
-                                    name={CURRENT_FIELD.necessaryPlace}
+                                    name={`${props.attendanceName}[${index}].necessaryPlace`}
                                     disabled={!CURRENT_FIELD.isNew}
                                     component={'select'}
                                   >
                                     <option value={''}>-- Выбор --</option>
                                     {
-                                      props.availablePlace.map((procedurePlace, i) => {
-                                        return <option key={i} name={procedurePlace} value={procedurePlace}>{procedurePlace}</option>
+                                      props.availablePlace.map((necessaryPlace, i) => {
+                                        return <option key={i} name={necessaryPlace} value={necessaryPlace}>{necessaryPlace}</option>
                                       })
                                     }
                                   </Field>
@@ -68,21 +67,25 @@ const AttendancePlan = (props) => {
                                 return (
                                   <Field key={`${zIndex}${props.stage}`} render={() =>
                                     <label>
-                                      <Input className="checkbox" name={`${props.attendanceName}.${index}.${procedureItem}.${props.necessaryPlace[index]}`} type="radio" onClick={() =>  {
+                                      <Input className="checkbox" name={`${props.attendanceName}[${index}].${procedureItem}.${props.necessaryPlace[index]}`} value={CURRENT_FIELD.dynamicsData} type="radio" onClick={() =>  {
+
                                         let newValue = [...CURRENT_FIELD.dynamicsData];
                                         newValue.forEach(option => option.value = false);
                                         newValue[zIndex].value = true;
                                         arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`, newValue)
+
                                       }
                                       } />
-                                      <span className="fake-checkbox"></span>{CURRENT_FIELD.dynamicsData[zIndex].title}</label> } />
+                                      <span className="fake-checkbox"></span>{CURRENT_FIELD.dynamicsData[zIndex].title}
+
+                                    </label> } />
                                 )})}
                             </div>
                           </div>
-                        {!CURRENT_FIELD.isNew ? null : <Button className="mb-2" close onClick={() => {
+                        <Button className="mb-2" close onClick={() => {
                           return(
                           arrayHelpers.remove(index)
-                          )}}/>}
+                          )}}/>
                         </div>
                     )})}
 
