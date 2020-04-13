@@ -4,7 +4,6 @@ import {Button, Input} from "reactstrap";
 import './AttendancePlan.css';
 import {DYNAMICS_DATA} from "../Attendance";
 
-
 const AttendancePlan = (props) => {
   return (
     <>
@@ -18,7 +17,7 @@ const AttendancePlan = (props) => {
                   arrayHelpers.form.values[props.attendanceName].map((procedureItem, index) => {
                     const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
                     return (
-                      <div key={`${index}${props.stage}`} className='d-flex p-2 mb-1'>
+                      <div key={`${index}`} className='d-flex p-2 mb-1'>
                           <div className='d-flex p-2 mb-1'>
                             {
                               !CURRENT_FIELD.isNew ? <Field
@@ -62,25 +61,19 @@ const AttendancePlan = (props) => {
                                     }
                                   </Field>
                             }
-                            <div>
                               { CURRENT_FIELD.dynamicsData && CURRENT_FIELD.dynamicsData.map((field, zIndex) => {
                                 return (
                                   <Field key={`${zIndex}${props.stage}`} render={() =>
                                     <label>
                                       <Input className="checkbox" name={`${props.attendanceName}[${index}].${procedureItem}.${props.necessaryPlace[index]}`} value={CURRENT_FIELD.dynamicsData} type="radio" onClick={() =>  {
-
                                         let newValue = [...CURRENT_FIELD.dynamicsData];
                                         newValue.forEach(option => option.value = false);
                                         newValue[zIndex].value = true;
                                         arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`, newValue)
-
-                                      }
-                                      } />
+                                      }} />
                                       <span className="fake-checkbox"></span>{CURRENT_FIELD.dynamicsData[zIndex].title}
-
                                     </label> } />
                                 )})}
-                            </div>
                           </div>
                         <Button className="mb-2" close onClick={() => {
                           return(
@@ -88,7 +81,6 @@ const AttendancePlan = (props) => {
                           )}}/>
                         </div>
                     )})}
-
               </div>
               <div>
                 <Button onClick={() => {

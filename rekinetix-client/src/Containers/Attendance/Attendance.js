@@ -62,8 +62,26 @@ class Attendance extends Component {
               thirdPartData: [
               ],
               fourthPartData: [
+                {
+                  procedureItem: "процедура четвертого этапа 1",
+                  necessaryPlace: "Массаж",
+                  dynamicsData: DYNAMICS_DATA,
+                  isNew: false,
+                }
               ],
               fifthPartData: [
+                {
+                  procedureItem: "Упражнение",
+                  necessaryPlace: "Тренировка нижнего циллиндра",
+                  dynamicsData: DYNAMICS_DATA,
+                  isNew: false,
+                },
+                {
+                  procedureItem: "Упражнение",
+                  necessaryPlace: "Подъем правой ноги",
+                  dynamicsData: DYNAMICS_DATA,
+                  isNew: false,
+                },
               ],
               date: formattedDate(),
               patientName: this.state.patientName,
@@ -104,9 +122,9 @@ class Attendance extends Component {
                 attendanceName="secondPartData"
                 attendance={values.secondPartData}
                 dynamics={values.secondDynamicsData}
-                necessaryProcedures={necessaryProcedures["secondStage"]}
+                necessaryProcedures={this.state.necessaryProceduresState["secondStage"]}
                 availableProcedures={availableProcedures["secondStage"]}
-                necessaryPlace={necessaryHealingPlaces["secondStage"]}
+                necessaryPlace={this.state.necessaryHealingPlacesState["secondStage"]}
                 availablePlace={availableHealingPlaces["secondStage"]}
                 stage="secondStage"
               />
@@ -115,9 +133,9 @@ class Attendance extends Component {
                 attendanceName="thirdPartData"
                 attendance={values.thirdPartData}
                 dynamics={values.thirdDynamicsData}
-                necessaryProcedures={necessaryProcedures["thirdStage"]}
+                necessaryProcedures={this.state.necessaryProceduresState["thirdStage"]}
                 availableProcedures={availableProcedures["thirdStage"]}
-                necessaryPlace={necessaryHealingPlaces["thirdStage"]}
+                necessaryPlace={this.state.necessaryHealingPlacesState["thirdStage"]}
                 availablePlace={availableHealingPlaces["thirdStage"]}
                 stage="thirdStage"
               />
@@ -126,9 +144,9 @@ class Attendance extends Component {
                 attendanceName="fourthPartData"
                 attendance={values.fourthPartData}
                 dynamics={values.fourthDynamicsData}
-                necessaryProcedures={necessaryProcedures["fourthStage"]}
+                necessaryProcedures={this.state.necessaryProceduresState["fourthStage"]}
                 availableProcedures={availableProcedures["fourthStage"]}
-                necessaryPlace={necessaryHealingPlaces["fourthStage"]}
+                necessaryPlace={this.state.necessaryHealingPlacesState["fourthStage"]}
                 availablePlace={availableHealingPlaces["fourthStage"]}
                 stage="fourthStage"
               />
@@ -137,9 +155,9 @@ class Attendance extends Component {
                 attendanceName="fifthPartData"
                 attendance={values.fifthPartData}
                 dynamics={values.fifthDynamicsData}
-                necessaryProcedures={necessaryProcedures["fifthStage"]}
+                necessaryProcedures={this.state.necessaryProceduresState["fifthStage"]}
                 availableProcedures={availableProcedures["fifthStage"]}
-                necessaryPlace={necessaryHealingPlaces["fifthStage"]}
+                necessaryPlace={this.state.necessaryHealingPlacesState["fifthStage"]}
                 availablePlace={availableHealingPlaces["fifthStage"]}
                 stage="fifthStage"
               />
@@ -173,21 +191,12 @@ class Attendance extends Component {
                         <Field key={index} render={() =>
                           <label>
                             <Input className="checkbox" name="patientFeelings" type="radio" onClick={() =>  {
-
                               let newValue = [...values.patientFeelings.dynamicsData];
                               newValue.forEach(option => option.value = false);
                               newValue[index].value = true;
                               arrayHelpers.form.setFieldValue("patientFeelings.dynamicsData", newValue)
-
-                              // values.patientFeelings[0].value = false;
-                              // values.patientFeelings[1].value = false;
-                              // values.patientFeelings[2].value = false;
-                              // values.patientFeelings[index].value = true
-
-                            }
-                            }  />
+                            }}  />
                             <span className="fake-checkbox"></span>{values.patientFeelings.dynamicsData[index].title}
-
                           </label> } />
                       )
                     })}
@@ -233,7 +242,7 @@ class Attendance extends Component {
                 <Button onClick={resetForm} color='danger'>Очистить</Button>
               </div>
               <Persist name='attendance-form'/>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
             </Form>
           )}
         </Formik>
