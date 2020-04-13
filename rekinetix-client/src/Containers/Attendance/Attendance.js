@@ -5,8 +5,6 @@ import {necessaryProcedures, availableProcedures, availableHealingPlaces, necess
 import {Persist} from "formik-persist";
 import AttendancePlan from "./Component/AttendancePlan";
 
-export const DYNAMICS_DATA = [{title: "Хуже", value: false}, {title: "Так же", value: false}, {title: "Лучше", value: false}];
-
 class Attendance extends Component {
 
   state= {
@@ -42,19 +40,19 @@ class Attendance extends Component {
                 {
                   procedureItem: "Расслабление",
                   necessaryPlace: "Надостная мышца",
-                  dynamicsData: DYNAMICS_DATA,
+                  dynamicsData: [],
                   isNew: false,
                 },
                 {
                   procedureItem: "Ультразвук",
                   necessaryPlace: "Подлопаточная мышца",
-                  dynamicsData: DYNAMICS_DATA,
+                  dynamicsData: [],
                   isNew: false,
                 },
                 {
                   procedureItem: "Плазмолифтинг",
                   necessaryPlace: "Латеральная связка",
-                  dynamicsData: DYNAMICS_DATA,
+                  dynamicsData: [],
                   isNew: false,
                 },
               ],
@@ -66,7 +64,7 @@ class Attendance extends Component {
                 {
                   procedureItem: "процедура четвертого этапа 1",
                   necessaryPlace: "Массаж",
-                  dynamicsData: DYNAMICS_DATA,
+                  dynamicsData: [],
                   isNew: false,
                 }
               ],
@@ -74,13 +72,13 @@ class Attendance extends Component {
                 {
                   procedureItem: "Упражнение",
                   necessaryPlace: "Тренировка нижнего циллиндра",
-                  dynamicsData: DYNAMICS_DATA,
+                  dynamicsData: [],
                   isNew: false,
                 },
                 {
                   procedureItem: "Упражнение",
                   necessaryPlace: "Подъем правой ноги",
-                  dynamicsData: DYNAMICS_DATA,
+                  dynamicsData: [],
                   isNew: false,
                 },
               ],

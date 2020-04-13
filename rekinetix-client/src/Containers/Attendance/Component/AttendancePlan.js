@@ -1,8 +1,7 @@
 import React from 'react';
 import {Field, FieldArray} from "formik";
-import {Button, Input} from "reactstrap";
+import {Button} from "reactstrap";
 import './AttendancePlan.css';
-import {DYNAMICS_DATA} from "../Attendance";
 
 
 
@@ -17,6 +16,7 @@ const AttendancePlan = (props) => {
                 {
                   arrayHelpers.form.values[props.attendanceName].map((procedureItem, index) => {
                     const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
+                    //console.log(CURRENT_FIELD)
                     return (
 
                       <div key={`${index}`} className='d-flex p-2 mb-1'>
@@ -63,50 +63,37 @@ const AttendancePlan = (props) => {
                                     }
                                   </Field>
                             }
-                            {/*{*/}
-                            {/*  <div className='d-flex p-2 mb-1'>*/}
-                            {/*      <label>*/}
-                            {/*        <input*/}
-                            {/*          type="radio"*/}
-                            {/*          name={""}*/}
-                            {/*          value="Хуже"*/}
-                            {/*          checked={CURRENT_FIELD.dynamicsData === "Хуже"}*/}
-                            {/*          onChange={() => setFieldValue("CURRENT_FIELD.dynamicsData","Хуже")}*/}
-                            {/*        />Хуже*/}
-                            {/*      </label>*/}
-                            {/*      <label>*/}
-                            {/*        <input*/}
-                            {/*          type="radio"*/}
-                            {/*          name={""}*/}
-                            {/*          value="Так же"*/}
-                            {/*          checked={CURRENT_FIELD.dynamicsData === "Так же"}*/}
-                            {/*          onChange={() => setFieldValue(`${CURRENT_FIELD.dynamicsData}`, "Так же")}*/}
-                            {/*        />Так же*/}
-                            {/*      </label>*/}
-                            {/*      <label>*/}
-                            {/*        <input*/}
-                            {/*          type="radio"*/}
-                            {/*          name={""}*/}
-                            {/*          value="Лучше"*/}
-                            {/*          checked={CURRENT_FIELD.dynamicsData === "Лучше"}*/}
-                            {/*          onChange={() => setFieldValue("CURRENT_FIELD.dynamicsData", "Лучше")}*/}
-                            {/*        />Лучше*/}
-                            {/*      </label>*/}
-                            {/*    </div>*/}
-                            {/*}*/}
-                              { CURRENT_FIELD.dynamicsData && CURRENT_FIELD.dynamicsData.map((field, zIndex) => {
-                                return (
-                                  <Field key={`${zIndex}${props.stage}`} render={() =>
-                                    <label>
-                                      <Input className="checkbox" name={`${props.attendanceName}[${index}].${procedureItem}.${props.necessaryPlace[index]}`} value={CURRENT_FIELD.dynamicsData} type="radio" onClick={() =>  {
-                                        let newValue = [...CURRENT_FIELD.dynamicsData];
-                                        newValue.forEach(option => option.value = false);
-                                        newValue[zIndex].value = true;
-                                        arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`, newValue)
-                                      }} />
-                                      <span className="fake-checkbox"></span>{CURRENT_FIELD.dynamicsData[zIndex].title}
-                                    </label> } />
-                                )})}
+                            {
+                              <div className='d-flex p-2 mb-1'>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name={`${props.attendanceName}[${index}].dynamicsData`}
+                                      value="Хуже"
+                                      checked={CURRENT_FIELD.dynamicsData === "Хуже"}
+                                      onChange={() => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`,"Хуже")}
+                                    />Хуже
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name={`${props.attendanceName}[${index}].dynamicsData`}
+                                      value="Так же"
+                                      checked={CURRENT_FIELD.dynamicsData === "Так же"}
+                                      onChange={() => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`, "Так же")}
+                                    />Так же
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name={`${props.attendanceName}[${index}].dynamicsData`}
+                                      value="Лучше"
+                                      checked={CURRENT_FIELD.dynamicsData === "Лучше"}
+                                      onChange={() => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].dynamicsData`, "Лучше")}
+                                    />Лучше
+                                  </label>
+                                </div>
+                            }
                           </div>
                         <Button className="mb-2" close onClick={() => {
                           return(
@@ -120,7 +107,7 @@ const AttendancePlan = (props) => {
                   return (arrayHelpers.push({
                     procedureItem: '',
                     necessaryPlace: '',
-                    dynamicsData: DYNAMICS_DATA,
+                    dynamicsData: [],
                     isNew: true})
                   )}
                 }
