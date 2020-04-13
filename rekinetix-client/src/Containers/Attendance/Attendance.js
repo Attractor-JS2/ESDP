@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Button, Input, Container} from "reactstrap";
-import {Formik, Field, FieldArray, Form, useField} from "formik";
+import {Formik, Field, FieldArray, Form} from "formik";
 import {necessaryProcedures, availableProcedures, availableHealingPlaces, necessaryHealingPlaces} from './procedures'
 import {Persist} from "formik-persist";
 import AttendancePlan from "./Component/AttendancePlan";
@@ -13,7 +13,6 @@ class Attendance extends Component {
     necessaryProceduresState: necessaryProcedures,
     necessaryHealingPlacesState: necessaryHealingPlaces
   }
-
 
   render() {
     const formattedDate = () => {
@@ -30,7 +29,6 @@ class Attendance extends Component {
       return day + '.' + month + '.' + year;
     }
     return (
-
       <Container className="mt-5">
         <h3>Отчет по приёму {formattedDate()}</h3>
         <Formik
@@ -254,7 +252,7 @@ class Attendance extends Component {
                 <Button onClick={resetForm} color='danger'>Очистить</Button>
               </div>
               <Persist name='attendance-form'/>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
             </Form>
           )}
         </Formik>
