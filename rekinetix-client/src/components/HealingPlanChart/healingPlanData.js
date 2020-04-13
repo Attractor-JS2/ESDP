@@ -1,6 +1,6 @@
 export const healingPlanByPatient = {
   firstStage: {
-    title: "1. Обезболивание/противовоспалительная",
+    title: '1. Обезболивание/противовоспалительная',
     procedures: [
       {
         id: '001',
@@ -15,10 +15,10 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'положительная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '002',
@@ -26,17 +26,17 @@ export const healingPlanByPatient = {
         targetArea: 'Подлопаточная мышца',
         status: 'Прервано',
         planned: '5',
-        completed: '3',
+        completed: '2',
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'положительная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '003',
@@ -53,13 +53,13 @@ export const healingPlanByPatient = {
           {
             dateTime: new Date(2020, 3, 4),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
   secondStage: {
-    title: "2. Мобилизация",
+    title: '2. Мобилизация',
     procedures: [
       {
         id: '004',
@@ -74,10 +74,10 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '005',
@@ -85,17 +85,17 @@ export const healingPlanByPatient = {
         targetArea: 'Шейный отдел позвоночника',
         status: 'Действует',
         planned: '5',
-        completed: '3',
+        completed: '2',
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '006',
@@ -112,13 +112,13 @@ export const healingPlanByPatient = {
           {
             dateTime: new Date(2020, 3, 4),
             dynamic: 'положительная',
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
   thirdStage: {
-    title: "3. НМА и стабилизация",
+    title: '3. НМА и стабилизация',
     procedures: [
       {
         id: '007',
@@ -133,10 +133,10 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '008',
@@ -151,10 +151,10 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '009',
@@ -171,13 +171,13 @@ export const healingPlanByPatient = {
           {
             dateTime: new Date(2020, 3, 4),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
   fourthStage: {
-    title: "4. Восстановление функций миофасциальных лент",
+    title: '4. Восстановление функций миофасциальных лент',
     procedures: [
       {
         id: '010',
@@ -192,15 +192,15 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
   fifthStage: {
-    title: "5. Профилактика дома",
+    title: '5. Профилактика дома',
     procedures: [
       {
         id: '011',
@@ -213,8 +213,8 @@ export const healingPlanByPatient = {
           {
             dateTime: new Date(2020, 2, 23),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '012',
@@ -225,10 +225,10 @@ export const healingPlanByPatient = {
         completed: '1',
         attendances: [
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
       {
         id: '013',
@@ -239,11 +239,62 @@ export const healingPlanByPatient = {
         completed: '1',
         attendances: [
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
-}
+  condition: {
+    title: 'Состояние пациента',
+    attendances: [
+      {
+        dateTime: new Date(2020, 2, 23),
+        dynamic: 'стабильная',
+      },
+      {
+        dateTime: new Date(2020, 2, 24),
+        dynamic: 'стабильная',
+      },
+      {
+        dateTime: new Date(2020, 2, 25),
+        dynamic: 'положительная',
+      },
+    ],
+  },
+  painScaleBefore: {
+    title: 'Шкала боли до',
+    attendances: [
+      {
+        dateTime: new Date(2020, 2, 23),
+        dynamic: '8',
+      },
+      {
+        dateTime: new Date(2020, 2, 24),
+        dynamic: '7',
+      },
+      {
+        dateTime: new Date(2020, 2, 25),
+        dynamic: '4',
+      },
+    ],
+  },
+  painScaleAfter: {
+    title: 'Шкала боли после',
+    attendances: [
+      {
+        dateTime: new Date(2020, 2, 23),
+        dynamic: '4',
+      },
+      {
+        dateTime: new Date(2020, 2, 24),
+        dynamic: '3',
+      },
+      {
+        dateTime: new Date(2020, 2, 25),
+        dynamic: '2',
+      },
+    ],
+  },
+};

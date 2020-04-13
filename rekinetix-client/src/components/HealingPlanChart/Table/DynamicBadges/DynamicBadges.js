@@ -8,8 +8,7 @@ const DynamicBadges = ({ values }) => {
           'стабильная': <span className="badge badge-warning">{values}</span>,
           'положительная': <span className="badge badge-success">{values}</span>,
           'отрицательная': <span className="badge badge-danger">{values}</span>,
-          '': '',
-        }[values] || ''
+        }[values] || `${values}`
       }
     </>
   );
