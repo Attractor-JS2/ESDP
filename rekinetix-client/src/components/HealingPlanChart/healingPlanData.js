@@ -281,7 +281,7 @@ export const healingPlanByPatient = {
     ],
   },
   painScaleAfter: {
-    title: 'Шкала боли до',
+    title: 'Шкала боли после',
     attendances: [
       {
         dateTime: new Date(2020, 2, 23),
