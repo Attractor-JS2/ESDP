@@ -1,0 +1,10 @@
+label {
+    padding: 3px;
+    margin: 0;
+    font-size: 12px;
+    display: block;
+    cursor: pointer;
+}
+input[type=radio] {
+    margin: 5px 0;
+}
