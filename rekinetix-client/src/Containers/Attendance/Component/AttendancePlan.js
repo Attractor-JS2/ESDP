@@ -4,12 +4,13 @@ import {Button, Input} from "reactstrap";
 import './AttendancePlan.css';
 import {DYNAMICS_DATA} from "../Attendance";
 
+
+
 const AttendancePlan = (props) => {
   return (
     <>
       <FieldArray name={props.attendanceName}>
         {arrayHelpers => {
-         console.log(arrayHelpers);
           return (
             <div>
               <div className="mb-3 mt-3"><p>{props.attendanceTitle}</p>
@@ -17,6 +18,7 @@ const AttendancePlan = (props) => {
                   arrayHelpers.form.values[props.attendanceName].map((procedureItem, index) => {
                     const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
                     return (
+
                       <div key={`${index}`} className='d-flex p-2 mb-1'>
                           <div className='d-flex p-2 mb-1'>
                             {
@@ -61,6 +63,37 @@ const AttendancePlan = (props) => {
                                     }
                                   </Field>
                             }
+                            {/*{*/}
+                            {/*  <div className='d-flex p-2 mb-1'>*/}
+                            {/*      <label>*/}
+                            {/*        <input*/}
+                            {/*          type="radio"*/}
+                            {/*          name={""}*/}
+                            {/*          value="Хуже"*/}
+                            {/*          checked={CURRENT_FIELD.dynamicsData === "Хуже"}*/}
+                            {/*          onChange={() => setFieldValue("CURRENT_FIELD.dynamicsData","Хуже")}*/}
+                            {/*        />Хуже*/}
+                            {/*      </label>*/}
+                            {/*      <label>*/}
+                            {/*        <input*/}
+                            {/*          type="radio"*/}
+                            {/*          name={""}*/}
+                            {/*          value="Так же"*/}
+                            {/*          checked={CURRENT_FIELD.dynamicsData === "Так же"}*/}
+                            {/*          onChange={() => setFieldValue(`${CURRENT_FIELD.dynamicsData}`, "Так же")}*/}
+                            {/*        />Так же*/}
+                            {/*      </label>*/}
+                            {/*      <label>*/}
+                            {/*        <input*/}
+                            {/*          type="radio"*/}
+                            {/*          name={""}*/}
+                            {/*          value="Лучше"*/}
+                            {/*          checked={CURRENT_FIELD.dynamicsData === "Лучше"}*/}
+                            {/*          onChange={() => setFieldValue("CURRENT_FIELD.dynamicsData", "Лучше")}*/}
+                            {/*        />Лучше*/}
+                            {/*      </label>*/}
+                            {/*    </div>*/}
+                            {/*}*/}
                               { CURRENT_FIELD.dynamicsData && CURRENT_FIELD.dynamicsData.map((field, zIndex) => {
                                 return (
                                   <Field key={`${zIndex}${props.stage}`} render={() =>

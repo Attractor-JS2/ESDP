@@ -32,6 +32,7 @@ class Attendance extends Component {
       return day + '.' + month + '.' + year;
     }
     return (
+
       <Container className="mt-5">
         <h3>Отчет по приёму {formattedDate()}</h3>
         <Formik
@@ -87,7 +88,7 @@ class Attendance extends Component {
               patientName: this.state.patientName,
               medicName: this.state.medicName,
               homeExcercising: [{excerciseName: ""}],
-              patientFeelings: {dynamicsData: DYNAMICS_DATA},
+              patientFeelings: [],
               patientHoodBefore: "",
               patientHoodAfter: "",
               painScaleBefore: "",
@@ -102,7 +103,7 @@ class Attendance extends Component {
             await localStorage.removeItem('attendance-form');
           }}
         >
-          {({values, handleSubmit, handleChange, resetForm}) => (
+          {({values, handleSubmit, setFieldValue, resetForm}) => (
             <Form onSubmit={handleSubmit}>
               <p className="mt-2 mb-2" name="patientName"> Пациент: {values.patientName}</p>
               <p className="mb-2" name="medicName">Врач: {values.medicName}</p>
@@ -186,20 +187,33 @@ class Attendance extends Component {
               <FieldArray name ="patientFeelings">
                 {arrayHelpers => (
                   <div className='d-flex p-2 mb-1'><p>Динамика со слов пациента: </p>
-                    {values.patientFeelings.dynamicsData.map((field, index) => {
-                      return (
-                        <Field key={index} render={() =>
-                          <label>
-                            <Input className="checkbox" name="patientFeelings" type="radio" onClick={() =>  {
-                              let newValue = [...values.patientFeelings.dynamicsData];
-                              newValue.forEach(option => option.value = false);
-                              newValue[index].value = true;
-                              arrayHelpers.form.setFieldValue("patientFeelings.dynamicsData", newValue)
-                            }}  />
-                            <span className="fake-checkbox"></span>{values.patientFeelings.dynamicsData[index].title}
-                          </label> } />
-                      )
-                    })}
+                    <label>
+                      <input
+                        type="radio"
+                        name="patientFeelings"
+                        value="Хуже"
+                        checked={values.patientFeelings === "Хуже"}
+                        onChange={() => setFieldValue("patientFeelings","Хуже")}
+                      />Хуже
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`patientFeelings`}
+                        value="Так же"
+                        checked={values.patientFeelings === "Так же"}
+                        onChange={() => setFieldValue("patientFeelings", "Так же")}
+                      />Так же
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`patientFeelings`}
+                        value="Лучше"
+                        checked={values.patientFeelings === "Лучше"}
+                        onChange={() => setFieldValue("patientFeelings", "Лучше")}
+                      />Лучше
+                    </label>
                   </div>
                 )}
               </FieldArray>
@@ -242,7 +256,7 @@ class Attendance extends Component {
                 <Button onClick={resetForm} color='danger'>Очистить</Button>
               </div>
               <Persist name='attendance-form'/>
-              {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
