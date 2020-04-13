@@ -15,7 +15,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'положительная',
           },
         ],
@@ -33,7 +33,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'положительная',
           },
         ],
@@ -74,7 +74,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],
@@ -92,7 +92,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],
@@ -133,7 +133,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],
@@ -151,7 +151,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],
@@ -192,7 +192,7 @@ export const healingPlanByPatient = {
             dynamic: 'стабильная',
           },
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],
@@ -225,7 +225,7 @@ export const healingPlanByPatient = {
         completed: '1',
         attendances: [
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],
@@ -239,7 +239,7 @@ export const healingPlanByPatient = {
         completed: '1',
         attendances: [
           {
-            dateTime: new Date(2020, 2, 25),
+            dateTime: new Date(2020, 2, 24),
             dynamic: 'стабильная',
           },
         ],

@@ -20,16 +20,21 @@ const HealingPlanChart = ({ healingPlan }) => {
     ...planData.fourthStage.procedures,
     getRowGroupHeader(planData.fifthStage.title),
     ...planData.fifthStage.procedures,
+    getRowGroupHeader(''),
+    planData.condition,
+    planData.painScaleBefore,
+    planData.painScaleAfter,
   ];
 
   const getDates = (proceduresArray) => {
-    return proceduresArray.reduce((acc, { attendances }) => {
+    const dates = proceduresArray.reduce((acc, { attendances }) => {
       const allDates = attendances.map(({ dateTime }) => dateTime.toString());
       const uniqueDates = allDates.filter((curDate) => {
         if (!acc.includes(curDate)) return curDate;
       });
       return [...acc, ...uniqueDates];
     }, []);
+    return dates.sort((a, b) => (new Date(a) - new Date(b)));
   };
 
   const getChartData = (allProcedures, dateTitles) => {
