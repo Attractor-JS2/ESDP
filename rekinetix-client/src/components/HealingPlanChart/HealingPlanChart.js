@@ -31,6 +31,7 @@ const HealingPlanChart = ({ healingPlan }) => {
       const allDates = attendances.map(({ dateTime }) => dateTime.toString());
       const uniqueDates = allDates.filter((curDate) => {
         if (!acc.includes(curDate)) return curDate;
+        return undefined;
       });
       return [...acc, ...uniqueDates];
     }, []);
@@ -123,7 +124,7 @@ const HealingPlanChart = ({ healingPlan }) => {
 
     setHeaderTitles([...dynamicColumns]);
     setChartData([...dynamicData]);
-  }, [attendedDates]);
+  }, [attendedDates, healingPlan]);
 
   return (
     <div className="container">
