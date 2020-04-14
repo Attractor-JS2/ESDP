@@ -5,10 +5,12 @@ import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 
 const HealingPlanChart = ({ healingPlan }) => {
-  const [chartData, setChartData] = useState([]);
   const [attendedDates, setAttendedDates] = useState([]);
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
+  // Возвращает массив объектов, необходимых для дальнейшей обработки
+  // и построения строк таблицы. Принимает объект План лечения.
   const getProcedures = (planData) => [
     getRowGroupHeader(planData.firstStage.title),
     ...planData.firstStage.procedures,
@@ -26,6 +28,9 @@ const HealingPlanChart = ({ healingPlan }) => {
     planData.painScaleAfter,
   ];
 
+  // Возвращает отсортированный по возрастанию массив дат, содержащихся в объектах процедура,
+  // состояние и шкала боли. Даты представлены в строчном виде и не повторяются, необходимы для
+  // построения столбцов динамической части таблицы.
   const getDates = (proceduresArray) => {
     const dates = proceduresArray.reduce((acc, { attendances }) => {
       const allDates = attendances.map(({ dateTime }) => dateTime.toString());
@@ -35,9 +40,12 @@ const HealingPlanChart = ({ healingPlan }) => {
       });
       return [...acc, ...uniqueDates];
     }, []);
-    return dates.sort((a, b) => (new Date(a) - new Date(b)));
+    return dates.sort((a, b) => new Date(a) - new Date(b));
   };
 
+  // Возвращает массив объектов представляющих строки тела таблицы. Принимает сырые объекты
+  // из обработанного методом getProcedures плана лечения и массив уникальных отформатированных
+  // дат.
   const getChartData = (allProcedures, dateTitles) => {
     return allProcedures.reduce((acc, procedure) => {
       const { attendances } = procedure;
@@ -60,9 +68,11 @@ const HealingPlanChart = ({ healingPlan }) => {
     }, []);
   };
 
+  // Возвращает объект, содержащий элемент для отображения строки с названием этапа или группы
+  // строк
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    title: (<span className="h6">{rowTitle}</span>),
+    title: <span className="h6">{rowTitle}</span>,
     targetArea: '',
     status: '',
     planned: '',
@@ -70,6 +80,11 @@ const HealingPlanChart = ({ healingPlan }) => {
     attendances: [],
   });
 
+  // С помощью хука возвращаются данные определяющие столбцы таблицы react-table.
+  // В документации react-table рекомендуется использовать memoize. По документации React его можно заменить
+  // на useEffect.
+  // id - идентификатор, String; Header - название столбца, String; accessor - ключ объекта для отображения
+  // ячейки столбца. Данные получаются из массива объектов передаваемого в пропс data.
   const columns = useMemo(
     () => [
       {
@@ -103,27 +118,41 @@ const HealingPlanChart = ({ healingPlan }) => {
   );
 
   useEffect(() => {
-    const procedures = getProcedures(healingPlan);
-    const dynamicHeaders = getDates(procedures);
-    setAttendedDates([...dynamicHeaders]);
+    // В хуке сохраняется в стейт массив уникальных дат всех посещений приведённых к строчному типу.
+    if (
+      healingPlan &&
+      healingPlan.constructor === Object &&
+      Object.keys(healingPlan).length > 0
+    ) {
+      const procedures = getProcedures(healingPlan);
+      const dynamicHeaders = getDates(procedures);
+      setAttendedDates([...dynamicHeaders]);
+    }
   }, [healingPlan]);
 
   useEffect(() => {
-    const formattedDates = attendedDates.map((dateString) => {
-      return format(new Date(dateString), 'yyyy-MM-dd');
-    });
-    const dynamicColumns = formattedDates.map((title) => ({
-      id: title,
-      Header: title,
-      accessor: `${title}`,
-      Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
-    }));
+    // В хуке формируется columns динамической части таблицы и окончательные данные для пропса data таблицы.
+    if (
+      healingPlan &&
+      healingPlan.constructor === Object &&
+      Object.keys(healingPlan).length > 0
+    ) {
+      const formattedDates = attendedDates.map((dateString) => {
+        return format(new Date(dateString), 'yyyy-MM-dd');
+      });
+      const dynamicColumns = formattedDates.map((title) => ({
+        id: title,
+        Header: title,
+        accessor: `${title}`,
+        Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
+      }));
 
-    const procedures = getProcedures(healingPlan);
-    const dynamicData = getChartData(procedures, formattedDates);
+      const procedures = getProcedures(healingPlan);
+      const dynamicData = getChartData(procedures, formattedDates);
 
-    setHeaderTitles([...dynamicColumns]);
-    setChartData([...dynamicData]);
+      setHeaderTitles([...dynamicColumns]);
+      setChartData([...dynamicData]);
+    }
   }, [attendedDates, healingPlan]);
 
   return (
