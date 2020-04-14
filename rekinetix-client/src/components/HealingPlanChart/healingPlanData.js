@@ -26,7 +26,7 @@ export const healingPlanByPatient = {
         targetArea: 'Подлопаточная мышца',
         status: 'Прервано',
         planned: '5',
-        completed: '3',
+        completed: '2',
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
@@ -85,7 +85,7 @@ export const healingPlanByPatient = {
         targetArea: 'Шейный отдел позвоночника',
         status: 'Действует',
         planned: '5',
-        completed: '3',
+        completed: '2',
         attendances: [
           {
             dateTime: new Date(2020, 2, 23),
@@ -285,15 +285,15 @@ export const healingPlanByPatient = {
     attendances: [
       {
         dateTime: new Date(2020, 2, 23),
-        dynamic: '8',
+        dynamic: '4',
       },
       {
         dateTime: new Date(2020, 2, 24),
-        dynamic: '7',
+        dynamic: '3',
       },
       {
         dateTime: new Date(2020, 2, 25),
-        dynamic: '4',
+        dynamic: '2',
       },
     ],
   },
