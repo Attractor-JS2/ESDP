@@ -157,6 +157,36 @@ const HealingPlanChart = ({ healingPlan }) => {
 
   return (
     <div className="container">
+      <div className="row pt-3">
+        <div className="col-sm-12 col-md-4">
+          <p>
+            <span>ПАЦИЕНТ: </span>
+            {`${healingPlan.patient.secondName} ${healingPlan.patient.firstName} ${healingPlan.patient.patronymic}`}
+          </p>
+          <p>
+            <span>ВРАЧ: </span>
+            {`${healingPlan.medic.secondName} ${healingPlan.medic.firstName} ${healingPlan.medic.patronymic}`}
+          </p>
+        </div>
+        <div className="col-sm-12 col-md-4">
+          <p>
+            <span>Диагноз: </span>
+            {`${healingPlan.diagnosis.main}`}
+          </p>
+        </div>
+        <div className="col-sm-12 col-md-4">
+          <p>
+            <span>Красные флаги: </span>
+            {healingPlan &&
+            healingPlan.redFlags &&
+            healingPlan.redFlags.length > 0
+              ? healingPlan.redFlags.map(({ id, title }) => (
+                  <span key={id} className="badge badge-danger">{title}</span>
+                ))
+              : null}
+          </p>
+        </div>
+      </div>
       {chartData && chartData.length > 0 && (
         <Table columns={columns} data={chartData} />
       )}
