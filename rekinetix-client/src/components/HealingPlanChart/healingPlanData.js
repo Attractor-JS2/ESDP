@@ -22,7 +22,7 @@ export const healingPlanByPatient = {
       title: 'быстрая потеря веса',
     },
     {
-      id: '001rf',
+      id: '002rf',
       createdAt: '',
       title: 'кашель более 2-х недель',
     }

@@ -1,6 +1,11 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Chip from '@material-ui/core/Chip';
 
+import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 
@@ -156,41 +161,47 @@ const HealingPlanChart = ({ healingPlan }) => {
   }, [attendedDates, healingPlan]);
 
   return (
-    <div className="container">
-      <div className="row pt-3">
-        <div className="col-sm-12 col-md-4">
-          <p>
-            <span>ПАЦИЕНТ: </span>
-            {`${healingPlan.patient.secondName} ${healingPlan.patient.firstName} ${healingPlan.patient.patronymic}`}
-          </p>
-          <p>
-            <span>ВРАЧ: </span>
-            {`${healingPlan.medic.secondName} ${healingPlan.medic.firstName} ${healingPlan.medic.patronymic}`}
-          </p>
-        </div>
-        <div className="col-sm-12 col-md-4">
-          <p>
-            <span>Диагноз: </span>
-            {`${healingPlan.diagnosis.main}`}
-          </p>
-        </div>
-        <div className="col-sm-12 col-md-4">
-          <p>
-            <span>Красные флаги: </span>
-            {healingPlan &&
-            healingPlan.redFlags &&
-            healingPlan.redFlags.length > 0
-              ? healingPlan.redFlags.map(({ id, title }) => (
-                  <span key={id} className="badge badge-danger">{title}</span>
-                ))
-              : null}
-          </p>
-        </div>
-      </div>
+    <Container>
+      <Grid container spacing={3} direction="row" alignItems="stretch">
+        <Grid item sm={12} md={4}>
+          <Paper className="HealingPlanChart-paper">
+            <p>
+              <span>ПАЦИЕНТ: </span>
+              {`${healingPlan.patient.secondName} ${healingPlan.patient.firstName} ${healingPlan.patient.patronymic}`}
+            </p>
+            <p>
+              <span>ВРАЧ: </span>
+              {`${healingPlan.medic.secondName} ${healingPlan.medic.firstName} ${healingPlan.medic.patronymic}`}
+            </p>
+          </Paper>
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <Paper className="HealingPlanChart-paper">
+            <p>
+              <span>Диагноз: </span>
+              {`${healingPlan.diagnosis.main}`}
+            </p>
+          </Paper>
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <Paper className="HealingPlanChart-paper">
+            <p>
+              <span>Красные флаги: </span>
+              {healingPlan &&
+              healingPlan.redFlags &&
+              healingPlan.redFlags.length > 0
+                ? healingPlan.redFlags.map(({ id, title }) => (
+                    <Chip color="secondary" label={title} />
+                  ))
+                : null}
+            </p>
+          </Paper>
+        </Grid>
+      </Grid>
       {chartData && chartData.length > 0 && (
         <Table columns={columns} data={chartData} />
       )}
-    </div>
+    </Container>
   );
 };
 
