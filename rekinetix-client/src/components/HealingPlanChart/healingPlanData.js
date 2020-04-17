@@ -1,4 +1,32 @@
 export const healingPlanByPatient = {
+  patient: {
+    id: '001002p',
+    firstName: 'Иван',
+    secondName: 'Сидоров',
+    patronymic: 'Петрович',
+  },
+  medic: {
+    id: '001001ph',
+    firstName: 'Кирилл',
+    secondName: 'Смирнов',
+    patronymic: '',
+  },
+  diagnosis: {
+    createdAt: '',
+    main: 'Импиджмент синдром плечевого сустава',
+  },
+  redFlags: [
+    {
+      id: '001rf',
+      createdAt: '',
+      title: 'быстрая потеря веса',
+    },
+    {
+      id: '002rf',
+      createdAt: '',
+      title: 'кашель более 2-х недель',
+    }
+  ],
   firstStage: {
     title: '1. Обезболивание/противовоспалительная',
     procedures: [
