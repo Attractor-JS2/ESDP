@@ -3,11 +3,13 @@ import { format } from 'date-fns';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 import Chip from '@material-ui/core/Chip';
 
 import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
+import { Typography } from '@material-ui/core';
 
 const HealingPlanChart = ({ healingPlan }) => {
   const [attendedDates, setAttendedDates] = useState([]);
@@ -162,42 +164,46 @@ const HealingPlanChart = ({ healingPlan }) => {
 
   return (
     <Container>
-      <Grid container spacing={3} direction="row" alignItems="stretch">
-        <Grid item sm={12} md={4}>
-          <Paper className="HealingPlanChart-paper">
-            <p>
-              <span>ПАЦИЕНТ: </span>
-              {`${healingPlan.patient.secondName} ${healingPlan.patient.firstName} ${healingPlan.patient.patronymic}`}
-            </p>
-            <p>
-              <span>ВРАЧ: </span>
-              {`${healingPlan.medic.secondName} ${healingPlan.medic.firstName} ${healingPlan.medic.patronymic}`}
-            </p>
-          </Paper>
+      <ScopedCssBaseline>
+        <Grid container spacing={3} direction="row" alignItems="stretch">
+          <Grid item sm={12} md={4}>
+            <Paper className="HealingPlanChart-paper">
+              <Typography>
+                <span>ПАЦИЕНТ: </span>
+                {`${healingPlan.patient.secondName} ${healingPlan.patient.firstName} ${healingPlan.patient.patronymic}`}
+              </Typography>
+              <Typography>
+                <span>ВРАЧ: </span>
+                {`${healingPlan.medic.secondName} ${healingPlan.medic.firstName} ${healingPlan.medic.patronymic}`}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item sm={12} md={4}>
+            <Paper className="HealingPlanChart-paper">
+              <Typography>
+                <b>Диагноз: </b>
+                {`${healingPlan.diagnosis.main}`}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item sm={12} md={4}>
+            <Paper className="HealingPlanChart-paper">
+              <div>
+                <Typography>
+                  <b>Красные флаги: </b>
+                </Typography>
+                {healingPlan &&
+                healingPlan.redFlags &&
+                healingPlan.redFlags.length > 0
+                  ? healingPlan.redFlags.map(({ id, title }) => (
+                      <Chip key={id} color="secondary" label={title} />
+                    ))
+                  : null}
+              </div>
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item sm={12} md={4}>
-          <Paper className="HealingPlanChart-paper">
-            <p>
-              <span>Диагноз: </span>
-              {`${healingPlan.diagnosis.main}`}
-            </p>
-          </Paper>
-        </Grid>
-        <Grid item sm={12} md={4}>
-          <Paper className="HealingPlanChart-paper">
-            <p>
-              <span>Красные флаги: </span>
-              {healingPlan &&
-              healingPlan.redFlags &&
-              healingPlan.redFlags.length > 0
-                ? healingPlan.redFlags.map(({ id, title }) => (
-                    <Chip color="secondary" label={title} />
-                  ))
-                : null}
-            </p>
-          </Paper>
-        </Grid>
-      </Grid>
+      </ScopedCssBaseline>
       {chartData && chartData.length > 0 && (
         <Table columns={columns} data={chartData} />
       )}

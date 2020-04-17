@@ -6,6 +6,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { store, history } from "./store/configureStore";
 import { ConnectedRouter } from "connected-react-router";
+import 'typeface-roboto';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
