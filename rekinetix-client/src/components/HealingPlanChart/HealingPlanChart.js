@@ -11,6 +11,7 @@ import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
+import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
 
 const HealingPlanChart = ({ healingPlan }) => {
   const [attendedDates, setAttendedDates] = useState([]);
@@ -35,7 +36,6 @@ const HealingPlanChart = ({ healingPlan }) => {
     getRowGroupHeader(planData.fifthStage.title),
     ...planData.fifthStage.procedures,
     getButtonRow(),
-    getRowGroupHeader(''),
     planData.condition,
     planData.painScaleBefore,
     planData.painScaleAfter,
@@ -91,7 +91,7 @@ const HealingPlanChart = ({ healingPlan }) => {
       </span>
     ),
     targetArea: '',
-    status: '',
+    status: 'shouldBeEmpty',
     planned: '',
     completed: '',
     attendances: [],
@@ -100,7 +100,7 @@ const HealingPlanChart = ({ healingPlan }) => {
   const getButtonRow = () => ({
     title: 'AddRowButton',
     targetArea: '',
-    status: '',
+    status: 'shouldBeEmpty',
     planned: '',
     completed: '',
     attendances: [],
@@ -123,6 +123,10 @@ const HealingPlanChart = ({ healingPlan }) => {
       return [...rows];
     });
   };
+
+  const updateProcedureStatus = (rowIndex, columnId, optionValue) => {
+    console.log(rowIndex, columnId, optionValue);
+  }
 
   // С помощью хука возвращаются данные определяющие столбцы таблицы react-table.
   // В документации react-table рекомендуется использовать memoize. По документации React его можно заменить
@@ -152,6 +156,7 @@ const HealingPlanChart = ({ healingPlan }) => {
         id: 'procedureStatus',
         Header: 'Статус',
         accessor: 'status',
+        Cell: EditableStatusSelect,
       },
       {
         id: 'procedurePlan',
@@ -253,6 +258,7 @@ const HealingPlanChart = ({ healingPlan }) => {
           columns={columns}
           data={chartData}
           addRowHandler={addRowHandler}
+          updateSelectData={updateProcedureStatus}
         />
       )}
     </Container>
