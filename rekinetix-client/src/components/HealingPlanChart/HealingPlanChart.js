@@ -107,7 +107,6 @@ const HealingPlanChart = ({ healingPlan }) => {
   });
 
   const emptyRow = {
-    id: '',
     title: '',
     targetArea: '',
     status: '',
@@ -124,13 +123,12 @@ const HealingPlanChart = ({ healingPlan }) => {
     });
   };
 
-  const updateProcedureStatus = (rowIndex, columnId, optionValue) => {
-    console.log(rowIndex, columnId, optionValue);
+  const updateProcedureStatus = (rowIndex, optionValue) => {
     setChartData(prevState => prevState.map((row, index) => {
       if (index === rowIndex) {
         return {
           ...prevState[rowIndex],
-          [columnId]: optionValue,
+          status: optionValue,
         };
       } else {
         return row;

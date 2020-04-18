@@ -5,26 +5,31 @@ import MenuItem from '@material-ui/core/MenuItem';
 const EditableStatusSelect = ({
   value: initialValue,
   row: { index },
-  column: { id },
   updateSelectData,
 }) => {
-  const [selectValue, setValue] = useState(
-    initialValue !== 'shouldBeEmpty' ? initialValue : '',
-  );
+  const [selectValue, setValue] = useState(getValidSelectValue(initialValue));
+
+  function getValidSelectValue(cellValue) {
+    if (cellValue !== 'shouldBeEmpty' && cellValue !== undefined) {
+      return cellValue;
+    } else {
+      return '';
+    }
+  }
 
   const onChange = (event) => {
     setValue(event.target.value);
   };
 
   const onBlur = () => {
-    updateSelectData(index, id, selectValue);
+    updateSelectData(index, selectValue);
   };
 
   useEffect(() => {
-    console.log(index, id, selectValue);
-  }, [selectValue]);
-  if (initialValue === 'shouldBeEmpty' || initialValue === undefined) return '';
-  return initialValue !== 'shouldBeEmpty' ? (
+    setValue(getValidSelectValue(initialValue));
+  }, [initialValue]);
+
+  return initialValue !== 'shouldBeEmpty' && initialValue !== undefined ? (
     <Select value={selectValue} onChange={onChange} onBlur={onBlur}>
       <MenuItem value="Завершено">завершено</MenuItem>
       <MenuItem value="Приостановлено">приостановлено</MenuItem>
@@ -32,7 +37,9 @@ const EditableStatusSelect = ({
       <MenuItem value="Действует">действует</MenuItem>
       <MenuItem value="" disabled></MenuItem>
     </Select>
-  ) : null;
+  ) : (
+    ''
+  );
 };
 
 export default EditableStatusSelect;
