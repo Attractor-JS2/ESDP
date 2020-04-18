@@ -1,0 +1,19 @@
+.status {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+.status_warning {
+  background: #F5B041;
+}
+
+.status_success {
+  background: #2ECC71;
+}
+
+.status_danger {
+  background: #E74C3C;
+}

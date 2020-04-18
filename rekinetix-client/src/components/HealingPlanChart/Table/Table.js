@@ -1,5 +1,10 @@
 import React from 'react';
 import { useTable } from 'react-table';
+import MaUTable from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 const Table = ({ columns, data, addRowHandler, updateSelectData }) => {
   const {
@@ -16,29 +21,29 @@ const Table = ({ columns, data, addRowHandler, updateSelectData }) => {
   });
 
   return (
-    <table {...getTableProps()} className="table">
-      <thead>
+    <MaUTable {...getTableProps()} size="small" >
+      <TableHead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <TableRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
-          </tr>
+          </TableRow>
         ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
+      </TableHead>
+      <TableBody {...getTableBodyProps()}>
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <TableRow {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <td className='text-center' {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                return <TableCell align="center" {...cell.getCellProps()}>{cell.render("Cell")}</TableCell>;
               })}
-            </tr>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </MaUTable>
   );
 };
 

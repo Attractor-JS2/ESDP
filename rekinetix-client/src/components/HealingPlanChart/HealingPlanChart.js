@@ -85,11 +85,7 @@ const HealingPlanChart = ({ healingPlan }) => {
   // строк
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    title: (
-      <span className="h6">
-        {rowTitle}
-      </span>
-    ),
+    title: <b>{rowTitle}</b>,
     targetArea: '',
     status: 'shouldBeEmpty',
     planned: '',
@@ -124,17 +120,19 @@ const HealingPlanChart = ({ healingPlan }) => {
   };
 
   const updateProcedureStatus = (rowIndex, optionValue) => {
-    setChartData(prevState => prevState.map((row, index) => {
-      if (index === rowIndex) {
-        return {
-          ...prevState[rowIndex],
-          status: optionValue,
-        };
-      } else {
-        return row;
-      }
-    }))
-  }
+    setChartData((prevState) =>
+      prevState.map((row, index) => {
+        if (index === rowIndex) {
+          return {
+            ...prevState[rowIndex],
+            status: optionValue,
+          };
+        } else {
+          return row;
+        }
+      }),
+    );
+  };
 
   // С помощью хука возвращаются данные определяющие столбцы таблицы react-table.
   // В документации react-table рекомендуется использовать memoize. По документации React его можно заменить
@@ -209,8 +207,8 @@ const HealingPlanChart = ({ healingPlan }) => {
   }, [attendedDates, healingPlan]);
 
   return (
-    <Container>
-      <ScopedCssBaseline>
+    <ScopedCssBaseline>
+      <Container>
         <Grid container spacing={2} direction="row" alignItems="stretch">
           <Grid item sm={12} md={4}>
             <Paper className="HealingPlanChart-paper">
@@ -249,16 +247,16 @@ const HealingPlanChart = ({ healingPlan }) => {
             </Paper>
           </Grid>
         </Grid>
-      </ScopedCssBaseline>
-      {chartData && chartData.length > 0 && (
-        <Table
-          columns={columns}
-          data={chartData}
-          addRowHandler={addRowHandler}
-          updateSelectData={updateProcedureStatus}
-        />
-      )}
-    </Container>
+        {chartData && chartData.length > 0 && (
+          <Table
+            columns={columns}
+            data={chartData}
+            addRowHandler={addRowHandler}
+            updateSelectData={updateProcedureStatus}
+          />
+        )}
+      </Container>
+    </ScopedCssBaseline>
   );
 };
 
