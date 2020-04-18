@@ -31,10 +31,10 @@ const EditableStatusSelect = ({
 
   return initialValue !== 'shouldBeEmpty' && initialValue !== undefined ? (
     <Select value={selectValue} onChange={onChange} onBlur={onBlur}>
+      <MenuItem value="Действует">действует</MenuItem>
       <MenuItem value="Завершено">завершено</MenuItem>
       <MenuItem value="Приостановлено">приостановлено</MenuItem>
       <MenuItem value="Прервано">прервано</MenuItem>
-      <MenuItem value="Действует">действует</MenuItem>
       <MenuItem value="" disabled></MenuItem>
     </Select>
   ) : (

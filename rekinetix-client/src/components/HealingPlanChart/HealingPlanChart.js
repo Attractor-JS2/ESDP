@@ -208,10 +208,6 @@ const HealingPlanChart = ({ healingPlan }) => {
     }
   }, [attendedDates, healingPlan]);
 
-  useEffect(() => {
-    console.dir(chartData);
-  }, [chartData])
-
   return (
     <Container>
       <ScopedCssBaseline>
