@@ -126,6 +126,16 @@ const HealingPlanChart = ({ healingPlan }) => {
 
   const updateProcedureStatus = (rowIndex, columnId, optionValue) => {
     console.log(rowIndex, columnId, optionValue);
+    setChartData(prevState => prevState.map((row, index) => {
+      if (index === rowIndex) {
+        return {
+          ...prevState[rowIndex],
+          [columnId]: optionValue,
+        };
+      } else {
+        return row;
+      }
+    }))
   }
 
   // С помощью хука возвращаются данные определяющие столбцы таблицы react-table.
@@ -136,29 +146,24 @@ const HealingPlanChart = ({ healingPlan }) => {
   const columns = useMemo(
     () => [
       {
-        id: 'procedureTitle',
         Header: 'Что делаем',
         accessor: 'title',
         Cell: AddActionButton,
       },
       {
-        id: 'procedureTarget',
         Header: 'На что направлено',
         accessor: 'targetArea',
       },
       {
-        id: 'procedureStatus',
         Header: 'Статус',
         accessor: 'status',
         Cell: EditableStatusSelect,
       },
       {
-        id: 'procedurePlan',
         Header: 'План',
         accessor: 'planned',
       },
       {
-        id: 'procedureFact',
         Header: 'Факт',
         accessor: 'completed',
       },
@@ -204,6 +209,10 @@ const HealingPlanChart = ({ healingPlan }) => {
       setChartData([...dynamicData]);
     }
   }, [attendedDates, healingPlan]);
+
+  useEffect(() => {
+    console.dir(chartData);
+  }, [chartData])
 
   return (
     <Container>

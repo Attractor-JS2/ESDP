@@ -21,7 +21,7 @@ const EditableStatusSelect = ({
   };
 
   useEffect(() => {
-    console.log(selectValue);
+    console.log(index, id, selectValue);
   }, [selectValue]);
   if (initialValue === 'shouldBeEmpty' || initialValue === undefined) return '';
   return initialValue !== 'shouldBeEmpty' ? (
