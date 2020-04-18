@@ -139,13 +139,7 @@ const HealingPlanChart = ({ healingPlan }) => {
         id: 'procedureTitle',
         Header: 'Что делаем',
         accessor: 'title',
-        Cell: ({ cell: { value, row } }) => (
-          <AddActionButton
-            values={value}
-            row={row}
-            addRowHandler={addRowHandler}
-          />
-        ),
+        Cell: AddActionButton,
       },
       {
         id: 'procedureTarget',

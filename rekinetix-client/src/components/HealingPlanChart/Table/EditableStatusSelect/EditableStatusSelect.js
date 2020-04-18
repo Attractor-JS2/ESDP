@@ -8,7 +8,9 @@ const EditableStatusSelect = ({
   column: { id },
   updateSelectData,
 }) => {
-  const [selectValue, setValue] = useState(initialValue !== 'shouldBeEmpty' ? initialValue : '');
+  const [selectValue, setValue] = useState(
+    initialValue !== 'shouldBeEmpty' ? initialValue : '',
+  );
 
   const onChange = (event) => {
     setValue(event.target.value);
@@ -20,18 +22,17 @@ const EditableStatusSelect = ({
 
   useEffect(() => {
     console.log(selectValue);
-  }, [selectValue])
+  }, [selectValue]);
   if (initialValue === 'shouldBeEmpty' || initialValue === undefined) return '';
-  return (
-    (initialValue !== 'shouldBeEmpty') ?
-    <Select value={selectValue} onChange={onChange} onBlur={onBlur} onFocus>
+  return initialValue !== 'shouldBeEmpty' ? (
+    <Select value={selectValue} onChange={onChange} onBlur={onBlur}>
       <MenuItem value="Завершено">завершено</MenuItem>
       <MenuItem value="Приостановлено">приостановлено</MenuItem>
       <MenuItem value="Прервано">прервано</MenuItem>
       <MenuItem value="Действует">действует</MenuItem>
       <MenuItem value="" disabled></MenuItem>
-    </Select> : null
-  )
-}
+    </Select>
+  ) : null;
+};
 
 export default EditableStatusSelect;
