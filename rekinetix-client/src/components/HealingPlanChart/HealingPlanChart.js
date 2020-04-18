@@ -4,12 +4,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
+import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 
 import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
-import { Typography } from '@material-ui/core';
+import AddActionButton from './Table/AddActionButton/AddActionButton';
 
 const HealingPlanChart = ({ healingPlan }) => {
   const [attendedDates, setAttendedDates] = useState([]);
@@ -21,14 +22,19 @@ const HealingPlanChart = ({ healingPlan }) => {
   const getProcedures = (planData) => [
     getRowGroupHeader(planData.firstStage.title),
     ...planData.firstStage.procedures,
+    getButtonRow(),
     getRowGroupHeader(planData.secondStage.title),
     ...planData.secondStage.procedures,
+    getButtonRow(),
     getRowGroupHeader(planData.thirdStage.title),
     ...planData.thirdStage.procedures,
+    getButtonRow(),
     getRowGroupHeader(planData.fourthStage.title),
     ...planData.fourthStage.procedures,
+    getButtonRow(),
     getRowGroupHeader(planData.fifthStage.title),
     ...planData.fifthStage.procedures,
+    getButtonRow(),
     getRowGroupHeader(''),
     planData.condition,
     planData.painScaleBefore,
@@ -79,13 +85,44 @@ const HealingPlanChart = ({ healingPlan }) => {
   // строк
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    title: <span className="h6">{rowTitle}</span>,
+    title: (
+      <span className="h6">
+        {rowTitle}
+      </span>
+    ),
     targetArea: '',
     status: '',
     planned: '',
     completed: '',
     attendances: [],
   });
+
+  const getButtonRow = () => ({
+    title: 'AddRowButton',
+    targetArea: '',
+    status: '',
+    planned: '',
+    completed: '',
+    attendances: [],
+  });
+
+  const emptyRow = {
+    id: '',
+    title: '',
+    targetArea: '',
+    status: '',
+    planned: '',
+    completed: '',
+    attendances: [],
+  };
+
+  const addRowHandler = (rowIndex) => {
+    setChartData((prevState) => {
+      const rows = [...prevState];
+      rows.splice(rowIndex, 0, emptyRow);
+      return [...rows];
+    });
+  };
 
   // С помощью хука возвращаются данные определяющие столбцы таблицы react-table.
   // В документации react-table рекомендуется использовать memoize. По документации React его можно заменить
@@ -98,6 +135,13 @@ const HealingPlanChart = ({ healingPlan }) => {
         id: 'procedureTitle',
         Header: 'Что делаем',
         accessor: 'title',
+        Cell: ({ cell: { value, row } }) => (
+          <AddActionButton
+            values={value}
+            row={row}
+            addRowHandler={addRowHandler}
+          />
+        ),
       },
       {
         id: 'procedureTarget',
@@ -165,7 +209,7 @@ const HealingPlanChart = ({ healingPlan }) => {
   return (
     <Container>
       <ScopedCssBaseline>
-        <Grid container spacing={3} direction="row" alignItems="stretch">
+        <Grid container spacing={2} direction="row" alignItems="stretch">
           <Grid item sm={12} md={4}>
             <Paper className="HealingPlanChart-paper">
               <Typography>
@@ -205,7 +249,11 @@ const HealingPlanChart = ({ healingPlan }) => {
         </Grid>
       </ScopedCssBaseline>
       {chartData && chartData.length > 0 && (
-        <Table columns={columns} data={chartData} />
+        <Table
+          columns={columns}
+          data={chartData}
+          addRowHandler={addRowHandler}
+        />
       )}
     </Container>
   );

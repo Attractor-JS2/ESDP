@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable } from 'react-table';
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, addRowHandler }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -11,6 +11,7 @@ const Table = ({ columns, data }) => {
   } = useTable({
     columns,
     data,
+    addRowHandler,
   });
 
   return (
