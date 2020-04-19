@@ -4,12 +4,12 @@
 &nbsp;&nbsp;attendanceDate: **Date**,  
 &nbsp;&nbsp;patientName: **String**,  
 &nbsp;&nbsp;medicName: **String**,  
-&nbsp;&nbsp;firstStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **String||Number**}, ...],  
-&nbsp;&nbsp;secondStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **String||Number**}, ...],  
-&nbsp;&nbsp;thirdStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **String||Number**}, ...],  
-&nbsp;&nbsp;fourthStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **String||Number**}, ...],  
-&nbsp;&nbsp;fifthStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **String||Number**}, ...],  
-&nbsp;&nbsp;patientDynamic: **String||Number**,  
+&nbsp;&nbsp;firstStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **Number**}, ...],  
+&nbsp;&nbsp;secondStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **Number**}, ...],  
+&nbsp;&nbsp;thirdStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **Number**}, ...],  
+&nbsp;&nbsp;fourthStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **Number**}, ...],  
+&nbsp;&nbsp;fifthStage: [{procedureName: **String**, procedureArea: **String**, procedureDynamic: **Number**}, ...],  
+&nbsp;&nbsp;patientDynamic: **Number**,  
 &nbsp;&nbsp;beforeAttendance: {comments: **String**, pain: **Number**},  
 &nbsp;&nbsp;afterAttendance: {comments: **String**, pain: **Number**}  
 }  
@@ -18,5 +18,8 @@
 - **String** - строка  
 - **Date** - экземпляр класса new Date()  
 - **Number** - целочисленное значение  
-  
-В тех местах, где стоит оператор 'или' - || - Значит, что форматов может быть несколько и необходимо решить, какой именно использовать (напр. String||Number - данные могут представлять из себя число или строку)
+
+Данные типа **Number** в ключах, отражающих динамику, записываются следующим образом:
+- 0 - Хуже
+- 1 - Так же
+- 2 - Лучше
