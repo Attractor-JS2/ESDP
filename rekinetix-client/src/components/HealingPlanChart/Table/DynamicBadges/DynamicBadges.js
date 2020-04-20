@@ -2,7 +2,7 @@ import React from 'react';
 import './DynamicBadges.css'
 
 const DynamicBadges = ({ values }) => {
-  if (values != 0 && !values) return '';
+  if (values !== 0 && !values) return '';
   return (
     <>
       {{

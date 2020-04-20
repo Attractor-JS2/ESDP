@@ -24,29 +24,6 @@ const HealingPlanChart = ({
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
 
-  // Возвращает массив объектов, необходимых для дальнейшей обработки
-  // и построения строк таблицы. Принимает объект План лечения.
-  const getProcedures = (planData) => [
-    getRowGroupHeader(planData.firstStage.title),
-    ...planData.firstStage.procedures,
-    getButtonRow(),
-    getRowGroupHeader(planData.secondStage.title),
-    ...planData.secondStage.procedures,
-    getButtonRow(),
-    getRowGroupHeader(planData.thirdStage.title),
-    ...planData.thirdStage.procedures,
-    getButtonRow(),
-    getRowGroupHeader(planData.fourthStage.title),
-    ...planData.fourthStage.procedures,
-    getButtonRow(),
-    getRowGroupHeader(planData.fifthStage.title),
-    ...planData.fifthStage.procedures,
-    getButtonRow(),
-    planData.condition,
-    planData.painScaleBefore,
-    planData.painScaleAfter,
-  ];
-
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
     if (attendances && attendances.length > 0) {
