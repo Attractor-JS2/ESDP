@@ -73,8 +73,6 @@ const HealingPlanChart = ({
     return procedures;
   };
 
-  // Возвращает объект, содержащий элемент для отображения строки с названием этапа или группы
-  // строк
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
     procedureName: <b>{rowTitle}</b>,
@@ -129,7 +127,7 @@ const HealingPlanChart = ({
   // С помощью хука возвращаются данные определяющие столбцы таблицы react-table.
   // В документации react-table рекомендуется использовать memoize. По документации React его можно заменить
   // на useEffect.
-  // id - идентификатор, String; Header - название столбца, String; accessor - ключ объекта для отображения
+  // Header - название столбца, String; accessor - ключ объекта для отображения
   // ячейки столбца. Данные получаются из массива объектов передаваемого в пропс data.
   const columns = useMemo(
     () => [
