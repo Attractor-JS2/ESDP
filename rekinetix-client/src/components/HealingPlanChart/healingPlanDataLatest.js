@@ -315,7 +315,104 @@ export const statuses = [
     id: 'status01',
     procedure: {
       id: '',
-      procedureName: '',
+      procedureName: 'Расслабление',
     },
-  }
+    status: 'завершено',
+  },
+  {
+    id: 'status02',
+    procedure: {
+      id: '',
+      procedureName: 'Ультразвук',
+    },
+    status: 'прервано',
+  },
+  {
+    id: 'status03',
+    procedure: {
+      id: '',
+      procedureName: 'Плазмолифтинг',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status04',
+    procedure: {
+      id: '',
+      procedureName: 'Тракция',
+    },
+    status: 'приостановлено',
+  },
+  {
+    id: 'status05',
+    procedure: {
+      id: '',
+      procedureName: 'Компрессия',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status06',
+    procedure: {
+      id: '',
+      procedureName: 'Мобилизация',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status07',
+    procedure: {
+      id: '',
+      procedureName: 'Упражнение: Активация нижнего цилиндра',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status08',
+    procedure: {
+      id: '',
+      procedureName: 'Упражнение: Тренировка нижнего цилиндра',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status09',
+    procedure: {
+      id: '',
+      procedureName: 'Стабилизация коленного сустава',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status10',
+    procedure: {
+      id: '',
+      procedureName: 'Тренировка передней ленты',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status11',
+    procedure: {
+      id: '',
+      procedureName: 'Упражнение: Тренировка нижнего цилиндра',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status12',
+    procedure: {
+      id: '',
+      procedureName: 'Упражнение: Подъём правой ноги',
+    },
+    status: 'действует',
+  },
+  {
+    id: 'status13',
+    procedure: {
+      id: '',
+      procedureName: 'Упражнение: Отведение левой ноги',
+    },
+    status: 'прервано',
+  },
 ];
