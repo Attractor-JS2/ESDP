@@ -1,4 +1,4 @@
-export const healingPlan = [
+export const attendances = [
   {
     attendanceDate: new Date(2020, 3, 16),
     patientName: 'Сидоров Иван Петрович',
@@ -129,7 +129,7 @@ export const healingPlan = [
       {
         procedureName: 'Упражнение: Тренировка нижнего цилиндра',
         procedureArea: '',
-        procedureDynamic: 1,
+        procedureDynamic: 0,
       },
       {
         procedureName: 'Стабилизация коленного сустава',
@@ -427,4 +427,5 @@ export const statuses = [
     },
     status: 'прервано',
     planned: '5',
+  },
 ];

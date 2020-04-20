@@ -2,13 +2,13 @@ import React from 'react';
 import './DynamicBadges.css'
 
 const DynamicBadges = ({ values }) => {
-  if (!values) return '';
+  if (values != 0 && !values) return '';
   return (
     <>
       {{
-        стабильная: <span className="status status_warning"></span>,
-        положительная: <span className="status status_success"></span>,
-        отрицательная: <span className="status status_danger"></span>,
+        1: <span className="status status_warning"></span>,
+        2: <span className="status status_success"></span>,
+        0: <span className="status status_danger"></span>,
       }[values] || `${values}`}
     </>
   );

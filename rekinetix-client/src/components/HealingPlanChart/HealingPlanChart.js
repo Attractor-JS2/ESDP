@@ -13,8 +13,14 @@ import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
 
-const HealingPlanChart = ({ healingPlan }) => {
-  const [attendedDates, setAttendedDates] = useState([]);
+const HealingPlanChart = ({
+  attendances,
+  statuses,
+  redFlags,
+  patient,
+  medic,
+  diagnosis,
+}) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
 
@@ -41,52 +47,61 @@ const HealingPlanChart = ({ healingPlan }) => {
     planData.painScaleAfter,
   ];
 
-  // Возвращает отсортированный по возрастанию массив дат, содержащихся в объектах процедура,
-  // состояние и шкала боли. Даты представлены в строчном виде и не повторяются, необходимы для
-  // построения столбцов динамической части таблицы.
-  const getDates = (proceduresArray) => {
-    const dates = proceduresArray.reduce((acc, { attendances }) => {
-      const allDates = attendances.map(({ dateTime }) => dateTime.toString());
-      const uniqueDates = allDates.filter((curDate) => {
-        if (!acc.includes(curDate)) return curDate;
-        return undefined;
+  const getDates = (attendances) => {
+    const today = format(new Date(), 'yyyy-MM-dd');
+    if (attendances && attendances.length > 0) {
+      const dates = attendances.map(({ attendanceDate }) => {
+        return format(attendanceDate, 'yyyy-MM-dd');
       });
-      return [...acc, ...uniqueDates];
-    }, []);
-    return dates.sort((a, b) => new Date(a) - new Date(b));
+      return [...dates, today].sort((a, b) => new Date(a) - new Date(b));
+    } else {
+      return [today];
+    }
   };
 
-  // Возвращает массив объектов представляющих строки тела таблицы. Принимает сырые объекты
-  // из обработанного методом getProcedures плана лечения и массив уникальных отформатированных
-  // дат.
-  const getChartData = (allProcedures, dateTitles) => {
-    return allProcedures.reduce((acc, procedure) => {
-      const { attendances } = procedure;
-      const reducedDates = attendances.reduce((acc, { dateTime, dynamic }) => {
-        const stringDate = format(new Date(dateTime), 'yyyy-MM-dd');
-        return { ...acc, [stringDate]: dynamic };
-      }, {});
-
-      const rowData = {
-        ...procedure,
-        ...dateTitles.reduce((acc, currentDate) => {
-          const curAttendance = {
-            [currentDate]: reducedDates[currentDate] || '',
+  const getStageRows = (attendances, stage, statuses) => {
+    const procedures = attendances.reduce((acc, curAttendance) => {
+      const { attendanceDate } = curAttendance;
+      const stageProcedures = [...curAttendance[stage]];
+      let uniqueProcedures = [];
+      stageProcedures.forEach((procedure) => {
+        const accIndex = acc.findIndex(
+          (accProcedure) =>
+            accProcedure.procedureName === procedure.procedureName,
+        );
+        const statusesIndex = statuses.findIndex(
+          (status) =>
+            status.procedure.procedureName === procedure.procedureName,
+        );
+        const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
+        if (accIndex >= 0) {
+          acc[accIndex] = {
+            ...acc[accIndex],
+            [formattedDate]: procedure.procedureDynamic,
+            completed: acc[accIndex].completed + 1,
           };
-          return { ...acc, ...curAttendance };
-        }, {}),
-      };
-
-      return [...acc, rowData];
+        } else {
+          const procedureEdited = {
+            ...procedure,
+            status: statuses[statusesIndex].status,
+            planned: statuses[statusesIndex].planned,
+            completed: 1,
+            [formattedDate]: procedure.procedureDynamic,
+          };
+          uniqueProcedures = [...uniqueProcedures, procedureEdited];
+        }
+      });
+      return [...acc, ...uniqueProcedures];
     }, []);
+    return procedures;
   };
 
   // Возвращает объект, содержащий элемент для отображения строки с названием этапа или группы
   // строк
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    title: <b>{rowTitle}</b>,
-    targetArea: '',
+    procedureName: <b>{rowTitle}</b>,
+    procedureArea: '',
     status: 'shouldBeEmpty',
     planned: '',
     completed: '',
@@ -94,8 +109,8 @@ const HealingPlanChart = ({ healingPlan }) => {
   });
 
   const getButtonRow = () => ({
-    title: 'AddRowButton',
-    targetArea: '',
+    procedureName: 'AddRowButton',
+    procedureArea: '',
     status: 'shouldBeEmpty',
     planned: '',
     completed: '',
@@ -103,8 +118,8 @@ const HealingPlanChart = ({ healingPlan }) => {
   });
 
   const emptyRow = {
-    title: '',
-    targetArea: '',
+    procedureName: '',
+    procedureArea: '',
     status: '',
     planned: '',
     completed: '',
@@ -143,12 +158,12 @@ const HealingPlanChart = ({ healingPlan }) => {
     () => [
       {
         Header: 'Что делаем',
-        accessor: 'title',
+        accessor: 'procedureName',
         Cell: AddActionButton,
       },
       {
         Header: 'На что направлено',
-        accessor: 'targetArea',
+        accessor: 'procedureArea',
       },
       {
         Header: 'Статус',
@@ -168,43 +183,40 @@ const HealingPlanChart = ({ healingPlan }) => {
     [dateHeaderTitles],
   );
 
-  useEffect(() => {
-    // В хуке сохраняется в стейт массив уникальных дат всех посещений приведённых к строчному типу.
-    if (
-      healingPlan &&
-      healingPlan.constructor === Object &&
-      Object.keys(healingPlan).length > 0
-    ) {
-      const procedures = getProcedures(healingPlan);
-      const dynamicHeaders = getDates(procedures);
-      setAttendedDates([...dynamicHeaders]);
-    }
-  }, [healingPlan]);
 
   useEffect(() => {
-    // В хуке формируется columns динамической части таблицы и окончательные данные для пропса data таблицы.
-    if (
-      healingPlan &&
-      healingPlan.constructor === Object &&
-      Object.keys(healingPlan).length > 0
-    ) {
-      const formattedDates = attendedDates.map((dateString) => {
-        return format(new Date(dateString), 'yyyy-MM-dd');
-      });
-      const dynamicColumns = formattedDates.map((title) => ({
-        id: title,
-        Header: title,
-        accessor: `${title}`,
-        Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
-      }));
-
-      const procedures = getProcedures(healingPlan);
-      const dynamicData = getChartData(procedures, formattedDates);
-
-      setHeaderTitles([...dynamicColumns]);
-      setChartData([...dynamicData]);
-    }
-  }, [attendedDates, healingPlan]);
+    const formattedDates = getDates(attendances);
+    const dynamicColumns = formattedDates.map((title) => ({
+      id: title,
+      Header: title,
+      accessor: `${title}`,
+      Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
+    }));
+    const firstStageRows = getStageRows(attendances, 'firstStage', statuses);
+    const secondStageRows = getStageRows(attendances, 'secondStage', statuses);
+    const thirdStageRows = getStageRows(attendances, 'thirdStage', statuses);
+    const fourthStageRows = getStageRows(attendances, 'fourthStage', statuses);
+    const fifthStageRows = getStageRows(attendances, 'fifthStage', statuses);
+    const tableRows = [
+      getRowGroupHeader('1. Обезболивание/противовоспалительная'),
+      ...firstStageRows,
+      getButtonRow(),
+      getRowGroupHeader('2. Мобилизация'),
+      ...secondStageRows,
+      getButtonRow(),
+      getRowGroupHeader('3. НМА и стабилизация'),
+      ...thirdStageRows,
+      getButtonRow(),
+      getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
+      ...fourthStageRows,
+      getButtonRow(),
+      getRowGroupHeader('5. Профилактика дома'),
+      ...fifthStageRows,
+      getButtonRow(),
+    ];
+    setHeaderTitles(dynamicColumns);
+    setChartData(tableRows);
+  }, [attendances, statuses]);
 
   return (
     <ScopedCssBaseline>
@@ -214,11 +226,11 @@ const HealingPlanChart = ({ healingPlan }) => {
             <Paper className="HealingPlanChart-paper">
               <Typography>
                 <span>ПАЦИЕНТ: </span>
-                {`${healingPlan.patient.secondName} ${healingPlan.patient.firstName} ${healingPlan.patient.patronymic}`}
+                {`${patient.secondName} ${patient.firstName} ${patient.patronymic}`}
               </Typography>
               <Typography>
                 <span>ВРАЧ: </span>
-                {`${healingPlan.medic.secondName} ${healingPlan.medic.firstName} ${healingPlan.medic.patronymic}`}
+                {`${medic.secondName} ${medic.firstName} ${medic.patronymic}`}
               </Typography>
             </Paper>
           </Grid>
@@ -226,7 +238,7 @@ const HealingPlanChart = ({ healingPlan }) => {
             <Paper className="HealingPlanChart-paper">
               <Typography>
                 <b>Диагноз: </b>
-                {`${healingPlan.diagnosis.main}`}
+                {`${diagnosis.main}`}
               </Typography>
             </Paper>
           </Grid>
@@ -236,10 +248,8 @@ const HealingPlanChart = ({ healingPlan }) => {
                 <Typography>
                   <b>Красные флаги: </b>
                 </Typography>
-                {healingPlan &&
-                healingPlan.redFlags &&
-                healingPlan.redFlags.length > 0
-                  ? healingPlan.redFlags.map(({ id, title }) => (
+                {redFlags && redFlags.length > 0
+                  ? redFlags.map(({ id, title }) => (
                       <Chip key={id} color="secondary" label={title} />
                     ))
                   : null}
