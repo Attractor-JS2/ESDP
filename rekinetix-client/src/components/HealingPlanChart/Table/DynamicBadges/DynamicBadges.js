@@ -1,15 +1,15 @@
 import React from 'react';
+import './DynamicBadges.css'
 
 const DynamicBadges = ({ values }) => {
+  if (values !== 0 && !values) return '';
   return (
     <>
-      {
-        {
-          'стабильная': <span className="badge badge-warning">{values}</span>,
-          'положительная': <span className="badge badge-success">{values}</span>,
-          'отрицательная': <span className="badge badge-danger">{values}</span>,
-        }[values] || `${values}`
-      }
+      {{
+        1: <span className="status status_warning"></span>,
+        2: <span className="status status_success"></span>,
+        0: <span className="status status_danger"></span>,
+      }[values] || `${values}`}
     </>
   );
 };
