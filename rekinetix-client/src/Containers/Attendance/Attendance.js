@@ -1,18 +1,18 @@
 import React, {Component} from "react";
 import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
-import {necessaryProcedures, availableProcedures, availableHealingPlaces, necessaryHealingPlaces} from './procedures'
+import {availableProcedures, availableHealingPlaces} from './procedures'
 import {Persist} from "formik-persist";
 import AttendancePlan from "./Component/AttendancePlan";
 
 class Attendance extends Component {
 
-  state= {
-    medicName: "Петров Иван Сидорович",
-    patientName: "Сидоров Петр Иванович",
-    necessaryProceduresState: necessaryProcedures,
-    necessaryHealingPlacesState: necessaryHealingPlaces
-  }
+  // state= {
+  //   medicName: "Петров Иван Сидорович",
+  //   patientName: "Сидоров Петр Иванович",
+  //   necessaryProceduresState: necessaryProcedures,
+  //   necessaryHealingPlacesState: necessaryHealingPlaces
+  // }
 
   render() {
     const formattedDate = () => {
@@ -34,61 +34,60 @@ class Attendance extends Component {
         <Formik
           initialValues={
             {
-              firstPartData: [
+              attendanceDate: formattedDate(),
+              patientName: "Петров Иван Сидорович", //this.state.patientName,
+              medicName: "Сидоров Петр Иванович", //this.state.medicName,
+
+              firstStage: [
                 {
-                  procedureItem: "Расслабление",
-                  necessaryPlace: "Надостная мышца",
-                  dynamicsData: [],
-                  isNew: false,
+                  procedureName: "Расслабление",
+                  procedureArea: "Надостная мышца",
+                  procedureDynamic: 1,
+                  procedureIsNew: false,
                 },
                 {
-                  procedureItem: "Ультразвук",
-                  necessaryPlace: "Подлопаточная мышца",
-                  dynamicsData: [],
-                  isNew: false,
+                  procedureName: "Ультразвук",
+                  procedureArea: "Подлопаточная мышца",
+                  procedureDynamic: 1,
+                  procedureIsNew: false,
                 },
                 {
-                  procedureItem: "Плазмолифтинг",
-                  necessaryPlace: "Латеральная связка",
-                  dynamicsData: [],
-                  isNew: false,
+                  procedureName: "Плазмолифтинг",
+                  procedureArea: "Латеральная связка",
+                  procedureDynamic: 1,
+                  procedureIsNew: false,
                 },
               ],
-              secondPartData: [
+              secondStage: [
               ],
-              thirdPartData: [
+              thirdStage: [
               ],
-              fourthPartData: [
+              fourthStage: [
                 {
-                  procedureItem: "процедура четвертого этапа 1",
-                  necessaryPlace: "Массаж",
-                  dynamicsData: [],
-                  isNew: false,
+                  procedureName: "процедура четвертого этапа 1",
+                  procedureArea: "Массаж",
+                  procedureDynamic: 1,
+                  procedureIsNew: false,
                 }
               ],
-              fifthPartData: [
+              fifthStage: [
                 {
-                  procedureItem: "Упражнение",
-                  necessaryPlace: "Тренировка нижнего циллиндра",
-                  dynamicsData: [],
-                  isNew: false,
+                  procedureName: "Упражнение",
+                  procedureArea: "Тренировка нижнего циллиндра",
+                  procedureDynamic: 1,
+                  procedureIsNew: false,
                 },
                 {
-                  procedureItem: "Упражнение",
-                  necessaryPlace: "Подъем правой ноги",
-                  dynamicsData: [],
-                  isNew: false,
+                  procedureName: "Упражнение",
+                  procedureArea: "Подъем правой ноги",
+                  procedureDynamic: 1,
+                  procedureIsNew: false,
                 },
               ],
-              date: formattedDate(),
-              patientName: this.state.patientName,
-              medicName: this.state.medicName,
-              homeExcercising: [{excerciseName: ""}],
-              patientFeelings: [],
-              patientHoodBefore: "",
-              patientHoodAfter: "",
-              painScaleBefore: "",
-              painScaleAfter: ""
+              // homeExcercising: [{excerciseName: ""}],
+              patientDynamic: 1,
+              beforeAttendance: {comments: "", pain: 0},
+              afterAttendance: {comments: "", pain: 0}
             }}
           onSubmit={async (data, {resetForm}) => {
             console.log(data);
@@ -105,119 +104,113 @@ class Attendance extends Component {
               <p className="mb-2" name="medicName">Врач: {values.medicName}</p>
               <AttendancePlan
                 attendanceTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
-                attendanceName="firstPartData"
-                attendance={values.firstPartData}
-                dynamics={values.firstDynamicsData}
-                necessaryProcedures={this.state.necessaryProceduresState["firstStage"]}
+                attendanceName="firstStage"
+                attendance={values.firstStage}
+                // necessaryProcedures={this.state.necessaryProceduresState["firstStage"]}
                 availableProcedures={availableProcedures["firstStage"]}
-                necessaryPlace={this.state.necessaryHealingPlacesState["firstStage"]}
+                // necessaryPlace={this.state.necessaryHealingPlacesState["firstStage"]}
                 availablePlace={availableHealingPlaces["firstStage"]}
                 stage="firstStage"
               />
               <AttendancePlan
                 attendanceTitle="Этап 2: Мобилизационнные мероприятия"
-                attendanceName="secondPartData"
-                attendance={values.secondPartData}
-                dynamics={values.secondDynamicsData}
-                necessaryProcedures={this.state.necessaryProceduresState["secondStage"]}
+                attendanceName="secondStage"
+                attendance={values.secondStage}
+                // necessaryProcedures={this.state.necessaryProceduresState["secondStage"]}
                 availableProcedures={availableProcedures["secondStage"]}
-                necessaryPlace={this.state.necessaryHealingPlacesState["secondStage"]}
+                // necessaryPlace={this.state.necessaryHealingPlacesState["secondStage"]}
                 availablePlace={availableHealingPlaces["secondStage"]}
                 stage="secondStage"
               />
               <AttendancePlan
                 attendanceTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
-                attendanceName="thirdPartData"
-                attendance={values.thirdPartData}
-                dynamics={values.thirdDynamicsData}
-                necessaryProcedures={this.state.necessaryProceduresState["thirdStage"]}
+                attendanceName="thirdStage"
+                attendance={values.thirdStage}
+                // necessaryProcedures={this.state.necessaryProceduresState["thirdStage"]}
                 availableProcedures={availableProcedures["thirdStage"]}
-                necessaryPlace={this.state.necessaryHealingPlacesState["thirdStage"]}
+                // necessaryPlace={this.state.necessaryHealingPlacesState["thirdStage"]}
                 availablePlace={availableHealingPlaces["thirdStage"]}
                 stage="thirdStage"
               />
               <AttendancePlan
                 attendanceTitle="Этап 4: Восстановление функций в МФЛ"
-                attendanceName="fourthPartData"
-                attendance={values.fourthPartData}
-                dynamics={values.fourthDynamicsData}
-                necessaryProcedures={this.state.necessaryProceduresState["fourthStage"]}
+                attendanceName="fourthStage"
+                attendance={values.fourthStage}
+                // necessaryProcedures={this.state.necessaryProceduresState["fourthStage"]}
                 availableProcedures={availableProcedures["fourthStage"]}
-                necessaryPlace={this.state.necessaryHealingPlacesState["fourthStage"]}
+                // necessaryPlace={this.state.necessaryHealingPlacesState["fourthStage"]}
                 availablePlace={availableHealingPlaces["fourthStage"]}
                 stage="fourthStage"
               />
               <AttendancePlan
                 attendanceTitle="Этап 5: Профилактика"
-                attendanceName="fifthPartData"
-                attendance={values.fifthPartData}
-                dynamics={values.fifthDynamicsData}
-                necessaryProcedures={this.state.necessaryProceduresState["fifthStage"]}
+                attendanceName="fifthStage"
+                // necessaryProcedures={this.state.necessaryProceduresState["fifthStage"]}
                 availableProcedures={availableProcedures["fifthStage"]}
-                necessaryPlace={this.state.necessaryHealingPlacesState["fifthStage"]}
+                // necessaryPlace={this.state.necessaryHealingPlacesState["fifthStage"]}
                 availablePlace={availableHealingPlaces["fifthStage"]}
                 stage="fifthStage"
               />
-              <FieldArray name="homeExcercising">
-                {arrayHelpers => (
-                  <div className="mb-3"> Упражнения на дому
-                    {values.homeExcercising.map((excercise, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          <Field
-                            className="mb-2"
-                            placeholder="Упражнение"
-                            name={`homeExcercising.${index}.excerciseName`}
-                            as={Input}
-                          />
-                          <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
-                        </div>
-                      );
-                    })}
-                    <Button className="d-block" color='primary' onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить
-                      упражнение</Button>
+              {/*<FieldArray name="homeExcercising">*/}
+              {/*  {arrayHelpers => (*/}
+              {/*    <div className="mb-3"> Упражнения на дому*/}
+              {/*      {values.homeExcercising.map((excercise, index) => {*/}
+              {/*        return (*/}
+              {/*          <div key={index} className="d-flex">*/}
+              {/*            <Field*/}
+              {/*              className="mb-2"*/}
+              {/*              placeholder="Упражнение"*/}
+              {/*              name={`homeExcercising.${index}.excerciseName`}*/}
+              {/*              as={Input}*/}
+              {/*            />*/}
+              {/*            <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>*/}
+              {/*          </div>*/}
+              {/*        );*/}
+              {/*      })}*/}
+              {/*      <Button className="d-block" color='primary' onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить*/}
+              {/*        упражнение</Button>*/}
 
-                  </div>
-                )}
-              </FieldArray>
-              <FieldArray name ="patientFeelings">
+              {/*    </div>*/}
+              {/*  )}*/}
+              {/*</FieldArray>*/}
+              <FieldArray name ="patientDynamic">
                 {arrayHelpers => (
                   <div className='d-flex p-2 mb-1'><p>Динамика со слов пациента: </p>
                     <label>
                       <input
                         type="radio"
                         name="patientFeelings"
-                        value="Хуже"
-                        checked={values.patientFeelings === "Хуже"}
-                        onChange={() => setFieldValue("patientFeelings","Хуже")}
+                        value="0"
+                        checked={values.patientDynamic === 0}
+                        onChange={() => setFieldValue("patientDynamic",0)}
                       />Хуже
                     </label>
                     <label>
                       <input
                         type="radio"
                         name={`patientFeelings`}
-                        value="Так же"
-                        checked={values.patientFeelings === "Так же"}
-                        onChange={() => setFieldValue("patientFeelings", "Так же")}
+                        value="1"
+                        checked={values.patientDynamic === 1}
+                        onChange={() => setFieldValue("patientDynamic", 1)}
                       />Так же
                     </label>
                     <label>
                       <input
                         type="radio"
                         name={`patientFeelings`}
-                        value="Лучше"
-                        checked={values.patientFeelings === "Лучше"}
-                        onChange={() => setFieldValue("patientFeelings", "Лучше")}
+                        value="2"
+                        checked={values.patientDynamic === 2}
+                        onChange={() => setFieldValue("patientDynamic", 2)}
                       />Лучше
                     </label>
                   </div>
                 )}
               </FieldArray>
               <img className="d-block mb-3" style={{height: 100, width: 400}} src="./painscale.jpg" alt=""/>
-              <Field className="mb-3" placeholder="Состояние пациента до приема/Жалобы" name="patientHoodBefore" type="input"
+              <Field className="mb-3" placeholder="Состояние пациента до приема/Жалобы" name="beforeAttendance.comments" type="input"
                      as={Input} />
               <p className="d-inline-block pr-3">Шкала боли</p>
-              <Field name="painScaleBefore" as="select">
+              <Field name="beforeAttendance.pain" as="select">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -231,10 +224,10 @@ class Attendance extends Component {
                 <option value="10">10</option>
               </Field>
 
-              <Field className="mb-3" placeholder="Состояние пациента после приема/Жалобы" name="patientHoodAfter" type="input"
+              <Field className="mb-3" placeholder="Состояние пациента после приема/Жалобы" name="afterAttendance.comments" type="input"
                      as={Input}/>
               <p className="d-inline-block pr-3">Шкала боли</p>
-              <Field name="painScaleAfter" as="select">
+              <Field name="afterAttendance.pain" as="select">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
