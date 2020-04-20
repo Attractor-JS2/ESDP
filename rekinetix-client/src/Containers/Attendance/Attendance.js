@@ -43,19 +43,19 @@ class Attendance extends Component {
                   procedureName: "Расслабление",
                   procedureArea: "Надостная мышца",
                   procedureDynamic: 1,
-                  isNew: false,
+                  procedureIsNew: false,
                 },
                 {
                   procedureName: "Ультразвук",
                   procedureArea: "Подлопаточная мышца",
                   procedureDynamic: 1,
-                  isNew: false,
+                  procedureIsNew: false,
                 },
                 {
                   procedureName: "Плазмолифтинг",
                   procedureArea: "Латеральная связка",
                   procedureDynamic: 1,
-                  isNew: false,
+                  procedureIsNew: false,
                 },
               ],
               secondStage: [
@@ -67,7 +67,7 @@ class Attendance extends Component {
                   procedureName: "процедура четвертого этапа 1",
                   procedureArea: "Массаж",
                   procedureDynamic: 1,
-                  isNew: false,
+                  procedureIsNew: false,
                 }
               ],
               fifthStage: [
@@ -75,13 +75,13 @@ class Attendance extends Component {
                   procedureName: "Упражнение",
                   procedureArea: "Тренировка нижнего циллиндра",
                   procedureDynamic: 1,
-                  isNew: false,
+                  procedureIsNew: false,
                 },
                 {
                   procedureName: "Упражнение",
                   procedureArea: "Подъем правой ноги",
                   procedureDynamic: 1,
-                  isNew: false,
+                  procedureIsNew: false,
                 },
               ],
               // homeExcercising: [{excerciseName: ""}],

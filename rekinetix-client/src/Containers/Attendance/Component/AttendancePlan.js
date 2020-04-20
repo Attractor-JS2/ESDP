@@ -20,16 +20,16 @@ const AttendancePlan = (props) => {
                       <div key={`${index}`} className='d-flex p-2 mb-1'>
                         <div className='d-flex p-2 mb-1'>
                           {
-                            !CURRENT_FIELD.isNew ? <Field
+                            !CURRENT_FIELD.procedureIsNew ? <Field
                               className="ml-3"
                               size="35"
                               name={CURRENT_FIELD.procedureName}
-                              disabled={!CURRENT_FIELD.isNew}
+                              disabled={!CURRENT_FIELD.procedureIsNew}
                               value={CURRENT_FIELD.procedureName}
                             />:<Field
                               className="ml-3"
                               name={`${props.attendanceName}[${index}].procedureName`}
-                              disabled={!CURRENT_FIELD.isNew}
+                              disabled={!CURRENT_FIELD.procedureIsNew}
                               component={'select'}
                             >
                               <option value={''}>-- Выбор --</option>
@@ -41,16 +41,16 @@ const AttendancePlan = (props) => {
                             </Field>
                           }
                           {
-                            !CURRENT_FIELD.isNew ? <Field
+                            !CURRENT_FIELD.procedureIsNew ? <Field
                               className="ml-2"
                               size="50"
                               name={CURRENT_FIELD.procedureArea}
-                              disabled={!CURRENT_FIELD.isNew}
+                              disabled={!CURRENT_FIELD.procedureIsNew}
                               value={CURRENT_FIELD.procedureArea}
                             />:<Field
                               className="ml-2"
                               name={`${props.attendanceName}[${index}].procedureArea`}
-                              disabled={!CURRENT_FIELD.isNew}
+                              disabled={!CURRENT_FIELD.procedureIsNew}
                               component={'select'}
                             >
                               <option value={''}>-- Выбор --</option>
@@ -106,7 +106,7 @@ const AttendancePlan = (props) => {
                       procedureName: '',
                       procedureArea: '',
                       procedureDynamic: 1,
-                      isNew: true})
+                      procedureIsNew: true})
                   )}
                 }
                 >Добавить</Button>
