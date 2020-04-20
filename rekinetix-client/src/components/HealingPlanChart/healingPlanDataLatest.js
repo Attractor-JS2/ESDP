@@ -318,6 +318,7 @@ export const statuses = [
       procedureName: 'Расслабление',
     },
     status: 'завершено',
+    planned: '3'
   },
   {
     id: 'status02',
@@ -326,6 +327,7 @@ export const statuses = [
       procedureName: 'Ультразвук',
     },
     status: 'прервано',
+    planned: '5'
   },
   {
     id: 'status03',
@@ -334,6 +336,7 @@ export const statuses = [
       procedureName: 'Плазмолифтинг',
     },
     status: 'действует',
+    planned: '5'
   },
   {
     id: 'status04',
@@ -342,6 +345,7 @@ export const statuses = [
       procedureName: 'Тракция',
     },
     status: 'приостановлено',
+    planned: '3'
   },
   {
     id: 'status05',
@@ -350,6 +354,7 @@ export const statuses = [
       procedureName: 'Компрессия',
     },
     status: 'действует',
+    planned: '5'
   },
   {
     id: 'status06',
@@ -358,6 +363,7 @@ export const statuses = [
       procedureName: 'Мобилизация',
     },
     status: 'действует',
+    planned: '5'
   },
   {
     id: 'status07',
@@ -366,6 +372,7 @@ export const statuses = [
       procedureName: 'Упражнение: Активация нижнего цилиндра',
     },
     status: 'действует',
+    planned: '3'
   },
   {
     id: 'status08',
@@ -374,6 +381,7 @@ export const statuses = [
       procedureName: 'Упражнение: Тренировка нижнего цилиндра',
     },
     status: 'действует',
+    planned: '5',
   },
   {
     id: 'status09',
@@ -382,6 +390,7 @@ export const statuses = [
       procedureName: 'Стабилизация коленного сустава',
     },
     status: 'действует',
+    planned: '5'
   },
   {
     id: 'status10',
@@ -390,6 +399,7 @@ export const statuses = [
       procedureName: 'Тренировка передней ленты',
     },
     status: 'действует',
+    planned: '5'
   },
   {
     id: 'status11',
@@ -398,6 +408,7 @@ export const statuses = [
       procedureName: 'Упражнение: Тренировка нижнего цилиндра',
     },
     status: 'действует',
+    planned: '3'
   },
   {
     id: 'status12',
@@ -406,6 +417,7 @@ export const statuses = [
       procedureName: 'Упражнение: Подъём правой ноги',
     },
     status: 'действует',
+    planned: '5',
   },
   {
     id: 'status13',
@@ -414,5 +426,5 @@ export const statuses = [
       procedureName: 'Упражнение: Отведение левой ноги',
     },
     status: 'прервано',
-  },
+    planned: '5',
 ];
