@@ -73,6 +73,17 @@ const HealingPlanChart = ({
     return procedures;
   };
 
+  const getDynamicAndPainScaleRows = (attendances) => {
+    const rows = attendances.reduce((acc, curAttendance) => {
+      const { attendanceDate } = curAttendance;
+      const conditionRow = {
+        procedureName: 'Состояние пациента',
+        [attendanceDate]: curAttendance.patientDynamic,
+      }
+    }, []);
+    return rows;
+  }
+
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
     procedureName: <b>{rowTitle}</b>,
