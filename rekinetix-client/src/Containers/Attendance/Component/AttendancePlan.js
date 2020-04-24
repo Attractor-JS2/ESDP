@@ -1,9 +1,12 @@
 import React from 'react';
 import {Field, FieldArray} from "formik";
-import {Button} from "reactstrap";
+import {Button, Input} from "reactstrap";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import './AttendancePlan.css';
 
 const AttendancePlan = (props) => {
+
   return (
     <>
       <FieldArray name={props.attendanceName}>
@@ -14,52 +17,44 @@ const AttendancePlan = (props) => {
                 {
                   arrayHelpers.form.values[props.attendanceName].map((procedureName, index) => {
                     const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
-                    //console.log(CURRENT_FIELD)
+                    // console.log(arrayHelpers.form)
                     return (
 
-                      <div key={`${index}`} className='d-flex p-2 mb-1'>
-                        <div className='d-flex p-2 mb-1'>
+                      <div key={`${index}`} className='d-flex'>
+                        <div className='d-flex'>
                           {
                             !CURRENT_FIELD.procedureIsNew ? <Field
-                              className="ml-3"
                               size="35"
                               name={CURRENT_FIELD.procedureName}
                               disabled={!CURRENT_FIELD.procedureIsNew}
                               value={CURRENT_FIELD.procedureName}
-                            />:<Field
-                              className="ml-3"
+                              component={Input}
+                            />:<Autocomplete
+                              className="ml-2"
                               name={`${props.attendanceName}[${index}].procedureName`}
-                              disabled={!CURRENT_FIELD.procedureIsNew}
-                              component={'select'}
-                            >
-                              <option value={''}>-- Выбор --</option>
-                              {
-                                props.availableProcedures.map((procedureName, i) => {
-                                  return <option key={i} name={procedureName} value={procedureName}>{procedureName}</option>
-                                })
-                              }
-                            </Field>
+                              options={props.availableProcedures}
+                              onChange={(event, value) => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureName`,value)}
+                              getOptionLabel={(option) => option}
+                              style={{ width: 300 }}
+                              renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                            />
                           }
                           {
                             !CURRENT_FIELD.procedureIsNew ? <Field
                               className="ml-2"
-                              size="50"
                               name={CURRENT_FIELD.procedureArea}
                               disabled={!CURRENT_FIELD.procedureIsNew}
                               value={CURRENT_FIELD.procedureArea}
-                            />:<Field
-                              className="ml-2"
-                              name={`${props.attendanceName}[${index}].procedureArea`}
-                              disabled={!CURRENT_FIELD.procedureIsNew}
-                              component={'select'}
-                            >
-                              <option value={''}>-- Выбор --</option>
-                              {
-                                props.availablePlace.map((procedureArea, i) => {
-                                  return <option key={i} name={procedureArea} value={procedureArea}>{procedureArea}</option>
-                                })
-                              }
-                            </Field>
+                              component={Input}
+                              />:<Autocomplete
+                            className="ml-2"
+                            name={`${props.attendanceName}[${index}].procedureArea`}
+                            options={props.availablePlace}
+                            onChange={(event, value) => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureArea`,value)}
+                            getOptionLabel={(option) => option}
+                            style={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                            />
                           }
                           {
                             <div className='d-flex p-2 mb-1'>

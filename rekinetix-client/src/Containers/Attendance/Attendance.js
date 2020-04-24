@@ -37,7 +37,6 @@ class Attendance extends Component {
               attendanceDate: formattedDate(),
               patientName: "Петров Иван Сидорович", //this.state.patientName,
               medicName: "Сидоров Петр Иванович", //this.state.medicName,
-
               firstStage: [
                 {
                   procedureName: "Расслабление",
