@@ -7,8 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import 'react-datepicker/dist/react-datepicker.css';
 
 
-
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import {BrowserRouter} from "react-router-dom";

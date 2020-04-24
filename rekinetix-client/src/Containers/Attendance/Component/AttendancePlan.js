@@ -36,7 +36,7 @@ const AttendancePlan = (props) => {
                               onChange={(event, value) => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureName`,value)}
                               getOptionLabel={(option) => option}
                               style={{ width: 300 }}
-                              renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                              renderInput={(params) => <TextField {...params} label="Название процедуры" variant="outlined" />}
                             />
                           }
                           {
@@ -53,7 +53,7 @@ const AttendancePlan = (props) => {
                             onChange={(event, value) => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureArea`,value)}
                             getOptionLabel={(option) => option}
                             style={{ width: 300 }}
-                            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                            renderInput={(params) => <TextField {...params} label="Назначение" variant="outlined" />}
                             />
                           }
                           {
