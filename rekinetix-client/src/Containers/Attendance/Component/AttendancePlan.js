@@ -6,7 +6,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import './AttendancePlan.css';
 
 const AttendancePlan = (props) => {
-
   return (
     <>
       <FieldArray name={props.attendanceName}>
