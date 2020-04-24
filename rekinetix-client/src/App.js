@@ -11,6 +11,7 @@ function App() {
     <Row className='w-100 mb-3 border-bottom border-dark row justify-content-center'>
       <Link className='mx-5' to='/attendance'>Прием</Link>
       <Link to='/plan-chart'>План лечения</Link>
+      <Link to='/plan'>Создание плана лечения</Link>
     </Row>
     
     <Routes/>;

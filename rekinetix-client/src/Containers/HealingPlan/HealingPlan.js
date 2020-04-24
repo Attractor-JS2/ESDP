@@ -35,44 +35,44 @@ class HealingPlan extends Component {
           {({values}) => (
             <Form>
               <HealingPart
-                name="firstStageData"
+                name="firstStage"
                 procedureNames={firstStageProcedureNames}
                 procedureAreas={firstStageProcedureAreas}
                 stageClassName={{title: "firstStageTitle", background: 'firstStageBg'}}
                 title="Этап 1: Обезболивание/противовоспалительные мероприятия"
-                stage={values.firstStageData}
+                stage={values.firstStage}
               />
               <HealingPart
-                name="secondStageData"
+                name="secondStage"
                 procedureNames={secondStageProcedureNames}
                 procedureAreas={secondStageProcedureAreas}
                 stageClassName={{title: "secondStageTitle", background: 'secondStageBg'}}
                 title="Этап 2: Мобилизация"
-                stage={values.secondStageData}
+                stage={values.secondStage}
               />
               <HealingPart
-                name="thirdStageData"
+                name="thirdStage"
                 procedureNames={thirdStageProcedureNames}
                 procedureAreas={thirdStageProcedureAreas}
                 stageClassName={{title: "thirdStageTitle", background: 'thirdStageBg'}}
                 title="Этап 3: НМА и Стабилизация"
-                stage={values.thirdStageData}
+                stage={values.thirdStage}
               />
               <HealingPart
-                name="fourthStageData"
+                name="fourthStage"
                 procedureNames={fourthStageProcedureNames}
                 procedureAreas={fourthStageProcedureAreas}
                 stageClassName={{title: "fourthStageTitle", background: 'fourthStageBg'}}
                 title="Этап 4: Восстановление функций в МФЛ"
-                stage={values.fourthStageData}
+                stage={values.fourthStage}
               />
               <HealingPart
-                name="fifthStageData"
+                name="fifthStage"
                 procedureNames={fifthStageProcedureNames}
                 procedureAreas={fifthStageProcedureAreas}
                 stageClassName={{title: "fifthStageTitle", background: 'fifthStageBg'}}
                 title="Этап 5: Профилактика"
-                stage={values.fifthStageData}
+                stage={values.fifthStage}
               />
               
               <Button type="submit">Сохранить</Button>
