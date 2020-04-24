@@ -9,9 +9,9 @@ const FormikAutocomplete = ({textFieldProps, ...props}) => {
   const {form: {setTouched, setFieldValue}} = props;
   const {error, helperText, ...field} = fieldToTextField(props);
   const {name} = field;
-  
   return (
     <Autocomplete
+      getOptionSelected={() => true}
       {...props}
       {...field}
       onChange={(_, value) => setFieldValue(name, value)}
