@@ -1,6 +1,7 @@
 import React from 'react';
 import {Field, FieldArray} from "formik";
 import {Button} from "reactstrap";
+import {Input} from "@material-ui/core";
 
 const HealingPart = (props) => {
   
@@ -9,19 +10,21 @@ const HealingPart = (props) => {
       <FieldArray name={props.name}>
         {arrayHelpers => (
           <div className="mb-3 mt-3"><p className={props.userClassName}>{props.title}</p>
-            {props.stage.map((firstPartData, index) => {
+            {props.stage.map((procedure, index) => {
               return (
                 <div key={index} className="d-flex">
                   <Field
                     className="mb-2"
-                    name={`${props.name}.${index}.${props.name}`}
-                    component="input"
+                    name={`${props.name}[${index}].procedureName`}
+                    type='input'
+                    as={Input}
                   />
                   <label> Метод:
                     <Field
                       className="mb-2"
-                      name={`${props.name}.${index}.${props.method}`}
-                      component="input"
+                      name={`${props.name}[${index}].procedureArea`}
+                      type='input'
+                      as={Input}
                     />
                   
                   </label>
