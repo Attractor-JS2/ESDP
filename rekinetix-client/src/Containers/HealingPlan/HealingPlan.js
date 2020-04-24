@@ -25,55 +25,56 @@ class HealingPlan extends Component {
         <h3>План лечения</h3>
         <Formik
           initialValues={{
-            firstStageData: [{}],
-            secondStageData: [{}],
-            thirdStageData: [{}],
-            fourthStageData: [{}],
-            fifthStageData: [{}],
-            recommendationData: [{}],
+            firstStageData: [{procedureName: '', procedureArea: ''}],
+            secondStageData: [{procedureName: '', procedureArea: ''}],
+            thirdStageData: [{procedureName: '', procedureArea: ''}],
+            fourthStageData: [{procedureName: '', procedureArea: ''}],
+            fifthStageData: [{procedureName: '', procedureArea: ''}]
           }}
           onSubmit={data => {
             console.log(data)
           }}>
-          {({values, setFieldValue}) => (
+          {({values}) => (
             <Form>
               <HealingPart
                 name = "firstStageData"
-                method = "firstPartHealingItem"
+                // methods = {firstStageMethods}
+                // names = {firstStageHealingItem}
                 userClassName = "firstPart"
                 title = "Этап 1: Обезболивание/противовоспалительные мероприятия"
                 stage = {values.firstStageData}
               />
               <HealingPart
-                name = "secondStage"
-                method = "secondPartMethod"
+                name = "secondStageData"
+               
                 userClassName = "secondPart"
                 title = "Этап 2: Мобилизация"
                 stage = {values.secondStageData}
               />
               <HealingPart
-                name = "thirdStage"
-                method = "thirdPartMethod"
+                name = "thirdStageData"
+               
                 userClassName = "thirdPart"
                 title = "Этап 3: НМА и Стабилизация"
                 stage = {values.thirdStageData}
               />
               <HealingPart
-                name = "fourthStage"
-                method = "fourthPartMethod"
+                name = "fourthStageData"
+               
                 userClassName = "fourthPart"
                 title = "Этап 4: Восстановление функций в МФЛ"
                 stage = {values.fourthStageData}
               />
               <HealingPart
-                name = "fifthStage"
-                method = "fifthPartMethod"
+                name = "fifthStageData"
+              
                 userClassName = "fifthPart"
                 title = "Этап 5: Профилактика"
                 stage = {values.fifthStageData}
               />
              
               <Button type="submit">Сохранить</Button>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
