@@ -32,7 +32,7 @@ const HealingPart = (props) => {
                       label="Введите название процедуры"
                       clearOnEscape
                       {...procedureNameAutocompleteProps}
-                      textFieldProps={{}}
+                      
                     />
                     
                   
@@ -45,7 +45,7 @@ const HealingPart = (props) => {
                       label="Введите область направления"
                       clearOnEscape
                       {...procedureAreaAutocompleteProps}
-                      textFieldProps={{}}
+                      
                     />
                   
                   </label>
@@ -64,7 +64,7 @@ const HealingPart = (props) => {
                 </div>
               );
             })}
-            <Button color='primary' className="d-block" onClick={() => arrayHelpers.push({})}>Добавить</Button>
+            <Button color='primary' className="d-block" onClick={() => arrayHelpers.push({procedureName: '', procedureArea: '', procedureQuantity: 0})}>Добавить</Button>
           </div>
         )}
       </FieldArray>
