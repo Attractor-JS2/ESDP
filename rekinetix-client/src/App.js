@@ -1,23 +1,18 @@
 import React from "react";
-import "./App.css";
-import Routes from "./Routes";
-import {Link} from "react-router-dom";
-import {Row} from "reactstrap";
 import {NotificationContainer} from "react-notifications";
 
+import "./App.css";
+import Routes from "./Routes";
+import Header from "./components/Header/Header";
 
 function App() {
-  return(
-  <>
-    <Row className='w-100 mb-3 border-bottom border-dark row justify-content-center'>
-      <Link className='mx-5' to='/attendance'>Прием</Link>
-      <Link to='/plan-chart'>План лечения</Link>
-      <Link to='/plan'>Создание плана лечения</Link>
-    </Row>
-    <NotificationContainer />
-    
-    <Routes/>;
-  </>)
+  return (
+    <>
+      <Header />
+      <NotificationContainer />
+      <Routes />
+    </>
+  );
 }
 
 export default App;
