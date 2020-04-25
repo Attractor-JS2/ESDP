@@ -3,6 +3,7 @@ import "./App.css";
 import Routes from "./Routes";
 import {Link} from "react-router-dom";
 import {Row} from "reactstrap";
+import {NotificationContainer} from "react-notifications";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Link to='/plan-chart'>План лечения</Link>
       <Link to='/plan'>Создание плана лечения</Link>
     </Row>
+    <NotificationContainer />
     
     <Routes/>;
   </>)
