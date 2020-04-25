@@ -1,17 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
 
-import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
+import PatientInfo from './PatientInfo/PatientInfo';
 
 const HealingPlanChart = ({
   attendances,
@@ -77,7 +73,7 @@ const HealingPlanChart = ({
   const getDynamicAndPainScaleRows = (attendances) => {
     const conditionRow = { rowTitle: 'Состояние пациента' };
     const painScaleBeforeRow = { rowTitle: 'Шкала боли до' };
-    const painSacleAfterRow = { rowTitle: 'Шкала боли после' };
+    const painScaleAfterRow = { rowTitle: 'Шкала боли после' };
     const rows = attendances.reduce(
       (acc, curAttendance) => {
         const { attendanceDate } = curAttendance;
@@ -96,7 +92,7 @@ const HealingPlanChart = ({
         };
         return acc;
       },
-      [conditionRow, painScaleBeforeRow, painSacleAfterRow],
+      [conditionRow, painScaleBeforeRow, painScaleAfterRow],
     );
     return rows;
   };
@@ -210,42 +206,7 @@ const HealingPlanChart = ({
   return (
     <ScopedCssBaseline>
       <Container>
-        <Grid container spacing={2} direction="row" alignItems="stretch">
-          <Grid item sm={12} md={4}>
-            <Paper className="HealingPlanChart-paper">
-              <Typography>
-                <span>ПАЦИЕНТ: </span>
-                {`${patient.secondName} ${patient.firstName} ${patient.patronymic}`}
-              </Typography>
-              <Typography>
-                <span>ВРАЧ: </span>
-                {`${medic.secondName} ${medic.firstName} ${medic.patronymic}`}
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item sm={12} md={4}>
-            <Paper className="HealingPlanChart-paper">
-              <Typography>
-                <b>Диагноз: </b>
-                {`${diagnosis.main}`}
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item sm={12} md={4}>
-            <Paper className="HealingPlanChart-paper">
-              <div>
-                <Typography>
-                  <b>Красные флаги: </b>
-                </Typography>
-                {redFlags && redFlags.length > 0
-                  ? redFlags.map(({ id, title }) => (
-                      <Chip key={id} color="secondary" label={title} />
-                    ))
-                  : null}
-              </div>
-            </Paper>
-          </Grid>
-        </Grid>
+        <PatientInfo patient={patient} medic={medic} diagnosis={diagnosis} redFlags={redFlags} />
         {chartData && chartData.length > 0 && (
           <Table
             columns={columns}
