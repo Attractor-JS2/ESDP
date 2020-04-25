@@ -76,19 +76,24 @@ const HealingPlanChart = ({
     const painScaleAfterRow = { rowTitle: 'Шкала боли после' };
     const rows = attendances.reduce(
       (acc, curAttendance) => {
-        const { attendanceDate } = curAttendance;
+        const {
+          attendanceDate,
+          patientDynamic,
+          beforeAttendance: {pain: painBefore},
+          afterAttendance: {pain: painAfter},
+        } = curAttendance;
         const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
         acc[0] = {
           ...acc[0],
-          [formattedDate]: curAttendance.patientDynamic,
+          [formattedDate]: patientDynamic,
         };
         acc[1] = {
           ...acc[1],
-          [formattedDate]: curAttendance.beforeAttendance.pain,
+          [formattedDate]: painBefore,
         };
         acc[2] = {
           ...acc[2],
-          [formattedDate]: curAttendance.afterAttendance.pain,
+          [formattedDate]: painAfter,
         };
         return acc;
       },
@@ -206,7 +211,12 @@ const HealingPlanChart = ({
   return (
     <ScopedCssBaseline>
       <Container>
-        <PatientInfo patient={patient} medic={medic} diagnosis={diagnosis} redFlags={redFlags} />
+        <PatientInfo
+          patient={patient}
+          medic={medic}
+          diagnosis={diagnosis}
+          redFlags={redFlags}
+        />
         {chartData && chartData.length > 0 && (
           <Table
             columns={columns}
