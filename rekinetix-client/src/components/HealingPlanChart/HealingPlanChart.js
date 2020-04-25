@@ -60,6 +60,7 @@ const HealingPlanChart = ({
         } else {
           const procedureEdited = {
             ...procedure,
+            rowTitle: procedure.procedureName,
             status: statuses[statusesIndex].status,
             planned: statuses[statusesIndex].planned,
             completed: 1,
@@ -74,9 +75,9 @@ const HealingPlanChart = ({
   };
 
   const getDynamicAndPainScaleRows = (attendances) => {
-    const conditionRow = { procedureName: 'Состояние пациента' };
-    const painScaleBeforeRow = { procedureName: 'Шкала боли до' };
-    const painSacleAfterRow = { procedureName: 'Шкала боли после' };
+    const conditionRow = { rowTitle: 'Состояние пациента' };
+    const painScaleBeforeRow = { rowTitle: 'Шкала боли до' };
+    const painSacleAfterRow = { rowTitle: 'Шкала боли после' };
     const rows = attendances.reduce(
       (acc, curAttendance) => {
         const { attendanceDate } = curAttendance;
@@ -102,30 +103,21 @@ const HealingPlanChart = ({
 
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    procedureName: <b>{rowTitle}</b>,
-    procedureArea: '',
+    rowTitle: <b>{rowTitle}</b>,
     status: 'shouldBeEmpty',
-    planned: '',
-    completed: '',
-    attendances: [],
   });
 
   const getButtonRow = () => ({
-    procedureName: 'AddRowButton',
-    procedureArea: '',
+    rowTitle: 'AddRowButton',
     status: 'shouldBeEmpty',
-    planned: '',
-    completed: '',
-    attendances: [],
   });
 
   const emptyRow = {
-    procedureName: '',
+    rowTitle: '',
     procedureArea: '',
     status: '',
     planned: '',
     completed: '',
-    attendances: [],
   };
 
   const addRowHandler = (rowIndex) => {
@@ -160,7 +152,7 @@ const HealingPlanChart = ({
     () => [
       {
         Header: 'Что делаем',
-        accessor: 'procedureName',
+        accessor: 'rowTitle',
         Cell: AddActionButton,
       },
       {
