@@ -74,15 +74,31 @@ const HealingPlanChart = ({
   };
 
   const getDynamicAndPainScaleRows = (attendances) => {
-    const rows = attendances.reduce((acc, curAttendance) => {
-      const { attendanceDate } = curAttendance;
-      const conditionRow = {
-        procedureName: 'Состояние пациента',
-        [attendanceDate]: curAttendance.patientDynamic,
-      }
-    }, []);
+    const conditionRow = { procedureName: 'Состояние пациента' };
+    const painScaleBeforeRow = { procedureName: 'Шкала боли до' };
+    const painSacleAfterRow = { procedureName: 'Шкала боли после' };
+    const rows = attendances.reduce(
+      (acc, curAttendance) => {
+        const { attendanceDate } = curAttendance;
+        const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
+        acc[0] = {
+          ...acc[0],
+          [formattedDate]: curAttendance.patientDynamic,
+        };
+        acc[1] = {
+          ...acc[1],
+          [formattedDate]: curAttendance.beforeAttendance.pain,
+        };
+        acc[2] = {
+          ...acc[2],
+          [formattedDate]: curAttendance.afterAttendance.pain,
+        };
+        return acc;
+      },
+      [conditionRow, painScaleBeforeRow, painSacleAfterRow],
+    );
     return rows;
-  }
+  };
 
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
@@ -169,7 +185,6 @@ const HealingPlanChart = ({
     [dateHeaderTitles],
   );
 
-
   useEffect(() => {
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
@@ -178,27 +193,23 @@ const HealingPlanChart = ({
       accessor: `${title}`,
       Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
     }));
-    const firstStageRows = getStageRows(attendances, 'firstStage', statuses);
-    const secondStageRows = getStageRows(attendances, 'secondStage', statuses);
-    const thirdStageRows = getStageRows(attendances, 'thirdStage', statuses);
-    const fourthStageRows = getStageRows(attendances, 'fourthStage', statuses);
-    const fifthStageRows = getStageRows(attendances, 'fifthStage', statuses);
     const tableRows = [
       getRowGroupHeader('1. Обезболивание/противовоспалительная'),
-      ...firstStageRows,
+      ...getStageRows(attendances, 'firstStage', statuses),
       getButtonRow(),
       getRowGroupHeader('2. Мобилизация'),
-      ...secondStageRows,
+      ...getStageRows(attendances, 'secondStage', statuses),
       getButtonRow(),
       getRowGroupHeader('3. НМА и стабилизация'),
-      ...thirdStageRows,
+      ...getStageRows(attendances, 'thirdStage', statuses),
       getButtonRow(),
       getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
-      ...fourthStageRows,
+      ...getStageRows(attendances, 'fourthStage', statuses),
       getButtonRow(),
       getRowGroupHeader('5. Профилактика дома'),
-      ...fifthStageRows,
+      ...getStageRows(attendances, 'fifthStage', statuses),
       getButtonRow(),
+      ...getDynamicAndPainScaleRows(attendances),
     ];
     setHeaderTitles(dynamicColumns);
     setChartData(tableRows);
