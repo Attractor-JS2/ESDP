@@ -3,6 +3,8 @@ import {Button, Container} from "reactstrap";
 import {Formik, Form} from "formik";
 import "./HealingPlan.css";
 import HealingPart from "./Components/HealingPart";
+import {submitForm} from "../../store/actions/healingPlan";
+import {connect} from "react-redux";
 
 class HealingPlan extends Component {
   render() {
@@ -30,7 +32,7 @@ class HealingPlan extends Component {
             fifthStage: []
           }}
           onSubmit={data => {
-            console.log(data)
+            this.props.submitForm(data);
           }}>
           {({values}) => (
             <Form>
@@ -76,7 +78,6 @@ class HealingPlan extends Component {
               />
               
               <Button type="submit">Сохранить</Button>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
@@ -85,4 +86,10 @@ class HealingPlan extends Component {
   };
 }
 
-export default HealingPlan;
+const mapDispatchToProps = dispatch => {
+  return {
+    submitForm: (data) => dispatch(submitForm(data))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(HealingPlan);
