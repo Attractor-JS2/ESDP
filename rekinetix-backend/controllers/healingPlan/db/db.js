@@ -1,26 +1,26 @@
 const fs = require('fs');
 
-const dbFileName = './db.json';
+const dbFileName = './controllers/healingPlan/db/db.json';
 
 let data = [];
 
 module.exports = {
-  init() {
+  init() { // Подготавливает либо текущее значение базы, либо создает пустое
     try {
-      const dbContent = fs.readFileSync(dbFileName);
+      const dbContent = fs.readFileSync(dbFileName); // Сожержимое db.json
       data = JSON.parse(String(dbContent));
     } catch (e) {
       data = [];
     }
   },
-  getData() {
+  getData() { // возвращает текущее состояние базы
     return data;
   },
-  addItem(item) {
+  addItem(item) { // Добавляет в копию базы запись
     data.push(item);
     this.save();
   },
-  save() {
+  save() { // Сохраняет изменения копии в базу
     fs.writeFileSync(dbFileName, JSON.stringify(data));
   }
 };
