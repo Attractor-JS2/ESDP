@@ -29,9 +29,8 @@ const createRouter = () => {
         ...fifthStage.map((procedure) => ({ ...procedure, status: procedure.status || 'запланировано'}))
       ],
     };
-    console.log(healingPlanWithStatuses);
     try {
-      db.addItem(healingPlan);
+      db.addItem(healingPlanWithStatuses);
     } catch (e) {
       return res.sendStatus(500);
     }
