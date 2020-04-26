@@ -20,7 +20,6 @@ const Routes = () => {
       <Route path="/plan-chart">
         <HealingPlanChart
           attendances={attendances}
-          statuses={statuses}
           redFlags={redFlags}
           patient={patient}
           medic={medic}
