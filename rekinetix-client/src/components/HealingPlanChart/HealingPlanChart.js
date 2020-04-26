@@ -9,6 +9,7 @@ import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
 import PatientInfo from './PatientInfo/PatientInfo';
+import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import { fetchHealingPlan } from '../../store/actions/healingPlan';
 
 const HealingPlanChart = ({
@@ -22,6 +23,7 @@ const HealingPlanChart = ({
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
+  const [isProcedureAddingNeeded, setAddProcedure] = useState(false);
 
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
@@ -137,21 +139,13 @@ const HealingPlanChart = ({
     status: 'shouldBeEmpty',
   });
 
-  const emptyRow = {
-    rowTitle: '',
-    procedureArea: '',
-    status: '',
-    planned: '',
-    completed: '',
+  const addRowHandler = (rowIndex) => {
+    setAddProcedure(true);
   };
 
-  const addRowHandler = (rowIndex) => {
-    setChartData((prevState) => {
-      const rows = [...prevState];
-      rows.splice(rowIndex, 0, emptyRow);
-      return [...rows];
-    });
-  };
+  const cancelProcedureAdding = () => {
+    setAddProcedure(false);
+  }
 
   const updateProcedureStatus = (rowIndex, optionValue) => {
     setChartData((prevState) =>
@@ -207,10 +201,6 @@ const HealingPlanChart = ({
   }, []);
 
   useEffect(() => {
-    console.dir(healingPlan);
-  }, [healingPlan]);
-
-  useEffect(() => {
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -248,6 +238,7 @@ const HealingPlanChart = ({
   return (
     <ScopedCssBaseline>
       <Container>
+        <AddProcedureForm open={isProcedureAddingNeeded} handleClose={cancelProcedureAdding} />
         <PatientInfo
           patient={patient}
           medic={medic}
