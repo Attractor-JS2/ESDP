@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { createBrowserHistory } from "history";
-import reducer from "./reducers/healingPlan";
+import healingPlanReducer from "./reducers/healingPlan";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import thunkMiddleware from "redux-thunk";
 
@@ -9,7 +9,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  test: reducer,
+  healingPlan: healingPlanReducer,
   router: connectRouter(history),
 });
 

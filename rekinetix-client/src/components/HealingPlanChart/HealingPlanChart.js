@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import Container from '@material-ui/core/Container';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
@@ -8,14 +9,17 @@ import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
 import PatientInfo from './PatientInfo/PatientInfo';
+import { fetchHealingPlan } from '../../store/actions/healingPlan';
 
 const HealingPlanChart = ({
+  healingPlan,
   attendances,
   statuses,
   redFlags,
   patient,
   medic,
   diagnosis,
+  onFetchHealingPlan,
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
@@ -179,6 +183,11 @@ const HealingPlanChart = ({
   );
 
   useEffect(() => {
+    onFetchHealingPlan();
+  }, [])
+
+  useEffect(() => {
+    console.log(healingPlan);
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -230,4 +239,12 @@ const HealingPlanChart = ({
   );
 };
 
-export default HealingPlanChart;
+const mapStateToProps = (state) => ({
+  healingPlan: state.healingPlan.healingPlan,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onFetchHealingPlan: () => dispatch(fetchHealingPlan()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HealingPlanChart);
