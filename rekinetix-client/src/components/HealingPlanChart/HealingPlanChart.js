@@ -14,7 +14,6 @@ import { fetchHealingPlan } from '../../store/actions/healingPlan';
 const HealingPlanChart = ({
   healingPlan,
   attendances,
-  statuses,
   redFlags,
   patient,
   medic,
@@ -36,74 +35,95 @@ const HealingPlanChart = ({
     }
   };
 
-  const getStageRows = (attendances, stage, statuses) => {
-    const procedures = attendances.reduce((acc, curAttendance) => {
-      const { attendanceDate } = curAttendance;
-      const stageProcedures = [...curAttendance[stage]];
-      let uniqueProcedures = [];
-      stageProcedures.forEach((procedure) => {
-        const accIndex = acc.findIndex(
-          (accProcedure) =>
-            accProcedure.procedureName === procedure.procedureName,
-        );
-        const statusesIndex = statuses.findIndex(
-          (status) =>
-            status.procedure.procedureName === procedure.procedureName,
-        );
+  const getStageRowsFromPlan = (planData, stage) => {
+    const procedures = [...planData[stage]];
+    return procedures.reduce(
+      (acc, { procedureName, procedureArea, procedureQuantity, status }) => {
+        return [
+          ...acc,
+          {
+            rowTitle: procedureName,
+            procedureArea,
+            status,
+            planned: procedureQuantity,
+            completed: 0,
+          },
+        ];
+      },
+      [],
+    );
+  };
+
+  const getStageRows = (attendances, stage, planData) => {
+    let planStageRows = getStageRowsFromPlan(planData, stage);
+
+    if (attendances && Array.isArray(attendances) && attendances.length > 0) {
+      attendances.forEach((curAttendance) => {
+        const { attendanceDate } = curAttendance;
         const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
-        if (accIndex >= 0) {
-          acc[accIndex] = {
-            ...acc[accIndex],
-            [formattedDate]: procedure.procedureDynamic,
-            completed: acc[accIndex].completed + 1,
-          };
-        } else {
-          const procedureEdited = {
-            ...procedure,
-            rowTitle: procedure.procedureName,
-            status: statuses[statusesIndex].status,
-            planned: statuses[statusesIndex].planned,
-            completed: 1,
-            [formattedDate]: procedure.procedureDynamic,
-          };
-          uniqueProcedures = [...uniqueProcedures, procedureEdited];
-        }
+        const stageProcedures = [...curAttendance[stage]];
+        stageProcedures.forEach((procedure) => {
+          const rowIndex = planStageRows.findIndex(
+            ({ rowTitle }) => rowTitle === procedure.procedureName,
+          );
+          if (rowIndex >= 0) {
+            planStageRows[rowIndex] = {
+              ...planStageRows[rowIndex],
+              completed: planStageRows[rowIndex].completed + 1,
+              [formattedDate]: procedure.procedureDynamic,
+            };
+          } else {
+            const procedureAbsentInPlan = {
+              ...procedure,
+              rowTitle: procedure.procedureName,
+              status: 'действует',
+              planned: '',
+              completed: 1,
+              [formattedDate]: procedure.procedureDynamic,
+            };
+            planStageRows = [...planStageRows, procedureAbsentInPlan];
+          }
+        });
       });
-      return [...acc, ...uniqueProcedures];
-    }, []);
-    return procedures;
+    }
+
+    return planStageRows;
   };
 
   const getDynamicAndPainScaleRows = (attendances) => {
     const conditionRow = { rowTitle: 'Состояние пациента' };
     const painScaleBeforeRow = { rowTitle: 'Шкала боли до' };
     const painScaleAfterRow = { rowTitle: 'Шкала боли после' };
-    const rows = attendances.reduce(
-      (acc, curAttendance) => {
-        const {
-          attendanceDate,
-          patientDynamic,
-          beforeAttendance: {pain: painBefore},
-          afterAttendance: {pain: painAfter},
-        } = curAttendance;
-        const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
-        acc[0] = {
-          ...acc[0],
-          [formattedDate]: patientDynamic,
-        };
-        acc[1] = {
-          ...acc[1],
-          [formattedDate]: painBefore,
-        };
-        acc[2] = {
-          ...acc[2],
-          [formattedDate]: painAfter,
-        };
-        return acc;
-      },
-      [conditionRow, painScaleBeforeRow, painScaleAfterRow],
-    );
-    return rows;
+    if (attendances && Array.isArray(attendances) && attendances.length > 0) {
+      const rows = attendances.reduce(
+        (acc, curAttendance) => {
+          const {
+            attendanceDate,
+            patientDynamic,
+            beforeAttendance: { pain: painBefore },
+            afterAttendance: { pain: painAfter },
+          } = curAttendance;
+          const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
+          acc[0] = {
+            ...acc[0],
+            [formattedDate]: patientDynamic,
+          };
+          acc[1] = {
+            ...acc[1],
+            [formattedDate]: painBefore,
+          };
+          acc[2] = {
+            ...acc[2],
+            [formattedDate]: painAfter,
+          };
+          return acc;
+        },
+        [conditionRow, painScaleBeforeRow, painScaleAfterRow],
+      );
+      return rows;
+    } else {
+      return [conditionRow, painScaleBeforeRow, painScaleAfterRow];
+    }
   };
 
   const getRowGroupHeader = (rowTitle) => ({
@@ -184,10 +204,13 @@ const HealingPlanChart = ({
 
   useEffect(() => {
     onFetchHealingPlan();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    console.log(healingPlan);
+    console.dir(healingPlan);
+  }, [healingPlan]);
+
+  useEffect(() => {
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -195,27 +218,32 @@ const HealingPlanChart = ({
       accessor: `${title}`,
       Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
     }));
-    const tableRows = [
-      getRowGroupHeader('1. Обезболивание/противовоспалительная'),
-      ...getStageRows(attendances, 'firstStage', statuses),
-      getButtonRow(),
-      getRowGroupHeader('2. Мобилизация'),
-      ...getStageRows(attendances, 'secondStage', statuses),
-      getButtonRow(),
-      getRowGroupHeader('3. НМА и стабилизация'),
-      ...getStageRows(attendances, 'thirdStage', statuses),
-      getButtonRow(),
-      getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
-      ...getStageRows(attendances, 'fourthStage', statuses),
-      getButtonRow(),
-      getRowGroupHeader('5. Профилактика дома'),
-      ...getStageRows(attendances, 'fifthStage', statuses),
-      getButtonRow(),
-      ...getDynamicAndPainScaleRows(attendances),
-    ];
     setHeaderTitles(dynamicColumns);
-    setChartData(tableRows);
-  }, [attendances, statuses]);
+  }, [attendances]);
+
+  useEffect(() => {
+    if (healingPlan && Object.keys(healingPlan).length > 0) {
+      const tableRows = [
+        getRowGroupHeader('1. Обезболивание/противовоспалительная'),
+        ...getStageRows(attendances, 'firstStage', healingPlan),
+        getButtonRow(),
+        getRowGroupHeader('2. Мобилизация'),
+        ...getStageRows(attendances, 'secondStage', healingPlan),
+        getButtonRow(),
+        getRowGroupHeader('3. НМА и стабилизация'),
+        ...getStageRows(attendances, 'thirdStage', healingPlan),
+        getButtonRow(),
+        getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
+        ...getStageRows(attendances, 'fourthStage', healingPlan),
+        getButtonRow(),
+        getRowGroupHeader('5. Профилактика дома'),
+        ...getStageRows(attendances, 'fifthStage', healingPlan),
+        getButtonRow(),
+        ...getDynamicAndPainScaleRows(attendances),
+      ];
+      setChartData(tableRows);
+    }
+  }, [healingPlan, attendances]);
 
   return (
     <ScopedCssBaseline>
@@ -245,6 +273,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchHealingPlan: () => dispatch(fetchHealingPlan()),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HealingPlanChart);

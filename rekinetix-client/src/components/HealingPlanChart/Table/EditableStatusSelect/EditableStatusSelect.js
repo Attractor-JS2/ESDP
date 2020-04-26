@@ -35,6 +35,7 @@ const EditableStatusSelect = ({
       <MenuItem value="завершено">завершено</MenuItem>
       <MenuItem value="приостановлено">приостановлено</MenuItem>
       <MenuItem value="прервано">прервано</MenuItem>
+      <MenuItem value="запланировано">запланировано</MenuItem>
       <MenuItem value="" disabled></MenuItem>
     </Select>
   ) : (
