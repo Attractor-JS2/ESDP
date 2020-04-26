@@ -16,7 +16,7 @@ module.exports = {
   getData() { // возвращает текущее состояние базы
     return data;
   },
-  addItem(item) { // Добавляет в копию базы запись
+  addItem(item) { // Перезаписывает в копию базы запись
     data = {...item};
     this.save();
   },
