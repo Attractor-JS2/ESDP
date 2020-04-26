@@ -11,6 +11,25 @@ const createRouter = () => {
   
   router.post('/', (req, res) => {
     const healingPlan = req.body.healingPlan;
+    const { firstStage, secondStage, thirdStage, fourthStage, fifthStage } = healingPlan;
+    const healingPlanWithStatuses = {
+      firstStage: [
+        ...firstStage.map((procedure) => ({ ...procedure, status: procedure.status || 'запланировано'}))
+      ],
+      secondStage: [
+        ...secondStage.map((procedure) => ({ ...procedure, status: procedure.status || 'запланировано'}))
+      ],
+      thirdStage: [
+        ...thirdStage.map((procedure) => ({ ...procedure, status: procedure.status || 'запланировано'}))
+      ],
+      fourthStage: [
+        ...fourthStage.map((procedure) => ({ ...procedure, status: procedure.status || 'запланировано'}))
+      ],
+      fifthStage: [
+        ...fifthStage.map((procedure) => ({ ...procedure, status: procedure.status || 'запланировано'}))
+      ],
+    };
+    console.log(healingPlanWithStatuses);
     try {
       db.addItem(healingPlan);
     } catch (e) {
