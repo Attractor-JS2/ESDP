@@ -1,20 +1,22 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+import {fetchAttendanceData, sendAttendanceData} from "../../store/actions/attendance";
 import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
 import {availableProcedures, availableHealingPlaces} from './procedures'
 import {Persist} from "formik-persist";
 import AttendancePlan from "./Component/AttendancePlan";
 
+
 class Attendance extends Component {
 
-  // state= {
-  //   medicName: "Петров Иван Сидорович",
-  //   patientName: "Сидоров Петр Иванович",
-  //   necessaryProceduresState: necessaryProcedures,
-  //   necessaryHealingPlacesState: necessaryHealingPlaces
-  // }
+  componentDidMount() {
+    this.props.onfetchAttendanceData();
+  }
 
   render() {
+    console.log(this.props);
+    if (!this.props.attendance.patientName) return <></>; //TODO add loader for async State waiting
     const formattedDate = () => {
       const attendanceDate = new Date();
       const trueDataFormat = (data) => {
@@ -30,84 +32,40 @@ class Attendance extends Component {
     }
     return (
       <Container className="mt-5">
-        <h3>Отчет по приёму {formattedDate()}</h3>
+        <h3>Отчет по приёму {this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : formattedDate()}</h3>
         <Formik
           initialValues={
             {
-              attendanceDate: formattedDate(),
-              patientName: "Петров Иван Сидорович", //this.state.patientName,
-              medicName: "Сидоров Петр Иванович", //this.state.medicName,
-              firstStage: [
-                {
-                  procedureName: "Расслабление",
-                  procedureArea: "Надостная мышца",
-                  procedureDynamic: 1,
-                  procedureIsNew: false,
-                },
-                {
-                  procedureName: "Ультразвук",
-                  procedureArea: "Подлопаточная мышца",
-                  procedureDynamic: 1,
-                  procedureIsNew: false,
-                },
-                {
-                  procedureName: "Плазмолифтинг",
-                  procedureArea: "Латеральная связка",
-                  procedureDynamic: 1,
-                  procedureIsNew: false,
-                },
-              ],
-              secondStage: [
-              ],
-              thirdStage: [
-              ],
-              fourthStage: [
-                {
-                  procedureName: "процедура четвертого этапа 1",
-                  procedureArea: "Массаж",
-                  procedureDynamic: 1,
-                  procedureIsNew: false,
-                }
-              ],
-              fifthStage: [
-                {
-                  procedureName: "Упражнение",
-                  procedureArea: "Тренировка нижнего циллиндра",
-                  procedureDynamic: 1,
-                  procedureIsNew: false,
-                },
-                {
-                  procedureName: "Упражнение",
-                  procedureArea: "Подъем правой ноги",
-                  procedureDynamic: 1,
-                  procedureIsNew: false,
-                },
-              ],
-              // homeExcercising: [{excerciseName: ""}],
-              patientDynamic: 1,
-              beforeAttendance: {comments: "", pain: 0},
-              afterAttendance: {comments: "", pain: 0}
+              attendanceDate: this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : formattedDate(),
+              patientName: this.props.attendance.patientName,
+              medicName: this.props.attendance.medicName,
+              firstStage: this.props.attendance.firstStage,
+              secondStage: this.props.attendance.secondStage,
+              thirdStage: this.props.attendance.thirdStage,
+              fourthStage: this.props.attendance.fourthStage,
+              fifthStage: this.props.attendance.fifthStage,
+              // homeExcercising: [{excerciseName: this.props.attendance.excerciseName}],
+              patientDynamic: this.props.attendance.patientDynamic,
+              beforeAttendance: {comments: this.props.attendance.beforeAttendance.comments, pain: this.props.attendance.beforeAttendance.pain},
+              afterAttendance: {comments: this.props.attendance.afterAttendance.comments, pain: this.props.attendance.afterAttendance.pain}
             }}
           onSubmit={async (data, {resetForm}) => {
-            console.log(data);
+            await this.props.sendAttendanceData(data);
             await resetForm({});
-            localStorage.removeItem('attendance-form');
           }}
-          onReset={async () => {
-            await localStorage.removeItem('attendance-form');
-          }}
+          // onReset={async () => {
+          //   await localStorage.removeItem('attendance-form');
+          // }}
         >
-          {({values, handleSubmit, setFieldValue, resetForm}) => (
-            <Form onSubmit={handleSubmit}>
+          {({values, setFieldValue, resetForm}) => (
+            <Form>
               <p className="mt-2 mb-2" name="patientName"> Пациент: {values.patientName}</p>
               <p className="mb-2" name="medicName">Врач: {values.medicName}</p>
               <AttendancePlan
                 attendanceTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
                 attendanceName="firstStage"
                 attendance={values.firstStage}
-                // necessaryProcedures={this.state.necessaryProceduresState["firstStage"]}
                 availableProcedures={availableProcedures["firstStage"]}
-                // necessaryPlace={this.state.necessaryHealingPlacesState["firstStage"]}
                 availablePlace={availableHealingPlaces["firstStage"]}
                 stage="firstStage"
               />
@@ -115,9 +73,7 @@ class Attendance extends Component {
                 attendanceTitle="Этап 2: Мобилизационнные мероприятия"
                 attendanceName="secondStage"
                 attendance={values.secondStage}
-                // necessaryProcedures={this.state.necessaryProceduresState["secondStage"]}
                 availableProcedures={availableProcedures["secondStage"]}
-                // necessaryPlace={this.state.necessaryHealingPlacesState["secondStage"]}
                 availablePlace={availableHealingPlaces["secondStage"]}
                 stage="secondStage"
               />
@@ -125,9 +81,7 @@ class Attendance extends Component {
                 attendanceTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
                 attendanceName="thirdStage"
                 attendance={values.thirdStage}
-                // necessaryProcedures={this.state.necessaryProceduresState["thirdStage"]}
                 availableProcedures={availableProcedures["thirdStage"]}
-                // necessaryPlace={this.state.necessaryHealingPlacesState["thirdStage"]}
                 availablePlace={availableHealingPlaces["thirdStage"]}
                 stage="thirdStage"
               />
@@ -135,18 +89,14 @@ class Attendance extends Component {
                 attendanceTitle="Этап 4: Восстановление функций в МФЛ"
                 attendanceName="fourthStage"
                 attendance={values.fourthStage}
-                // necessaryProcedures={this.state.necessaryProceduresState["fourthStage"]}
                 availableProcedures={availableProcedures["fourthStage"]}
-                // necessaryPlace={this.state.necessaryHealingPlacesState["fourthStage"]}
                 availablePlace={availableHealingPlaces["fourthStage"]}
                 stage="fourthStage"
               />
               <AttendancePlan
                 attendanceTitle="Этап 5: Профилактика"
                 attendanceName="fifthStage"
-                // necessaryProcedures={this.state.necessaryProceduresState["fifthStage"]}
                 availableProcedures={availableProcedures["fifthStage"]}
-                // necessaryPlace={this.state.necessaryHealingPlacesState["fifthStage"]}
                 availablePlace={availableHealingPlaces["fifthStage"]}
                 stage="fifthStage"
               />
@@ -241,9 +191,9 @@ class Attendance extends Component {
               </Field>
               <div className='d-flex justify-content-between'>
                 <Button type="submit" color='success'>Сохранить</Button>
-                <Button onClick={resetForm} color='danger'>Очистить</Button>
+                {/*<Button onClick={resetForm} color='danger'>Очистить</Button>*/}
               </div>
-              <Persist name='attendance-form'/>
+              {/*<Persist name='attendance-form'/>*/}
               {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
             </Form>
           )}
@@ -252,5 +202,16 @@ class Attendance extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    attendance: state.attendance,
+  }
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onfetchAttendanceData: () => dispatch(fetchAttendanceData()),
+    sendAttendanceData: (data) => dispatch(sendAttendanceData(data))
+  }
+};
 
-export default Attendance;
+export default connect(mapStateToProps, mapDispatchToProps)(Attendance);

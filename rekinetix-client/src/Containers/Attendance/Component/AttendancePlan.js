@@ -12,7 +12,7 @@ const AttendancePlan = (props) => {
         {arrayHelpers => {
           return (
             <div>
-              <div className="mb-3 mt-3"><p>{props.attendanceTitle}</p>
+              <div className="mb-3 mt-2"><p>{props.attendanceTitle}</p>
                 {
                   arrayHelpers.form.values[props.attendanceName].map((procedureName, index) => {
                     const CURRENT_FIELD = arrayHelpers.form.values[props.attendanceName][index];
@@ -23,42 +23,44 @@ const AttendancePlan = (props) => {
                         <div className='d-flex'>
                           {
                             !CURRENT_FIELD.procedureIsNew ? <Field
+                              className="mt-2"
                               size="35"
                               name={CURRENT_FIELD.procedureName}
                               disabled={!CURRENT_FIELD.procedureIsNew}
                               value={CURRENT_FIELD.procedureName}
                               component={Input}
                             />:<Autocomplete
-                              className="ml-2"
+                              className="mt-2"
                               name={`${props.attendanceName}[${index}].procedureName`}
                               options={props.availableProcedures}
                               onChange={(event, value) => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureName`,value)}
                               getOptionLabel={(option) => option}
-                              style={{ width: 300 }}
+                              style={{ width: 262 }}
                               renderInput={(params) => <TextField {...params} label="Название процедуры" variant="outlined" />}
                             />
                           }
                           {
                             !CURRENT_FIELD.procedureIsNew ? <Field
-                              className="ml-2"
+                              className="ml-1 mt-2"
                               name={CURRENT_FIELD.procedureArea}
                               disabled={!CURRENT_FIELD.procedureIsNew}
                               value={CURRENT_FIELD.procedureArea}
                               component={Input}
                             />:<Autocomplete
-                              className="ml-2"
+                              className="ml-2 mt-2"
                               name={`${props.attendanceName}[${index}].procedureArea`}
                               options={props.availablePlace}
                               onChange={(event, value) => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureArea`,value)}
                               getOptionLabel={(option) => option}
-                              style={{ width: 300 }}
+                              style={{ width: 262 }}
                               renderInput={(params) => <TextField {...params} label="Назначение" variant="outlined" />}
                             />
                           }
                           {
-                            <div className='d-flex p-2 mb-1'>
-                              <label>
+                            <div className='d-flex pl-2 mb-1'>
+                              <label className="d-flex m-2 p-3">
                                 <input
+                                  className='d-flex pl-2 mb-1'
                                   type="radio"
                                   name={`${props.attendanceName}[${index}].procedureDynamic`}
                                   value="0"
@@ -66,8 +68,9 @@ const AttendancePlan = (props) => {
                                   onChange={() => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureDynamic`,0)}
                                 />Хуже
                               </label>
-                              <label>
+                              <label className="d-flex m-2 p-3">
                                 <input
+                                  className='d-flex pl-2 mb-1'
                                   type="radio"
                                   name={`${props.attendanceName}[${index}].dynamicsData`}
                                   value="1"
@@ -75,8 +78,9 @@ const AttendancePlan = (props) => {
                                   onChange={() => arrayHelpers.form.setFieldValue(`${props.attendanceName}[${index}].procedureDynamic`, 1)}
                                 />Так же
                               </label>
-                              <label>
+                              <label className="d-flex m-2 p-3">
                                 <input
+                                  className='d-flex pl-2 mb-1'
                                   type="radio"
                                   name={`${props.attendanceName}[${index}].dynamicsData`}
                                   value="2"
