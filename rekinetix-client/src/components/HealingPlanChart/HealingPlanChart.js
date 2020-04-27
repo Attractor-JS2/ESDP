@@ -7,6 +7,7 @@ import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
+import DeleteActionButton from './Table/DeleteActionButton/DeleteActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
 import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
@@ -184,6 +185,11 @@ const HealingPlanChart = ({
   const columns = useMemo(
     () => [
       {
+        id: 'deleteBtnColumn',
+        Header: '',
+        Cell: DeleteActionButton,
+      },
+      {
         Header: 'Что делаем',
         accessor: 'rowTitle',
         Cell: AddActionButton,
@@ -272,6 +278,7 @@ const HealingPlanChart = ({
             columns={columns}
             data={chartData}
             addProcedureHandler={addProcedureHandler}
+            deleteProcedureHandler={deleteProcedureHandler}
             updateSelectData={updateProcedureStatus}
           />
         )}
