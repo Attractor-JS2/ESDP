@@ -1,5 +1,6 @@
 import React from 'react'
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const DeleteActionButton = ({
   value: initialValue,
@@ -10,13 +11,13 @@ const DeleteActionButton = ({
     <>
       {{
         DeleteRowButton: (
-          <Button
-            size="small"
-            variant="outlined"
+          <IconButton
+            size="medium"
+            color="primary"
             onClick={() => deleteProcedureHandler(original, index)}
           >
-            X
-          </Button>
+            <DeleteForeverIcon size="medium" />
+          </IconButton>
         ),
       }[initialValue] || initialValue}
     </>
