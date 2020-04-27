@@ -10,6 +10,7 @@ import AddActionButton from './Table/AddActionButton/AddActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
 import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
+import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import { fetchHealingPlan } from '../../store/actions/healingPlan';
 
 const HealingPlanChart = ({
@@ -23,8 +24,9 @@ const HealingPlanChart = ({
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const [isProcedureAddingNeeded, setAddProcedure] = useState(false);
+  const [isProcedureAdding, setAddProcedure] = useState(false);
   const [currentStage, setCurrentStage] = useState('');
+  const [isProcedureDeleting, setDeleteProcedure] = useState(false);
 
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
@@ -151,6 +153,14 @@ const HealingPlanChart = ({
     setAddProcedure(false);
   };
 
+  const deleteProcedureHandler = () => {
+    setDeleteProcedure(true);
+  }
+
+  const cancelProcedureDeleting = () => {
+    setDeleteProcedure(false);
+  };
+
   const updateProcedureStatus = (rowIndex, optionValue) => {
     setChartData((prevState) =>
       prevState.map((row, index) => {
@@ -243,9 +253,13 @@ const HealingPlanChart = ({
     <ScopedCssBaseline>
       <Container>
         <AddProcedureForm
-          open={isProcedureAddingNeeded}
+          open={isProcedureAdding}
           handleClose={cancelProcedureAdding}
           selectedStage={currentStage}
+        />
+        <ConfirmDialog
+          open={isProcedureDeleting}
+          handleClose={cancelProcedureDeleting}
         />
         <PatientInfo
           patient={patient}
@@ -261,6 +275,7 @@ const HealingPlanChart = ({
             updateSelectData={updateProcedureStatus}
           />
         )}
+        <button onClick={deleteProcedureHandler}>Delete</button>
       </Container>
     </ScopedCssBaseline>
   );
