@@ -8,7 +8,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const AddProcedureForm = ({ open, handleClose }) => {
+import stageTypes from './stageTypes';
+
+const AddProcedureForm = ({ open, handleClose, stage }) => {
   return (
     <Dialog
       open={open}
@@ -23,7 +25,7 @@ const AddProcedureForm = ({ open, handleClose }) => {
 
         <Formik
           initialValues={{
-            stage: '',
+            stage: stageTypes[stage] || '',
             procedureName: '',
           }}
           onSubmit={(values) => console.dir(values)}

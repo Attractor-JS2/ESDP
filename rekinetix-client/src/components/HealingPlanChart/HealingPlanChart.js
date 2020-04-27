@@ -24,6 +24,7 @@ const HealingPlanChart = ({
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [isProcedureAddingNeeded, setAddProcedure] = useState(false);
+  const [currentStage, setCurrentStage] = useState('');
 
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
@@ -141,14 +142,14 @@ const HealingPlanChart = ({
     stage,
   });
 
-  const addProcedureHandler = (row) => {
-    // setAddProcedure(true);
-    console.log(row);
+  const addProcedureHandler = (stageType) => {
+    setCurrentStage(stageType);
+    setAddProcedure(true);
   };
 
   const cancelProcedureAdding = () => {
     setAddProcedure(false);
-  }
+  };
 
   const updateProcedureStatus = (rowIndex, optionValue) => {
     setChartData((prevState) =>
@@ -241,7 +242,11 @@ const HealingPlanChart = ({
   return (
     <ScopedCssBaseline>
       <Container>
-        <AddProcedureForm open={isProcedureAddingNeeded} handleClose={cancelProcedureAdding} />
+        <AddProcedureForm
+          open={isProcedureAddingNeeded}
+          handleClose={cancelProcedureAdding}
+          stage={currentStage}
+        />
         <PatientInfo
           patient={patient}
           medic={medic}
