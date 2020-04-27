@@ -135,13 +135,15 @@ const HealingPlanChart = ({
     status: 'shouldBeEmpty',
   });
 
-  const getButtonRow = () => ({
+  const getButtonRow = (stage) => ({
     rowTitle: 'AddRowButton',
     status: 'shouldBeEmpty',
+    stage,
   });
 
-  const addRowHandler = (rowIndex) => {
-    setAddProcedure(true);
+  const addProcedureHandler = (row) => {
+    // setAddProcedure(true);
+    console.log(row);
   };
 
   const cancelProcedureAdding = () => {
@@ -217,19 +219,19 @@ const HealingPlanChart = ({
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),
         ...getStageRows(attendances, 'firstStage', healingPlan),
-        getButtonRow(),
+        getButtonRow('firstStage'),
         getRowGroupHeader('2. Мобилизация'),
         ...getStageRows(attendances, 'secondStage', healingPlan),
-        getButtonRow(),
+        getButtonRow('secondStage'),
         getRowGroupHeader('3. НМА и стабилизация'),
         ...getStageRows(attendances, 'thirdStage', healingPlan),
-        getButtonRow(),
+        getButtonRow('thirdStage'),
         getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
         ...getStageRows(attendances, 'fourthStage', healingPlan),
-        getButtonRow(),
+        getButtonRow('fourthStage'),
         getRowGroupHeader('5. Профилактика дома'),
         ...getStageRows(attendances, 'fifthStage', healingPlan),
-        getButtonRow(),
+        getButtonRow('fifthStage'),
         ...getDynamicAndPainScaleRows(attendances),
       ];
       setChartData(tableRows);
@@ -250,7 +252,7 @@ const HealingPlanChart = ({
           <Table
             columns={columns}
             data={chartData}
-            addRowHandler={addRowHandler}
+            addProcedureHandler={addProcedureHandler}
             updateSelectData={updateProcedureStatus}
           />
         )}

@@ -3,8 +3,8 @@ import Button from '@material-ui/core/Button';
 
 const AddActionButton = ({
   value: initialValue,
-  row: { index },
-  addRowHandler,
+  row: { original },
+  addProcedureHandler,
 }) => {
   return (
     <>
@@ -13,7 +13,7 @@ const AddActionButton = ({
           <Button
             size="small"
             variant="outlined"
-            onClick={() => addRowHandler(index)}
+            onClick={() => addProcedureHandler(original.stage)}
           >
             Добавить действие
           </Button>
