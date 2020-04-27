@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import { NavLink as RouterNavLink } from "react-router-dom";
 import "./Header.css";
 import Logo from "../Logo/Logo";
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuLink: {
       color: "red",
-      marginLeft: "100px",
+      marginLeft: "50px",
     },
   })
 );
@@ -34,15 +34,15 @@ export default function Header() {
         <Toolbar>
           <Logo />
           <Typography variant="h6" className={classes.title}>
-            <Link className={classes.menuLink} href="/attendance">
+            <RouterNavLink className={classes.menuLink} to="/attendance" exact>
               Отчет по приёму
-            </Link>
-            <Link className={classes.menuLink} href="/plan">
-              План лечения
-            </Link>
-            <Link className={classes.menuLink} href="/plan-chart">
-              График курса лечения
-            </Link>
+            </RouterNavLink>
+            <RouterNavLink className={classes.menuLink} to="/plan" exact>
+              План лечения{" "}
+            </RouterNavLink>
+            <RouterNavLink className={classes.menuLink} to="/plan-chart" exact>
+              Таблица плана лечения
+            </RouterNavLink>
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
