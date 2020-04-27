@@ -7,6 +7,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 
 import stageTypes from './stageTypes';
 
@@ -32,20 +35,28 @@ const AddProcedureForm = ({ open, handleClose, stage }) => {
         >
           {({ values: {stage, procedureName}, handleChange }) => (
             <Form>
-              <TextField
+              <InputLabel id="stageSelect">Что делать</InputLabel>
+              <Select
                 autoFocus
                 margin="dense"
-                id="manipulation"
-                label="Что делать"
-                type="text"
+                id="stage"
+                labelId="stageSelect"
+                variant="outlined"
                 fullWidth
                 name='stage'
                 value={stage}
                 onChange={handleChange}
-              />
+                autoWidth
+              >
+                {Object.keys(stageTypes).map((key) => {
+                  return (
+                    <MenuItem key={key} value={stageTypes[key]}>{stageTypes[key]}</MenuItem>
+                  )
+                })}
+              </Select>
               <TextField
                 margin="dense"
-                id="area"
+                id="procedureName"
                 label="Анатомическая область"
                 type="text"
                 fullWidth
