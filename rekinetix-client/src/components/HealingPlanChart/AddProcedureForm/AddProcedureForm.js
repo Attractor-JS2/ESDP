@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import stageTypes from './stageTypes';
-import procedureTypes from './procedureTypes';
 
 const AddProcedureForm = ({ open, handleClose, selectedStage }) => {
   return (
@@ -20,6 +19,8 @@ const AddProcedureForm = ({ open, handleClose, selectedStage }) => {
       open={open}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
+      fullWidth
+      maxWidth="sm"
     >
       <DialogTitle id="form-dialog-title">Добавить действие</DialogTitle>
       <DialogContent>
