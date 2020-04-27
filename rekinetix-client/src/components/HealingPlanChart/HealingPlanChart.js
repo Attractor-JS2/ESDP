@@ -61,6 +61,20 @@ const HealingPlanChart = ({
     );
   };
 
+  const isRowDeletable = (row) => {
+    return (row.status === 'запланировано' && row.completed === 0);
+  }
+
+  const addRowDeleteCondition = (rows) => {
+    return rows.map((row) => {
+      if (!isRowDeletable(row)) return row;
+      return {
+        ...row,
+        deleteControl: 'DeleteRowButton'
+      };
+    })
+  }
+
   const getStageRows = (attendances, stage, planData) => {
     let planStageRows = getStageRowsFromPlan(planData, stage);
 
@@ -94,7 +108,9 @@ const HealingPlanChart = ({
       });
     }
 
-    return planStageRows;
+    const stageRows = addRowDeleteCondition(planStageRows);
+
+    return stageRows;
   };
 
   const getDynamicAndPainScaleRows = (attendances) => {
@@ -187,6 +203,7 @@ const HealingPlanChart = ({
       {
         id: 'deleteBtnColumn',
         Header: '',
+        accessor: 'deleteControl',
         Cell: DeleteActionButton,
       },
       {

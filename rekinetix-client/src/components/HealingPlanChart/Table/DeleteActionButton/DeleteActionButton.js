@@ -15,7 +15,7 @@ const DeleteActionButton = ({
             variant="outlined"
             onClick={() => deleteProcedureHandler(original, index)}
           >
-            Удалить
+            X
           </Button>
         ),
       }[initialValue] || initialValue}
