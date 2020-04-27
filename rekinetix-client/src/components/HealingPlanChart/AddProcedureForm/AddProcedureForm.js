@@ -12,8 +12,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import stageTypes from './stageTypes';
+import procedureTypes from './procedureTypes';
 
-const AddProcedureForm = ({ open, handleClose, stage }) => {
+const AddProcedureForm = ({ open, handleClose, selectedStage }) => {
   return (
     <Dialog
       open={open}
@@ -28,7 +29,7 @@ const AddProcedureForm = ({ open, handleClose, stage }) => {
 
         <Formik
           initialValues={{
-            stage: stageTypes[stage] || '',
+            stage: stageTypes[selectedStage] || '',
             procedureName: '',
           }}
           onSubmit={(values) => console.dir(values)}

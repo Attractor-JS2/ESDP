@@ -245,7 +245,7 @@ const HealingPlanChart = ({
         <AddProcedureForm
           open={isProcedureAddingNeeded}
           handleClose={cancelProcedureAdding}
-          stage={currentStage}
+          selectedStage={currentStage}
         />
         <PatientInfo
           patient={patient}
