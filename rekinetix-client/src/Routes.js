@@ -1,16 +1,15 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Attendance from './Containers/Attendance/Attendance';
-import HealingPlan from './Containers/HealingPlan/HealingPlan';
-import HealingPlanChart from './components/HealingPlanChart/HealingPlanChart';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Attendance from "./Containers/Attendance/Attendance";
+import HealingPlan from "./Containers/HealingPlan/HealingPlan";
+import HealingPlanChart from "./components/HealingPlanChart/HealingPlanChart";
 import {
   attendances,
-  statuses,
   redFlags,
   patient,
   medic,
   diagnosis,
-} from './components/HealingPlanChart/healingPlanDataLatest';
+} from "./components/HealingPlanChart/healingPlanDataLatest";
 
 const Routes = () => {
   return (
