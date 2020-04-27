@@ -49,6 +49,7 @@ const HealingPlanChart = ({
             status,
             planned: procedureQuantity,
             completed: 0,
+            stage,
           },
         ];
       },

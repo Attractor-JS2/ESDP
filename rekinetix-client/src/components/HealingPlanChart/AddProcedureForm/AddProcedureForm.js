@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formik, Form } from 'formik';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -19,30 +20,49 @@ const AddProcedureForm = ({ open, handleClose }) => {
         <DialogContentText>
           Добавить действие в отчёт/план лечения.
         </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="manipulation"
-          label="Что делать"
-          type="text"
-          fullWidth
-        />
-        <TextField
-          margin="dense"
-          id="area"
-          label="Анатомическая область"
-          type="text"
-          fullWidth
-        />
+
+        <Formik
+          initialValues={{
+            stage: '',
+            procedureName: '',
+          }}
+          onSubmit={(values) => console.dir(values)}
+        >
+          {({ values: {stage, procedureName}, handleChange }) => (
+            <Form>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="manipulation"
+                label="Что делать"
+                type="text"
+                fullWidth
+                name='stage'
+                value={stage}
+                onChange={handleChange}
+              />
+              <TextField
+                margin="dense"
+                id="area"
+                label="Анатомическая область"
+                type="text"
+                fullWidth
+                name='procedureName'
+                value={procedureName}
+                onChange={handleChange}
+              />
+              <DialogActions>
+                <Button onClick={handleClose} type="submit" color="primary">
+                  Добавить
+                </Button>
+                <Button onClick={handleClose} type="button" color="primary">
+                  Отмена
+                </Button>
+              </DialogActions>
+            </Form>
+          )}
+        </Formik>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Добавить
-        </Button>
-        <Button onClick={handleClose} color="primary">
-          Отмена
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };
