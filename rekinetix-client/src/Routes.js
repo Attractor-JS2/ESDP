@@ -5,7 +5,6 @@ import HealingPlan from "./Containers/HealingPlan/HealingPlan";
 import HealingPlanChart from "./components/HealingPlanChart/HealingPlanChart";
 import {
   attendances,
-  statuses,
   redFlags,
   patient,
   medic,
