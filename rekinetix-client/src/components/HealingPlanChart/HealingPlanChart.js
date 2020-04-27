@@ -275,7 +275,6 @@ const HealingPlanChart = ({
             updateSelectData={updateProcedureStatus}
           />
         )}
-        <button onClick={deleteProcedureHandler}>Delete</button>
       </Container>
     </ScopedCssBaseline>
   );
