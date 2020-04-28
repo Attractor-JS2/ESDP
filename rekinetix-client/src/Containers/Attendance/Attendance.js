@@ -12,10 +12,8 @@ class Attendance extends Component {
   componentDidMount() {
     this.props.onfetchAttendanceData();
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.attendance !== this.props.attendance) {
+  componentWillUnmount() {
       this.props.onfetchAttendanceData();
-    }
   }
 
   render() {
