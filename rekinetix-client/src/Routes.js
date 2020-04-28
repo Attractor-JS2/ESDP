@@ -18,7 +18,7 @@ const Routes = () => {
       <Route path="/plan" component={HealingPlan} />
       <Route path="/plan-chart">
         <HealingPlanChart
-          attendances={attendances}
+          // attendances={attendances}
           redFlags={redFlags}
           patient={patient}
           medic={medic}

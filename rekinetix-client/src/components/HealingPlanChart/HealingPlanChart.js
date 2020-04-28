@@ -13,6 +13,7 @@ import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import { fetchHealingPlan } from '../../store/actions/healingPlan';
+import './HealingPlanChart.css';
 
 const HealingPlanChart = ({
   healingPlan,
@@ -274,7 +275,7 @@ const HealingPlanChart = ({
 
   return (
     <ScopedCssBaseline>
-      <Container>
+      <Container className="HealingPlanChart-content">
         <AddProcedureForm
           open={isProcedureAdding}
           handleClose={cancelProcedureAdding}
