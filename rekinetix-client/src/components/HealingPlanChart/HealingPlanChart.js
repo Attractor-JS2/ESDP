@@ -14,15 +14,17 @@ import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import { fetchHealingPlan } from '../../store/actions/healingPlan';
 import './HealingPlanChart.css';
+import { fetchAttendanceData } from '../../store/actions/attendance';
 
 const HealingPlanChart = ({
   healingPlan,
-  attendances,
+  attendance,
   redFlags,
   patient,
   medic,
   diagnosis,
   onFetchHealingPlan,
+  onFetchAttendances
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
@@ -236,9 +238,11 @@ const HealingPlanChart = ({
 
   useEffect(() => {
     onFetchHealingPlan();
+    onFetchAttendances();
   }, []);
 
   useEffect(() => {
+    const attendances = [{...attendance}];
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -247,9 +251,10 @@ const HealingPlanChart = ({
       Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
     }));
     setHeaderTitles(dynamicColumns);
-  }, [attendances]);
+  }, [attendance]);
 
   useEffect(() => {
+    const attendances = [{...attendance}];
     if (healingPlan && Object.keys(healingPlan).length > 0) {
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),
@@ -271,7 +276,7 @@ const HealingPlanChart = ({
       ];
       setChartData(tableRows);
     }
-  }, [healingPlan, attendances]);
+  }, [healingPlan, attendance]);
 
   return (
     <ScopedCssBaseline>
@@ -307,10 +312,12 @@ const HealingPlanChart = ({
 
 const mapStateToProps = (state) => ({
   healingPlan: state.healingPlan.healingPlan,
+  attendance: state.attendance,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchHealingPlan: () => dispatch(fetchHealingPlan()),
+  onFetchAttendances: () => dispatch(fetchAttendanceData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HealingPlanChart);
