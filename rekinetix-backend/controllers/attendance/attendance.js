@@ -11,8 +11,32 @@ const createRouter = () => {
 
   router.post('/', (req, res) => {
     const attendanceData = req.body.attendanceData;
+    const { attendanceDate, patientName, medicName, firstStage, secondStage, thirdStage, fourthStage, fifthStage, patientDynamic, beforeAttendance, afterAttendance } = attendanceData;
+    const attendanceDataWithoutNew = {
+      attendanceDate: attendanceDate,
+      patientName: patientName,
+      medicName: medicName,
+      firstStage: [
+        ...firstStage.map((attendanceData) => ({ ...attendanceData, procedureIsNew: false}))
+      ],
+      secondStage: [
+        ...secondStage.map((attendanceData) => ({ ...attendanceData, procedureIsNew: false}))
+      ],
+      thirdStage: [
+        ...thirdStage.map((attendanceData) => ({ ...attendanceData, procedureIsNew: false}))
+      ],
+      fourthStage: [
+        ...fourthStage.map((attendanceData) => ({ ...attendanceData, procedureIsNew: false}))
+      ],
+      fifthStage: [
+        ...fifthStage.map((attendanceData) => ({ ...attendanceData, procedureIsNew: false}))
+      ],
+      patientDynamic: patientDynamic,
+      beforeAttendance: beforeAttendance,
+      afterAttendance: afterAttendance,
+    };
     try {
-      db.addItem(attendanceData);
+      db.addItem(attendanceDataWithoutNew);
     } catch (e) {
       return res.sendStatus(500);
     }

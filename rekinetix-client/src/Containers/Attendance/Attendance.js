@@ -4,7 +4,6 @@ import {fetchAttendanceData, sendAttendanceData} from "../../store/actions/atten
 import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
 import {availableProcedures, availableHealingPlaces} from './procedures'
-import {Persist} from "formik-persist";
 import AttendancePlan from "./Component/AttendancePlan";
 
 
@@ -13,9 +12,13 @@ class Attendance extends Component {
   componentDidMount() {
     this.props.onfetchAttendanceData();
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.attendance !== this.props.attendance) {
+      this.props.onfetchAttendanceData();
+    }
+  }
 
   render() {
-    console.log(this.props);
     if (!this.props.attendance.patientName) return <></>; //TODO add loader for async State waiting
     const formattedDate = () => {
       const attendanceDate = new Date();
@@ -44,7 +47,6 @@ class Attendance extends Component {
               thirdStage: this.props.attendance.thirdStage,
               fourthStage: this.props.attendance.fourthStage,
               fifthStage: this.props.attendance.fifthStage,
-              // homeExcercising: [{excerciseName: this.props.attendance.excerciseName}],
               patientDynamic: this.props.attendance.patientDynamic,
               beforeAttendance: {comments: this.props.attendance.beforeAttendance.comments, pain: this.props.attendance.beforeAttendance.pain},
               afterAttendance: {comments: this.props.attendance.afterAttendance.comments, pain: this.props.attendance.afterAttendance.pain}
@@ -53,11 +55,8 @@ class Attendance extends Component {
             await this.props.sendAttendanceData(data);
             await resetForm({});
           }}
-          // onReset={async () => {
-          //   await localStorage.removeItem('attendance-form');
-          // }}
         >
-          {({values, setFieldValue, resetForm}) => (
+          {({values, setFieldValue}) => (
             <Form>
               <p className="mt-2 mb-2" name="patientName"> Пациент: {values.patientName}</p>
               <p className="mb-2" name="medicName">Врач: {values.medicName}</p>
@@ -100,28 +99,6 @@ class Attendance extends Component {
                 availablePlace={availableHealingPlaces["fifthStage"]}
                 stage="fifthStage"
               />
-              {/*<FieldArray name="homeExcercising">*/}
-              {/*  {arrayHelpers => (*/}
-              {/*    <div className="mb-3"> Упражнения на дому*/}
-              {/*      {values.homeExcercising.map((excercise, index) => {*/}
-              {/*        return (*/}
-              {/*          <div key={index} className="d-flex">*/}
-              {/*            <Field*/}
-              {/*              className="mb-2"*/}
-              {/*              placeholder="Упражнение"*/}
-              {/*              name={`homeExcercising.${index}.excerciseName`}*/}
-              {/*              as={Input}*/}
-              {/*            />*/}
-              {/*            <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>*/}
-              {/*          </div>*/}
-              {/*        );*/}
-              {/*      })}*/}
-              {/*      <Button className="d-block" color='primary' onClick={() => arrayHelpers.push({excerciseName: ""})}>Добавить*/}
-              {/*        упражнение</Button>*/}
-
-              {/*    </div>*/}
-              {/*  )}*/}
-              {/*</FieldArray>*/}
               <FieldArray name ="patientDynamic">
                 {arrayHelpers => (
                   <div className='d-flex p-2 mb-1'><p>Динамика со слов пациента: </p>
@@ -172,7 +149,6 @@ class Attendance extends Component {
                 <option value="9">9</option>
                 <option value="10">10</option>
               </Field>
-
               <Field className="mb-3" placeholder="Состояние пациента после приема/Жалобы" name="afterAttendance.comments" type="input"
                      as={Input}/>
               <p className="d-inline-block pr-3">Шкала боли</p>
@@ -191,9 +167,7 @@ class Attendance extends Component {
               </Field>
               <div className='d-flex justify-content-between'>
                 <Button type="submit" color='success'>Сохранить</Button>
-                {/*<Button onClick={resetForm} color='danger'>Очистить</Button>*/}
               </div>
-              {/*<Persist name='attendance-form'/>*/}
               {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
             </Form>
           )}
