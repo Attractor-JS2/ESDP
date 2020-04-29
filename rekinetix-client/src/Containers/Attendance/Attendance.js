@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {fetchAttendanceData, sendAttendanceData} from "../../store/actions/attendance";
 import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
+import moment from "moment";
+import "moment/locale/ru";
 import {availableProcedures, availableHealingPlaces} from './procedures'
 import AttendancePlan from "./Component/AttendancePlan";
 
@@ -14,6 +16,10 @@ class Attendance extends Component {
   }
   componentWillUnmount() {
       this.props.onfetchAttendanceData();
+  }
+
+  getMomentLocale(date) {
+    return moment(date).locale('ru').format('L');
   }
 
   render() {
@@ -33,11 +39,11 @@ class Attendance extends Component {
     }
     return (
       <Container className="mt-5">
-        <h3>Отчет по приёму {this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : formattedDate()}</h3>
+        <h3>Отчет по приёму {this.props.attendance.attendanceDate !== "" ? this.getMomentLocale(this.props.attendance.attendanceDate) : this.getMomentLocale(new Date())}</h3>
         <Formik
           initialValues={
             {
-              attendanceDate: this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : formattedDate(),
+              attendanceDate: this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : new Date(),
               patientName: this.props.attendance.patientName,
               medicName: this.props.attendance.medicName,
               firstStage: this.props.attendance.firstStage,
