@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const ConfirmDialog = ({ open, handleClose, confirmHandler }) => {
+const ConfirmDialog = ({ open, handleClose, handleConfirm }) => {
   return (
     <Dialog
       open={open}
@@ -23,7 +23,7 @@ const ConfirmDialog = ({ open, handleClose, confirmHandler }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={confirmHandler} color="primary">
+        <Button onClick={handleConfirm} color="primary">
           Удалить
         </Button>
         <Button onClick={handleClose} color="primary" autoFocus>

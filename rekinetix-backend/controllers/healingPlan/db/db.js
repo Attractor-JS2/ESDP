@@ -33,4 +33,11 @@ module.exports = {
     };
     this.save();
   },
+  deleteProcedure(stageName, procedureName) {
+    data = {
+      ...data,
+      [stageName]: [...data[stageName].filter((procedure) => (procedure.procedureName !== procedureName))],
+    };
+    this.save();
+  }
 };
