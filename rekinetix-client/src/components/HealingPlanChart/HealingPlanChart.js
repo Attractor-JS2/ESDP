@@ -34,11 +34,13 @@ const HealingPlanChart = ({
 
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
-    if (attendances && attendances.length > 0) {
+    if (attendances && attendances.length > 0 && Object.keys(attendances[0]).length > 0) {
       const dates = attendances.map(({ attendanceDate }) => {
-        return format(attendanceDate, 'yyyy-MM-dd');
+        return format(new Date(attendanceDate), 'yyyy-MM-dd');
       });
-      return [...dates, today].sort((a, b) => new Date(a) - new Date(b));
+      if (!dates.includes(today)) dates.push(today);
+      dates.sort((a, b) => new Date(a) - new Date(b));
+      return [...dates];
     } else {
       return [today];
     }
@@ -81,7 +83,7 @@ const HealingPlanChart = ({
   const getStageRows = (attendances, stage, planData) => {
     let planStageRows = getStageRowsFromPlan(planData, stage);
 
-    if (attendances && Array.isArray(attendances) && attendances.length > 0) {
+    if (attendances && Array.isArray(attendances) && attendances.length > 0 && Object.keys(attendances[0]).length > 0) {
       attendances.forEach((curAttendance) => {
         const { attendanceDate } = curAttendance;
         const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
@@ -120,7 +122,7 @@ const HealingPlanChart = ({
     const conditionRow = { rowTitle: 'Состояние пациента' };
     const painScaleBeforeRow = { rowTitle: 'Шкала боли до' };
     const painScaleAfterRow = { rowTitle: 'Шкала боли после' };
-    if (attendances && Array.isArray(attendances) && attendances.length > 0) {
+    if (attendances && Array.isArray(attendances) && attendances.length > 0 && Object.keys(attendances[0]).length > 0) {
       const rows = attendances.reduce(
         (acc, curAttendance) => {
           const {
