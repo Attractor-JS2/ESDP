@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,8 +13,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import stageTypes from './stageTypes';
+import { addProcedureToPlan } from '../../../store/actions/healingPlan';
 
-const AddProcedureForm = ({ open, handleClose, selectedStage }) => {
+const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) => {
+  const handleSubmit = (data) => {
+    onAddProcedure(data);
+  };
+
   return (
     <Dialog
       open={open}
@@ -33,7 +39,7 @@ const AddProcedureForm = ({ open, handleClose, selectedStage }) => {
             stage: stageTypes[selectedStage] || '',
             procedureName: '',
           }}
-          onSubmit={(values) => console.dir(values)}
+          onSubmit={(values) => handleSubmit(values)}
         >
           {({ values: {stage, procedureName}, handleChange }) => (
             <Form>
@@ -82,4 +88,8 @@ const AddProcedureForm = ({ open, handleClose, selectedStage }) => {
   );
 };
 
-export default AddProcedureForm;
+const mapDispatchToProps = (dispatch) => ({
+  onAddProcedure: (procedureData) => dispatch(addProcedureToPlan(procedureData)),
+})
+
+export default connect(null, mapDispatchToProps)(AddProcedureForm);

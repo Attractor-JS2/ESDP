@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-const Table = ({ columns, data, addProcedureHandler, deleteProcedureHandler, updateSelectData }) => {
+const Table = ({ columns, data, addProcedureHandler, proceedToDeleteProcedure, updateSelectData }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -17,7 +17,7 @@ const Table = ({ columns, data, addProcedureHandler, deleteProcedureHandler, upd
     columns,
     data,
     addProcedureHandler,
-    deleteProcedureHandler,
+    proceedToDeleteProcedure,
     updateSelectData,
   });
 

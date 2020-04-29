@@ -4,8 +4,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const DeleteActionButton = ({
   value: initialValue,
-  row: { original, index },
-  deleteProcedureHandler,
+  row: { original },
+  proceedToDeleteProcedure,
 }) => {
   return (
     <>
@@ -14,7 +14,7 @@ const DeleteActionButton = ({
           <IconButton
             size="medium"
             color="primary"
-            onClick={() => deleteProcedureHandler(original, index)}
+            onClick={() => proceedToDeleteProcedure(original)}
           >
             <DeleteForeverIcon size="medium" />
           </IconButton>

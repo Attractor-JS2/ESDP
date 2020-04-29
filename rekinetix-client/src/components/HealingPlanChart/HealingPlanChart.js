@@ -12,7 +12,7 @@ import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSel
 import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
-import { fetchHealingPlan } from '../../store/actions/healingPlan';
+import { fetchHealingPlan, removeProcedureFromPlan } from '../../store/actions/healingPlan';
 import './HealingPlanChart.css';
 import { fetchAttendanceData } from '../../store/actions/attendance';
 
@@ -24,13 +24,15 @@ const HealingPlanChart = ({
   medic,
   diagnosis,
   onFetchHealingPlan,
-  onFetchAttendances
+  onFetchAttendances,
+  onProcedureDelete
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [isProcedureAdding, setAddProcedure] = useState(false);
   const [currentStage, setCurrentStage] = useState('');
-  const [isProcedureDeleting, setDeleteProcedure] = useState(false);
+  const [isProcedureDeleting, setDeleting] = useState(false);
+  const [deletedProcedure, setToDelete] = useState({});
 
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
@@ -174,14 +176,23 @@ const HealingPlanChart = ({
   const cancelProcedureAdding = () => {
     setAddProcedure(false);
   };
+  
+  const cancelProcedureDeleting = () => {
+    setToDelete({ stage: undefined, rowTitle: undefined });
+    setDeleting(false);
+  };
 
-  const deleteProcedureHandler = () => {
-    setDeleteProcedure(true);
+  const proceedToDeleteProcedure = (row) => {
+    const { stage, rowTitle } = row;
+    setToDelete({ stage, rowTitle });
+    setDeleting(true);
   }
 
-  const cancelProcedureDeleting = () => {
-    setDeleteProcedure(false);
-  };
+  const procedureDeleteHandler = (planStage, procedureName) => {
+    onProcedureDelete(planStage, procedureName);
+    cancelProcedureDeleting();
+  }
+
 
   const updateProcedureStatus = (rowIndex, optionValue) => {
     setChartData((prevState) =>
@@ -290,7 +301,9 @@ const HealingPlanChart = ({
         />
         <ConfirmDialog
           open={isProcedureDeleting}
+          handleConfirm={() => procedureDeleteHandler(deletedProcedure.stage, deletedProcedure.rowTitle)}
           handleClose={cancelProcedureDeleting}
+          procedure={deletedProcedure}
         />
         <PatientInfo
           patient={patient}
@@ -303,7 +316,7 @@ const HealingPlanChart = ({
             columns={columns}
             data={chartData}
             addProcedureHandler={addProcedureHandler}
-            deleteProcedureHandler={deleteProcedureHandler}
+            proceedToDeleteProcedure={proceedToDeleteProcedure}
             updateSelectData={updateProcedureStatus}
           />
         )}
@@ -320,6 +333,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFetchHealingPlan: () => dispatch(fetchHealingPlan()),
   onFetchAttendances: () => dispatch(fetchAttendanceData()),
+  onProcedureDelete: (stage, procedureName) => dispatch(removeProcedureFromPlan(stage, procedureName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HealingPlanChart);
