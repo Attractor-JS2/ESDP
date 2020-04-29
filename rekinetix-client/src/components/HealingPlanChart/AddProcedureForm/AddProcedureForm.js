@@ -38,10 +38,11 @@ const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) 
           initialValues={{
             stage: stageTypes[selectedStage] || '',
             procedureName: '',
+            procedureArea: '',
           }}
           onSubmit={(values) => handleSubmit(values)}
         >
-          {({ values: {stage, procedureName}, handleChange }) => (
+          {({ values: {stage, procedureArea, procedureName}, handleChange }) => (
             <Form>
               <InputLabel id="stageSelect">Что делать</InputLabel>
               <Select
@@ -64,14 +65,26 @@ const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) 
               </Select>
               <TextField
                 margin="dense"
-                id="procedureName"
+                id="procedureArea"
                 label="Анатомическая область"
+                type="text"
+                fullWidth
+                name='procedureArea'
+                value={procedureArea}
+                onChange={handleChange}
+              />
+
+              <TextField
+                margin="dense"
+                id="procedureName"
+                label="Название процедуры"
                 type="text"
                 fullWidth
                 name='procedureName'
                 value={procedureName}
                 onChange={handleChange}
               />
+
               <DialogActions>
                 <Button onClick={handleClose} type="submit" color="primary">
                   Добавить
