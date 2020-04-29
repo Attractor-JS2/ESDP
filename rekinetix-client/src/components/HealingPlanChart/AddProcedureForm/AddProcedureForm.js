@@ -36,7 +36,7 @@ const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) 
 
         <Formik
           initialValues={{
-            stage: stageTypes[selectedStage] || '',
+            stage: selectedStage || '',
             procedureName: '',
             procedureArea: '',
           }}
@@ -59,7 +59,7 @@ const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) 
               >
                 {Object.keys(stageTypes).map((key) => {
                   return (
-                    <MenuItem key={key} value={stageTypes[key]}>{stageTypes[key]}</MenuItem>
+                    <MenuItem key={key} value={key}>{stageTypes[key]}</MenuItem>
                   )
                 })}
               </Select>

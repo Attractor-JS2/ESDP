@@ -22,5 +22,15 @@ module.exports = {
   },
   save() { // Сохраняет изменения копии в базу
     fs.writeFileSync(dbFileName, JSON.stringify(data));
-  }
+  },
+  addProcedure(stageName, procedure) {
+    data = {
+      ...data,
+      [stageName]: [
+        ...data[stageName],
+        procedure,
+      ],
+    };
+    this.save();
+  },
 };
