@@ -244,7 +244,7 @@ const HealingPlanChart = ({
   }, []);
 
   useEffect(() => {
-    const attendances = [{...attendance}];
+    const attendances = [{...attendance}]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -256,7 +256,7 @@ const HealingPlanChart = ({
   }, [attendance]);
 
   useEffect(() => {
-    const attendances = [{...attendance}];
+    const attendances = [{...attendance}]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
     if (healingPlan && Object.keys(healingPlan).length > 0) {
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),

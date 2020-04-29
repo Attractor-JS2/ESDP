@@ -24,19 +24,7 @@ class Attendance extends Component {
 
   render() {
     if (!this.props.attendance.patientName) return <></>; //TODO add loader for async State waiting
-    const formattedDate = () => {
-      const attendanceDate = new Date();
-      const trueDataFormat = (data) => {
-        if (data < 10) {
-          data = '0' + data;
-        }
-        return data;
-      }
-      let day = trueDataFormat(attendanceDate.getDate());
-      let month = trueDataFormat(attendanceDate.getMonth()+1);
-      let year = trueDataFormat(attendanceDate.getFullYear());
-      return day + '.' + month + '.' + year;
-    }
+
     return (
       <Container className="mt-5">
         <h3>Отчет по приёму {this.props.attendance.attendanceDate !== "" ? this.getMomentLocale(this.props.attendance.attendanceDate) : this.getMomentLocale(new Date())}</h3>
