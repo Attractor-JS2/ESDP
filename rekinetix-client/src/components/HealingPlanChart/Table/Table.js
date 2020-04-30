@@ -38,7 +38,7 @@ const Table = ({ columns, data, addProcedureHandler, proceedToDeleteProcedure, u
           return (
             <TableRow {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <TableCell align="center" {...cell.getCellProps()}>{cell.render("Cell")}</TableCell>;
+                return <TableCell align="left" {...cell.getCellProps()}>{cell.render("Cell")}</TableCell>;
               })}
             </TableRow>
           );
