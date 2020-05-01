@@ -1,10 +1,11 @@
 import React from 'react';
-import { useTable } from 'react-table';
+import { useTable, useRowSelect } from 'react-table';
 import MaUTable from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import CheckboxCell from './Checkbox/Checkbox';
 
 const Table = ({ columns, data, addProcedureHandler, proceedToDeleteProcedure, updateSelectData }) => {
   const {
@@ -19,7 +20,27 @@ const Table = ({ columns, data, addProcedureHandler, proceedToDeleteProcedure, u
     addProcedureHandler,
     proceedToDeleteProcedure,
     updateSelectData,
-  });
+  },
+    useRowSelect,
+    hooks => {
+      hooks.allColumns.push((columns) => [
+        {
+          id: 'selection',
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <CheckboxCell {...getToggleAllRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <CheckboxCell {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ])
+    }
+  );
 
   return (
     <MaUTable {...getTableProps()} size="small" >
