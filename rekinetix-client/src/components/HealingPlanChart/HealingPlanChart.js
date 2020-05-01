@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import Container from '@material-ui/core/Container';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 
+import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
@@ -13,7 +14,6 @@ import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import { fetchHealingPlan, removeProcedureFromPlan } from '../../store/actions/healingPlan';
-import './HealingPlanChart.css';
 import { fetchAttendanceData } from '../../store/actions/attendance';
 
 const HealingPlanChart = ({
