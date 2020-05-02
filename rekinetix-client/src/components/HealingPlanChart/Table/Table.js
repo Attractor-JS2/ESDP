@@ -61,7 +61,8 @@ const Table = ({
       data,
       Object.keys(selectedRowIds).map((x) => parseInt(x, 10)),
     );
-    console.dir(selectedRows);
+    const procedureRows = selectedRows.filter(({ purpose }) => purpose && purpose === 'procedureData');
+    console.log(procedureRows);
   };
 
   return (
