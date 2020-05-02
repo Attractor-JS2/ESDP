@@ -75,8 +75,10 @@ export default function Patient() {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const [selectedPatient, setPatient] = React.useState({});
   const handleOpen = (index) => {
     setOpen(true);
+    setPatient(patient[index]);
     console.log(index);
   };
 
