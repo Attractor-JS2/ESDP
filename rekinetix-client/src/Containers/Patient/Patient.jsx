@@ -8,6 +8,38 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import { NavLink as RouterNavLink } from "react-router-dom";
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+  },
+  media: {
+    height: 200,
+    width: 200,
+  },
+  root: {
+    width: 500,
+    height: 200,
+    display: "flex",
+    textAlign: "left",
+  },
+  title: {
+    fontSize: 20,
+  },
+}));
+
+export default function Patient() {
   const patient = [
     {
       patientName: "Jhon",
@@ -52,6 +84,42 @@ import { NavLink as RouterNavLink } from "react-router-dom";
     setOpen(false);
   };
 
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      {selectedPatient ? (
+        <Card className={classes.root}>
+          <CardMedia
+            className={classes.media}
+            image={defaultImage}
+            title="Paella dish"
+          />
+          <CardContent>
+            <Typography className={classes.title}>
+              Name: {selectedPatient.patientName}{" "}
+            </Typography>
+            <Typography className={classes.title}>
+              Age: {selectedPatient.patientAge}
+            </Typography>
+            <Typography>
+              <RouterNavLink to="/plan" exact>
+                План лечения
+              </RouterNavLink>
+            </Typography>
+            <Typography>
+              <RouterNavLink to="/plan-chart" exact>
+                Таблица плана лечения
+              </RouterNavLink>
+            </Typography>
+            <Typography>
+              <RouterNavLink to="/" exact>
+                Протокол первичного приема
+              </RouterNavLink>
+            </Typography>
+          </CardContent>
+        </Card>
+      ) : null}
+    </div>
+  );
 
   return (
     <div>
