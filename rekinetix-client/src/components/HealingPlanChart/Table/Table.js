@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTable, useRowSelect } from 'react-table';
 import MaUTable from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -9,6 +9,7 @@ import CheckboxCell from './Checkbox/Checkbox';
 import TableContainer from '@material-ui/core/TableContainer';
 import Button from '@material-ui/core/Button';
 
+import './Table.css';
 
 const Table = ({
   columns,
@@ -16,8 +17,8 @@ const Table = ({
   addProcedureHandler,
   proceedToDeleteProcedure,
   updateSelectData,
+  handleProceed,
 }) => {
-  const [isSelecting, setSelecting] = useState(false);
   const {
     getTableProps,
     getTableBodyProps,
@@ -56,7 +57,6 @@ const Table = ({
     },
   );
 
-
   const getProcedureFromRow = (title, area) => ({
     procedureName: title,
     procedureArea: area,
@@ -94,7 +94,7 @@ const Table = ({
       return acc;
     }, attendanceDTO);
 
-  const getSelectedRows = () => {
+  const sendDataToAttendance = () => {
     const selectedRows = getDataByIndexes(
       data,
       Object.keys(selectedRowIds).map((x) => parseInt(x, 10)),
@@ -103,23 +103,20 @@ const Table = ({
       ({ purpose }) => purpose && purpose === 'procedureData',
     );
     const attendance = mapRowsToAttendance(procedureRows);
-    console.log(attendance);
+    handleProceed(attendance);
   };
-
-  const proceedToSelectProcedures = () => {
-    setSelecting(true);
-  };
-
-  const cancelSelectingProcedures = () => {
-    setSelecting(false);
-  }
 
   return (
     <TableContainer>
-      <div>
-        <Button onClick={proceedToSelectProcedures}>Выбрать процедуры</Button>
-        <Button onClick={getSelectedRows}>Отправить</Button>
-        <Button onClick={cancelSelectingProcedures}>Отмена</Button>
+      <div className="Table-button-group">
+        {Object.keys(selectedRowIds).length > 0 && (
+          <Button
+            variant="contained"
+            onClick={sendDataToAttendance}
+          >
+            Создать приём
+          </Button>
+        )}
       </div>
       <MaUTable {...getTableProps()} size="small">
         <TableHead>
