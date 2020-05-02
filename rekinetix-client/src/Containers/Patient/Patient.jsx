@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: 20,
+    borderBottom: '1px solid black'
   },
 }));
 
