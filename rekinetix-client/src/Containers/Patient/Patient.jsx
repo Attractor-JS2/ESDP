@@ -40,3 +40,39 @@ import { NavLink as RouterNavLink } from "react-router-dom";
       diagnosis: ["test"],
     },
   ];
+  const classes = useStyles();
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (index) => {
+    setOpen(true);
+    console.log(index);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  return (
+    <div>
+      {patient.map((person, index) => {
+        return (
+          <PatientCard
+            key={index}
+            name={person.patientName}
+            age={person.patientAge}
+            onClick={() => handleOpen(index)}
+          />
+        );
+      })}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+    </div>
+  );
+}
