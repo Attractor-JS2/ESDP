@@ -110,6 +110,7 @@ const HealingPlanChart = ({
               planned: '',
               completed: 1,
               [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
+              stage: stage,
               purpose: 'procedureData',
             };
             planStageRows = [...planStageRows, procedureAbsentInPlan];
