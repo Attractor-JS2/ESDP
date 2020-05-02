@@ -25,12 +25,10 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
   },
   media: {
-    height: 200,
     width: 200,
   },
   root: {
     width: 500,
-    height: 200,
     display: "flex",
     textAlign: "left",
   },
@@ -42,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Patient() {
   const patient = [
     {
-      patientName: "Jhon",
+      patientName: "John",
       patientAge: "17.07.1989",
       redFlags: ["test", '123', '123'],
       diagnosis: ["test"],
