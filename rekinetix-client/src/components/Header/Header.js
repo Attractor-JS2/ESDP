@@ -37,13 +37,24 @@ export default function Header() {
             <Toolbar>
               <Logo />
               <Typography variant="h6" className={classes.title}>
-                <RouterNavLink className={classes.menuLink} to="/attendance" exact>
+                <RouterNavLink className={classes.menuLink} to="/patient" exact>
+                  Пациенты
+                </RouterNavLink>
+                <RouterNavLink
+                  className={classes.menuLink}
+                  to="/attendance"
+                  exact
+                >
                   Отчет по приёму
                 </RouterNavLink>
                 <RouterNavLink className={classes.menuLink} to="/plan" exact>
                   План лечения{" "}
                 </RouterNavLink>
-                <RouterNavLink className={classes.menuLink} to="/plan-chart" exact>
+                <RouterNavLink
+                  className={classes.menuLink}
+                  to="/plan-chart"
+                  exact
+                >
                   Таблица плана лечения
                 </RouterNavLink>
               </Typography>
