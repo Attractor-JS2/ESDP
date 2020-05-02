@@ -36,14 +36,16 @@ const Table = ({
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <>
               <CheckboxCell {...getToggleAllRowsSelectedProps()} />
-            </div>
+            </>
           ),
           Cell: ({ row }) => (
-            <div>
-              <CheckboxCell {...row.getToggleRowSelectedProps()} />
-            </div>
+            <>
+              {row.original.purpose === 'procedureData' && (
+                <CheckboxCell {...row.getToggleRowSelectedProps()} />
+              )}
+            </>
           ),
         },
         ...columns,
@@ -55,7 +57,6 @@ const Table = ({
     array.filter((_, id) => indexes.includes(id));
 
   const getSelectedRows = () => {
-    console.log(selectedRowIds);
     const selectedRows = getDataByIndexes(
       data,
       Object.keys(selectedRowIds).map((x) => parseInt(x, 10)),
