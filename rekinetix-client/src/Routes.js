@@ -10,10 +10,12 @@ import {
   medic,
   diagnosis,
 } from "./components/HealingPlanChart/healingPlanDataLatest";
+import Patient from "./Containers/Patient/Patient";
 
 const Routes = () => {
   return (
     <Switch>
+      <Route path="/patient" component={Patient} />
       <Route path="/attendance" component={Attendance} />
       <Route path="/plan" component={HealingPlan} />
       <Route path="/plan-chart">
