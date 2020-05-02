@@ -40,7 +40,7 @@ export default function Header() {
               <Logo />
               <Typography variant="h6" className={classes.title}>
                 <RouterNavLink className={classes.menuLink} to="/patient" exact>
-                  Пациет
+                  Пациенты
                 </RouterNavLink>
                 <RouterNavLink
                   className={classes.menuLink}
