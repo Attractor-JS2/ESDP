@@ -1,18 +1,18 @@
 import React from "react";
 import PatientCard from "../../components/PatientCard/PatientCard";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import defaultImage from "../../assets/defaultImage/default-photo.jpeg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import {NavLink as RouterNavLink} from "react-router-dom";
 
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
+  
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -44,7 +44,7 @@ export default function Patient() {
     {
       patientName: "Jhon",
       patientAge: "17.07.1989",
-      redFlags: ["test"],
+      redFlags: ["test", '123', '123'],
       diagnosis: ["test"],
     },
     {
@@ -81,11 +81,11 @@ export default function Patient() {
     setPatient(patient[index]);
     console.log(index);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
   };
-
+  
   const body = (
     <div style={modalStyle} className={classes.paper}>
       {selectedPatient ? (
@@ -97,10 +97,16 @@ export default function Patient() {
           />
           <CardContent>
             <Typography className={classes.title}>
-              Name: {selectedPatient.patientName}{" "}
+              Имя: {selectedPatient.patientName}{" "}
             </Typography>
             <Typography className={classes.title}>
-              Age: {selectedPatient.patientAge}
+              Год рождения: {selectedPatient.patientAge}
+            </Typography>
+            <Typography className={classes.title} >
+              Красные флаги: {selectedPatient.redFlags && selectedPatient.redFlags.join(', ')}
+            </Typography>
+            <Typography className={classes.title} >
+              Диагноз: {selectedPatient.diagnosis && selectedPatient.diagnosis.join(', ')}
             </Typography>
             <Typography>
               <RouterNavLink to="/plan" exact>
@@ -122,7 +128,7 @@ export default function Patient() {
       ) : null}
     </div>
   );
-
+  
   return (
     <div>
       {patient.map((person, index) => {
