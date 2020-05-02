@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import Container from '@material-ui/core/Container';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 
+import './HealingPlanChart.css';
 import Table from './Table/Table';
 import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
@@ -12,9 +13,15 @@ import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSel
 import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
-import { fetchHealingPlan, removeProcedureFromPlan } from '../../store/actions/healingPlan';
-import './HealingPlanChart.css';
-import { fetchAttendanceData } from '../../store/actions/attendance';
+import {
+  fetchHealingPlan,
+  removeProcedureFromPlan,
+} from '../../store/actions/healingPlan';
+import {
+  fetchAttendanceData,
+  proceedToAttendance,
+} from '../../store/actions/attendance';
+import DailyDynamicsTypes from './DailyDynamicsTypes';
 
 const HealingPlanChart = ({
   healingPlan,
@@ -25,7 +32,8 @@ const HealingPlanChart = ({
   diagnosis,
   onFetchHealingPlan,
   onFetchAttendances,
-  onProcedureDelete
+  onProcedureDelete,
+  onProceedToAttendance,
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
@@ -36,7 +44,11 @@ const HealingPlanChart = ({
 
   const getDates = (attendances) => {
     const today = format(new Date(), 'yyyy-MM-dd');
-    if (attendances && attendances.length > 0 && Object.keys(attendances[0]).length > 0) {
+    if (
+      attendances &&
+      attendances.length > 0 &&
+      Object.keys(attendances[0]).length > 0
+    ) {
       const dates = attendances.map(({ attendanceDate }) => {
         return format(new Date(attendanceDate), 'yyyy-MM-dd');
       });
@@ -61,6 +73,7 @@ const HealingPlanChart = ({
             planned: procedureQuantity,
             completed: 0,
             stage,
+            purpose: 'procedureData',
           },
         ];
       },
@@ -69,23 +82,28 @@ const HealingPlanChart = ({
   };
 
   const isRowDeletable = (row) => {
-    return (row.status === 'запланировано' && row.completed === 0);
-  }
+    return row.status === 'запланировано' && row.completed === 0;
+  };
 
   const addRowDeleteCondition = (rows) => {
     return rows.map((row) => {
       if (!isRowDeletable(row)) return row;
       return {
         ...row,
-        deleteControl: 'DeleteRowButton'
+        deleteControl: 'DeleteRowButton',
       };
-    })
-  }
+    });
+  };
 
   const getStageRows = (attendances, stage, planData) => {
     let planStageRows = getStageRowsFromPlan(planData, stage);
 
-    if (attendances && Array.isArray(attendances) && attendances.length > 0 && Object.keys(attendances[0]).length > 0) {
+    if (
+      attendances &&
+      Array.isArray(attendances) &&
+      attendances.length > 0 &&
+      Object.keys(attendances[0]).length > 0
+    ) {
       attendances.forEach((curAttendance) => {
         const { attendanceDate } = curAttendance;
         const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
@@ -98,7 +116,7 @@ const HealingPlanChart = ({
             planStageRows[rowIndex] = {
               ...planStageRows[rowIndex],
               completed: planStageRows[rowIndex].completed + 1,
-              [formattedDate]: procedure.procedureDynamic,
+              [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
             };
           } else {
             const procedureAbsentInPlan = {
@@ -107,7 +125,9 @@ const HealingPlanChart = ({
               status: 'действует',
               planned: '',
               completed: 1,
-              [formattedDate]: procedure.procedureDynamic,
+              [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
+              stage: stage,
+              purpose: 'procedureData',
             };
             planStageRows = [...planStageRows, procedureAbsentInPlan];
           }
@@ -124,7 +144,12 @@ const HealingPlanChart = ({
     const conditionRow = { rowTitle: 'Состояние пациента' };
     const painScaleBeforeRow = { rowTitle: 'Шкала боли до' };
     const painScaleAfterRow = { rowTitle: 'Шкала боли после' };
-    if (attendances && Array.isArray(attendances) && attendances.length > 0 && Object.keys(attendances[0]).length > 0) {
+    if (
+      attendances &&
+      Array.isArray(attendances) &&
+      attendances.length > 0 &&
+      Object.keys(attendances[0]).length > 0
+    ) {
       const rows = attendances.reduce(
         (acc, curAttendance) => {
           const {
@@ -136,7 +161,7 @@ const HealingPlanChart = ({
           const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
           acc[0] = {
             ...acc[0],
-            [formattedDate]: patientDynamic,
+            [formattedDate]: DailyDynamicsTypes[patientDynamic],
           };
           acc[1] = {
             ...acc[1],
@@ -176,7 +201,7 @@ const HealingPlanChart = ({
   const cancelProcedureAdding = () => {
     setAddProcedure(false);
   };
-  
+
   const cancelProcedureDeleting = () => {
     setToDelete({ stage: undefined, rowTitle: undefined });
     setDeleting(false);
@@ -186,13 +211,12 @@ const HealingPlanChart = ({
     const { stage, rowTitle } = row;
     setToDelete({ stage, rowTitle });
     setDeleting(true);
-  }
+  };
 
   const procedureDeleteHandler = (planStage, procedureName) => {
     onProcedureDelete(planStage, procedureName);
     cancelProcedureDeleting();
-  }
-
+  };
 
   const updateProcedureStatus = (rowIndex, optionValue) => {
     setChartData((prevState) =>
@@ -255,7 +279,7 @@ const HealingPlanChart = ({
   }, []);
 
   useEffect(() => {
-    const attendances = [{...attendance}]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
+    const attendances = [{ ...attendance }]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
     const formattedDates = getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -267,7 +291,7 @@ const HealingPlanChart = ({
   }, [attendance]);
 
   useEffect(() => {
-    const attendances = [{...attendance}]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
+    const attendances = [{ ...attendance }]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
     if (healingPlan && Object.keys(healingPlan).length > 0) {
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),
@@ -301,7 +325,12 @@ const HealingPlanChart = ({
         />
         <ConfirmDialog
           open={isProcedureDeleting}
-          handleConfirm={() => procedureDeleteHandler(deletedProcedure.stage, deletedProcedure.rowTitle)}
+          handleConfirm={() =>
+            procedureDeleteHandler(
+              deletedProcedure.stage,
+              deletedProcedure.rowTitle,
+            )
+          }
           handleClose={cancelProcedureDeleting}
           procedure={deletedProcedure}
         />
@@ -318,6 +347,7 @@ const HealingPlanChart = ({
             addProcedureHandler={addProcedureHandler}
             proceedToDeleteProcedure={proceedToDeleteProcedure}
             updateSelectData={updateProcedureStatus}
+            handleProceed={onProceedToAttendance}
           />
         )}
       </Container>
@@ -333,7 +363,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFetchHealingPlan: () => dispatch(fetchHealingPlan()),
   onFetchAttendances: () => dispatch(fetchAttendanceData()),
-  onProcedureDelete: (stage, procedureName) => dispatch(removeProcedureFromPlan(stage, procedureName)),
+  onProcedureDelete: (stage, procedureName) =>
+    dispatch(removeProcedureFromPlan(stage, procedureName)),
+  onProceedToAttendance: (attendanceData) =>
+    dispatch(proceedToAttendance(attendanceData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HealingPlanChart);
