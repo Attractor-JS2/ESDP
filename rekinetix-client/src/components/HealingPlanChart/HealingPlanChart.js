@@ -15,6 +15,7 @@ import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import { fetchHealingPlan, removeProcedureFromPlan } from '../../store/actions/healingPlan';
 import { fetchAttendanceData } from '../../store/actions/attendance';
+import DailyDynamicsTypes from './DailyDynamicsTypes';
 
 const HealingPlanChart = ({
   healingPlan,
@@ -98,7 +99,7 @@ const HealingPlanChart = ({
             planStageRows[rowIndex] = {
               ...planStageRows[rowIndex],
               completed: planStageRows[rowIndex].completed + 1,
-              [formattedDate]: procedure.procedureDynamic,
+              [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
             };
           } else {
             const procedureAbsentInPlan = {
@@ -107,7 +108,7 @@ const HealingPlanChart = ({
               status: 'действует',
               planned: '',
               completed: 1,
-              [formattedDate]: procedure.procedureDynamic,
+              [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
             };
             planStageRows = [...planStageRows, procedureAbsentInPlan];
           }
@@ -136,7 +137,7 @@ const HealingPlanChart = ({
           const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
           acc[0] = {
             ...acc[0],
-            [formattedDate]: patientDynamic,
+            [formattedDate]: DailyDynamicsTypes[patientDynamic],
           };
           acc[1] = {
             ...acc[1],
