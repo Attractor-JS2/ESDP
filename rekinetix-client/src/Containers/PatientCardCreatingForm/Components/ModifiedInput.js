@@ -14,29 +14,23 @@ const ModifiedInput = (props) => {
     <>
       <FieldArray name={props.name}>
         {arrayHelpers => (
-          <div className={`mb-3 mt-4 pb-3 border-bottom border-dark`}><p>{props.title}</p>
+          <div className={`mb-3 mt-4 pb-3 border-bottom border-dark`}> {props.label}
             {props.values.map((procedure, index) => {
               return (
-                <div key={index} className="d-flex justify-content-between border-bottom mb-3">
-                  <label className='d-flex flex-column w-25'> Название процедуры:
-                    
+                <div key={index} className="d-flex justify-content-between border-bottom mb-3 mt-1">
+                  <label className='d-flex flex-column w-25'>
                     <Field
                       name={`${props.name}[${index}]`}
                       component={FormikAutocomplete}
-                      label={props.label}
                       clearOnEscape
                       {...arrayToAutocomplete}
-                    
                     />
-                  
-                  
                   </label>
-                  
                   <Button className="mb-2" close onClick={() => arrayHelpers.remove(index)}/>
                 </div>
               );
             })}
-            <Button color='primary' className="d-block" onClick={() => arrayHelpers.push('')}>Добавить</Button>
+            <Button color='primary' className="d-block mt-3" onClick={() => arrayHelpers.push('')}>Добавить</Button>
           </div>
         )}
       </FieldArray>
