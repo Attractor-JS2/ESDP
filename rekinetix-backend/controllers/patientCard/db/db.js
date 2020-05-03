@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const dbFileName = './controllers/patientCard/db/db.json';
 
-let data = {};
+let data = [];
 
 module.exports = {
   init() { // Подготавливает либо текущее значение базы, либо создает пустое
@@ -10,14 +10,14 @@ module.exports = {
       const dbContent = fs.readFileSync(dbFileName); // Сожержимое db.json
       data = JSON.parse(String(dbContent));
     } catch (e) {
-      data = {};
+      data = [];
     }
   },
   getData() { // возвращает текущее состояние базы
     return data;
   },
   addItem(item) { // Перезаписывает в копию базы запись
-    data = {...item};
+    data.push(item);
     this.save();
   },
   save() { // Сохраняет изменения копии в базу

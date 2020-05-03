@@ -1,7 +1,7 @@
 import {FETCH_PATIENT_CARDS_SUCCESS} from "../actions/actionTypes";
 
 const initialState = {
-  patientCards: {},
+  patientCards: [],
   currentCard: {}
 };
 
