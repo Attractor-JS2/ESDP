@@ -10,6 +10,7 @@ import {
   diagnosis,
 } from "./components/HealingPlanChart/healingPlanDataLatest";
 import Patient from "./Containers/Patient/Patient";
+import PatientCardCreatingForm from "./Containers/PatientCardCreatingForm/PatientCardCreatingForm";
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
       <Route path="/patient" component={Patient} />
       <Route path="/attendance" component={Attendance} />
       <Route path="/plan" component={HealingPlan} />
+      <Route path="/createPatient" component={PatientCardCreatingForm} />
       <Route path="/plan-chart">
         <HealingPlanChart
           redFlags={redFlags}
