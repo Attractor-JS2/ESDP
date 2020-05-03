@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PatientCard from "../../components/PatientCard/PatientCard";
 import {makeStyles} from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -8,6 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import {NavLink as RouterNavLink} from "react-router-dom";
+import {fetchPatientCards} from "../../store/actions/patientCards";
+import {connect} from "react-redux";
 
 function getModalStyle() {
   const top = 50;
@@ -20,7 +22,7 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   paper: {
     position: "absolute",
   },
@@ -38,49 +40,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Patient() {
-  const patient = [
-    {
-      patientName: "John",
-      patientAge: "17.07.1989",
-      redFlags: ["test", '123', '123'],
-      diagnosis: ["test"],
-    },
-    {
-      patientName: "lia",
-      patientAge: "17.07.1989",
-      redFlags: ["test"],
-      diagnosis: ["test"],
-    },
-    {
-      patientName: "Alex",
-      patientAge: "17.07.1989",
-      redFlags: ["test"],
-      diagnosis: ["test"],
-    },
-    {
-      patientName: "Olya",
-      patientAge: "17.07.1989",
-      redFlags: ["test"],
-      diagnosis: ["test"],
-    },
-    {
-      patientName: "Vasya",
-      patientAge: "17.07.1989",
-      redFlags: ["test"],
-      diagnosis: ["test"],
-    },
-  ];
+function Patient(props) {
+  
+  
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [selectedPatient, setPatient] = React.useState({});
   const handleOpen = (index) => {
     setOpen(true);
-    setPatient(patient[index]);
+    setPatient(props.patientCards[index]);
     console.log(index);
   };
-  
+  useEffect(() => {
+    props.fetchPatientCards()
+  }, []);
   const handleClose = () => {
     setOpen(false);
   };
@@ -130,7 +104,7 @@ export default function Patient() {
   
   return (
     <div>
-      {patient.map((person, index) => {
+      {props.patientCards.map((person, index) => {
         return (
           <PatientCard
             key={index}
@@ -151,3 +125,17 @@ export default function Patient() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    patientCards: state.patientCards.patientCards
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchPatientCards: () => dispatch(fetchPatientCards())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Patient);
