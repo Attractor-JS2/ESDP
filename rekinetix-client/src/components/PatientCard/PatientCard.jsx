@@ -2,11 +2,11 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import defaultImage from "../../assets/defaultImage/default-photo.jpeg";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: 500,
     display: "flex",
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function PatientCard(props) {
   const classes = useStyles();
-
+  const formattedDate = new Date(props.birthDate).toLocaleDateString();
   return (
     <div className={classes.container} onClick={props.onClick}>
       <div>
@@ -34,8 +34,8 @@ export default function PatientCard(props) {
             title="Paella dish"
           />
           <CardContent>
-            <Typography>Name: {props.name}</Typography>
-            <Typography>Age: {props.age}</Typography>
+            <Typography>Имя: {props.name}</Typography>
+            <Typography>Дата рождения: {formattedDate}</Typography>
           </CardContent>
         </Card>
       </div>
