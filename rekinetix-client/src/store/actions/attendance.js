@@ -10,11 +10,11 @@ export const sendAttendanceData = (attendanceData) => {
         console.log(res);
         dispatch(push('/plan-chart'));
       });
-  }
+  };
 };
 
 const fetchAttendanceSuccess = (data) => {
-  return {type: FETCH_ATTENDANCE_DATA_SUCCESS, data}
+  return {type: FETCH_ATTENDANCE_DATA_SUCCESS, data};
 };
 
 export const fetchAttendanceData = () => (dispatch) => {
@@ -22,4 +22,9 @@ export const fetchAttendanceData = () => (dispatch) => {
     .then(    (res) => dispatch(fetchAttendanceSuccess(res.data)),
     (error) => console.log(error)
   );
-}
+};
+
+export const proceedToAttendance = (data) => (dispatch) => {
+  dispatch(fetchAttendanceSuccess(data));
+  dispatch(push('/attendance'));
+};
