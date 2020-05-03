@@ -3,13 +3,13 @@ import {Button, Container} from "reactstrap";
 import {Formik, Form} from "formik";
 import {submitForm} from "../../store/actions/healingPlan";
 import {connect} from "react-redux";
-import HealingPart from "../HealingPlan/Components/HealingPart";
+import ModifiedInput from "./Components/ModifiedInput";
 
 class HealingPlan extends Component {
   render() {
    
-    const fifthStageProcedureAreas = ["Упражнения", "Задания", "Лекарства"];
-    const fifthStageProcedureNames = ["Ходьба", "Бег", "Прыжки"];
+    const redFlags = ["Упражнения", "Задания", "Лекарства"];
+    const diagnosis = ["Ходьба", "Бег", "Прыжки"];
     
     
     return (
@@ -20,8 +20,8 @@ class HealingPlan extends Component {
             firstStage: [],
             secondStage: [],
             thirdStage: [],
-            fourthStage: [],
-            fifthStage: []
+            redFlags: [],
+            diagnosis: []
           }}
           onSubmit={data => {
             this.props.submitForm(data);
@@ -29,16 +29,16 @@ class HealingPlan extends Component {
           {({values}) => (
             <Form>
              
-              <HealingPart
-                name="fifthStage"
-                procedureNames={fifthStageProcedureNames}
-                procedureAreas={fifthStageProcedureAreas}
-                stageClassName={{title: "fifthStageTitle", background: 'fifthStageBg'}}
-                title="Этап 5: Профилактика"
-                stage={values.fifthStage}
+              <ModifiedInput
+                name="redFlags"
+                autocompleteOptions={redFlags}
+                label="Красные флаги"
+                values={values.redFlags}
               />
               
               <Button type="submit">Сохранить</Button>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+
             </Form>
           )}
         </Formik>
