@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const dbFileName = './controllers/healingPlan/db/db.json';
+const dbFileName = './controllers/patientCard/db/db.json';
 
 let data = {};
 
