@@ -73,12 +73,12 @@ function Patient(props) {
               Имя: {selectedPatient.patientName}{" "}
             </Typography>
             <Typography className={classes.title}>
-              Год рождения: {selectedPatient.patientAge}
+              Год рождения: {new Date(selectedPatient.birthDate).toLocaleDateString()}
             </Typography>
-            <Typography className={classes.title} >
+            <Typography className={classes.title}>
               Красные флаги: {selectedPatient.redFlags && selectedPatient.redFlags.join(', ')}
             </Typography>
-            <Typography className={classes.title} >
+            <Typography className={classes.title}>
               Диагноз: {selectedPatient.diagnosis && selectedPatient.diagnosis.join(', ')}
             </Typography>
             <Typography>
@@ -109,7 +109,7 @@ function Patient(props) {
           <PatientCard
             key={index}
             name={person.patientName}
-            age={person.patientAge}
+            birthDate={person.birthDate}
             onClick={() => handleOpen(index)}
           />
         );
