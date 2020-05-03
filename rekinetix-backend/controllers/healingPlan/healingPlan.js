@@ -36,6 +36,28 @@ const createRouter = () => {
     }
     res.status(200).send(`successfully added`)
   });
+
+  router.patch('/procedure', (req, res) => {
+    const { stage, procedureName, procedureArea } = req.body;
+    try {
+      db.addProcedure(stage, { procedureArea, procedureName, status: 'запланировано' });
+      res.sendStatus(201);
+    } catch (error) {
+      res.sendStatus(500);
+    }
+  });
+
+  router.delete('/procedure', (req, res) => {
+    if (req.query && req.query.stage && req.query.procedureName) {
+      const { stage, procedureName } = req.query;
+      try {
+        db.deleteProcedure(stage, procedureName);
+        res.sendStatus(204);
+      } catch (error) {
+        res.sendStatus(500);
+      }
+    }
+  })
   
   return router;
 };

@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-const Table = ({ columns, data, addRowHandler, updateSelectData }) => {
+const Table = ({ columns, data, addProcedureHandler, proceedToDeleteProcedure, updateSelectData }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -16,7 +16,8 @@ const Table = ({ columns, data, addRowHandler, updateSelectData }) => {
   } = useTable({
     columns,
     data,
-    addRowHandler,
+    addProcedureHandler,
+    proceedToDeleteProcedure,
     updateSelectData,
   });
 
@@ -37,7 +38,7 @@ const Table = ({ columns, data, addRowHandler, updateSelectData }) => {
           return (
             <TableRow {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <TableCell align="center" {...cell.getCellProps()}>{cell.render("Cell")}</TableCell>;
+                return <TableCell align="left" {...cell.getCellProps()}>{cell.render("Cell")}</TableCell>;
               })}
             </TableRow>
           );

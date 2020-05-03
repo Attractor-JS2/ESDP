@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {fetchAttendanceData, sendAttendanceData} from "../../store/actions/attendance";
 import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
+import moment from "moment";
+import "moment/locale/ru";
 import {availableProcedures, availableHealingPlaces} from './procedures'
 import AttendancePlan from "./Component/AttendancePlan";
 
@@ -16,28 +18,20 @@ class Attendance extends Component {
       this.props.onfetchAttendanceData();
   }
 
+  getMomentLocale(date) {
+    return moment(date).locale('ru').format('L');
+  }
+
   render() {
     if (!this.props.attendance.patientName) return <></>; //TODO add loader for async State waiting
-    const formattedDate = () => {
-      const attendanceDate = new Date();
-      const trueDataFormat = (data) => {
-        if (data < 10) {
-          data = '0' + data;
-        }
-        return data;
-      }
-      let day = trueDataFormat(attendanceDate.getDate());
-      let month = trueDataFormat(attendanceDate.getMonth()+1);
-      let year = trueDataFormat(attendanceDate.getFullYear());
-      return day + '.' + month + '.' + year;
-    }
+
     return (
       <Container className="mt-5">
-        <h3>Отчет по приёму {this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : formattedDate()}</h3>
+        <h3>Отчет по приёму {this.props.attendance.attendanceDate !== "" ? this.getMomentLocale(this.props.attendance.attendanceDate) : this.getMomentLocale(new Date())}</h3>
         <Formik
           initialValues={
             {
-              attendanceDate: this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : formattedDate(),
+              attendanceDate: this.props.attendance.attendanceDate !== "" ? this.props.attendance.attendanceDate : new Date(),
               patientName: this.props.attendance.patientName,
               medicName: this.props.attendance.medicName,
               firstStage: this.props.attendance.firstStage,

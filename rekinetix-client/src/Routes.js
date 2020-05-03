@@ -4,7 +4,6 @@ import Attendance from "./Containers/Attendance/Attendance";
 import HealingPlan from "./Containers/HealingPlan/HealingPlan";
 import HealingPlanChart from "./components/HealingPlanChart/HealingPlanChart";
 import {
-  attendances,
   redFlags,
   patient,
   medic,
@@ -22,7 +21,6 @@ const Routes = () => {
       <Route path="/createPatient" component={PatientCardCreatingForm} />
       <Route path="/plan-chart">
         <HealingPlanChart
-          attendances={attendances}
           redFlags={redFlags}
           patient={patient}
           medic={medic}

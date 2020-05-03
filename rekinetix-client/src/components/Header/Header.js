@@ -15,9 +15,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,
-      background: "green",
     },
-
     title: {
       flexGrow: 1,
     },
