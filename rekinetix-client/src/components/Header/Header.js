@@ -11,7 +11,7 @@ import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
 import "./Header.css";
 import Logo from "../Logo/Logo";
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -39,6 +39,9 @@ export default function Header() {
             <Toolbar>
               <Logo />
               <Typography variant="h6" className={classes.title}>
+                <RouterNavLink className={classes.menuLink} to="/createPatient" exact>
+                  Создать пациента
+                </RouterNavLink>
                 <RouterNavLink className={classes.menuLink} to="/patient" exact>
                   Пациенты
                 </RouterNavLink>
@@ -57,7 +60,7 @@ export default function Header() {
                   to="/plan-chart"
                   exact
                 >
-                  Таблица плана лечения
+                  Таблица плана
                 </RouterNavLink>
               </Typography>
               <Button color="inherit">Login</Button>

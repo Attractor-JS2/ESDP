@@ -25,7 +25,7 @@ class PatientCardCreatingForm extends Component {
           onSubmit={data => {
             this.props.submitForm(data)
           }}>
-          {({values, handleChange}) => (
+          {({values, setFieldValue}) => (
             <Form>
               <div className='mb-3'>
                 <Field
@@ -40,7 +40,7 @@ class PatientCardCreatingForm extends Component {
                   onChange={(val) => {
                     val = val.toString();
                     console.log(val);
-                    return handleChange(val);
+                    return setFieldValue('birthDate', val);
                   }}
                   name="birthDate"
                   disableCalendar
@@ -60,8 +60,6 @@ class PatientCardCreatingForm extends Component {
               />
               
               <Button type="submit">Сохранить</Button>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-            
             </Form>
           )}
         </Formik>
