@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {Button, Container} from "reactstrap";
 import {Formik, Form, Field} from "formik";
-import {submitForm} from "../../store/actions/healingPlan";
 import {connect} from "react-redux";
 import ModifiedInput from "./Components/ModifiedInput";
 import TextField from "@material-ui/core/TextField";
 import DatePicker from 'react-date-picker';
+import {sendPatientData} from "../../store/actions/patientCards";
 
 class PatientCardCreatingForm extends Component {
   render() {
@@ -23,7 +23,7 @@ class PatientCardCreatingForm extends Component {
             diagnosis: []
           }}
           onSubmit={data => {
-            console.log(data)
+            this.props.submitForm(data)
           }}>
           {({values, handleChange}) => (
             <Form>
@@ -36,7 +36,6 @@ class PatientCardCreatingForm extends Component {
               </div>
               <div>
                 <DatePicker
-                  // as={DatePicker}
                   
                   onChange={(val) => {
                     val = val.toString();
@@ -73,7 +72,7 @@ class PatientCardCreatingForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitForm: (data) => dispatch(submitForm(data))
+    submitForm: (data) => dispatch(sendPatientData(data))
   };
 };
 
