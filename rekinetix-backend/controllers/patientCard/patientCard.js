@@ -10,7 +10,7 @@ const createRouter = () => {
   });
   
   router.post('/', (req, res) => {
-    const patientInfo = req.body.patientInfo;
+    const patientInfo = req.body.patientData;
     try {
       db.addItem(patientInfo);
     } catch (e) {
