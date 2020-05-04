@@ -36,9 +36,8 @@ class PatientCardCreatingForm extends Component {
               </div>
               <div>
                 <DatePicker
-                  
                   onChange={(val) => {
-                    val = val.toString();
+                    if (val) val = val.toString();
                     console.log(val);
                     return setFieldValue('birthDate', val);
                   }}
