@@ -9,18 +9,30 @@ import {sendPatientData} from "../../store/actions/patientCards";
 
 class PatientCardCreatingForm extends Component {
   render() {
-    const redFlags = ["Упражнения", "Задания", "Лекарства"];
-    const diagnosis = ["Ходьба", "Бег", "Прыжки"];
+    const redFlags = ["Сахарный диабет", "Асцит", "Аневризмы", "Остеомелит"];
+    const diagnosis = ["Диагноз 1", "Диагноз 2", "Диагноз 3"];
     
     return (
       <Container className="mt-5">
         <h3>Новый пациент</h3>
         <Formik
           initialValues={{
-            patientName: '',
-            birthDate: new Date(),
             redFlags: [],
-            diagnosis: []
+            complaints: '',
+            anamnesisVitae: '',
+            anamnesisMorbi: '',
+            statusPraesens: {
+              foot: {D: '', S: '', additionalInfo: ''},
+              knee: {D: '', S: '', additionalInfo: ''},
+              hip: {D: '', S: '', additionalInfo: ''},
+              pelvicSpine: {D: '', S: '', additionalInfo: ''},
+              lumbarSpine: {D: '', S: '', additionalInfo: ''},
+              thoracicSpine: {D: '', S: '', additionalInfo: ''},
+              shoulderGirdel: {D: '', S: '', additionalInfo: ''},
+              headAndNeck: {D: '', S: '', additionalInfo: ''}
+            },
+            examinations: '',
+            diagnosis: [],
           }}
           onSubmit={data => {
             this.props.submitForm(data)
@@ -45,6 +57,7 @@ class PatientCardCreatingForm extends Component {
                   disableCalendar
                 />
               </div>
+              
               <ModifiedInput
                 name="redFlags"
                 autocompleteOptions={redFlags}
@@ -59,6 +72,7 @@ class PatientCardCreatingForm extends Component {
               />
               
               <Button type="submit">Сохранить</Button>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
