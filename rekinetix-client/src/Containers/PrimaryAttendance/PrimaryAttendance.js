@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import DatePicker from 'react-date-picker';
 import {sendPatientData} from "../../store/actions/patientCards";
 import FormTextarea from "../Course/components/FormTextarea";
+import {Checkbox} from "@material-ui/core";
 
 
 class PatientCardCreatingForm extends Component {
@@ -20,6 +21,7 @@ class PatientCardCreatingForm extends Component {
         <Formik
           initialValues={{
             redFlags: [],
+            attendanceDate: Date.now(),
             complaints: '',
             anamnesisVitae: '',
             anamnesisMorbi: '',
@@ -48,18 +50,31 @@ class PatientCardCreatingForm extends Component {
                   label='ФИО пациента'
                 />
               </div>
-              <div>
+              <div className='mb-3'>
+                <div>Дата приема: </div>
                 <DatePicker
+                  value={values.attendanceDate}
                   onChange={(val) => {
                     if (val) val = val.toString();
                     console.log(val);
                     return setFieldValue('birthDate', val);
                   }}
-                  name="birthDate"
                   disableCalendar
                 />
               </div>
-             
+              <div className='mb-3'>
+                <div> Красные флаги:</div>
+                {redFlags.map(redFlag => {
+                  return <label>
+                    <span>{redFlag}: </span>
+                    <Field
+                    type="checkbox"
+                    name="redFlags"
+                    as={Checkbox}
+                    value={redFlag}
+                  /></label>
+                })}
+              </div>
               <div className='mb-3'>
                 <Field
                   name="complaints"
