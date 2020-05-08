@@ -6,6 +6,8 @@ import ModifiedInput from "./Components/ModifiedInput";
 import TextField from "@material-ui/core/TextField";
 import DatePicker from 'react-date-picker';
 import {sendPatientData} from "../../store/actions/patientCards";
+import FormTextarea from "../Course/components/FormTextarea";
+
 
 class PatientCardCreatingForm extends Component {
   render() {
@@ -21,6 +23,7 @@ class PatientCardCreatingForm extends Component {
             complaints: '',
             anamnesisVitae: '',
             anamnesisMorbi: '',
+            examinations: '',
             statusPraesens: {
               foot: {D: '', S: '', additionalInfo: ''},
               knee: {D: '', S: '', additionalInfo: ''},
@@ -31,7 +34,6 @@ class PatientCardCreatingForm extends Component {
               shoulderGirdel: {D: '', S: '', additionalInfo: ''},
               headAndNeck: {D: '', S: '', additionalInfo: ''}
             },
-            examinations: '',
             diagnosis: [],
           }}
           onSubmit={data => {
@@ -57,17 +59,41 @@ class PatientCardCreatingForm extends Component {
                   disableCalendar
                 />
               </div>
+             
+              <div className='mb-3'>
+                <Field
+                  name="complaints"
+                  as={FormTextarea}
+                  label='Жалобы пациента: '
+                />
+              </div>
+              <div className='mb-3'>
+                <Field
+                  name="anamnesisVitae"
+                  as={FormTextarea}
+                  label='Анамнез профессии и условий среды жизнедеятельности: '
+                />
+              </div>
+              <div className='mb-3'>
+                <Field
+                  name="anamnesisMorbi"
+                  as={FormTextarea}
+                  label='Анализ заболевания: '
+                />
+              </div>
+              <div className='mb-3'>
+                <Field
+                  name="examinations"
+                  as={FormTextarea}
+                  label='Данные инструментальных и лабораторных обследований: '
+                />
+              </div>
               
-              <ModifiedInput
-                name="redFlags"
-                autocompleteOptions={redFlags}
-                label="Красные флаги"
-                values={values.redFlags}
-              />
+              
               <ModifiedInput
                 name="diagnosis"
                 autocompleteOptions={diagnosis}
-                label="Диагноз"
+                label="Диагноз: "
                 values={values.diagnosis}
               />
               
