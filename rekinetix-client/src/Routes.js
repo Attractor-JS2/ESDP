@@ -11,10 +11,12 @@ import {
 } from "./components/HealingPlanChart/healingPlanDataLatest";
 import Patient from "./Containers/Patient/Patient";
 import PatientCardCreatingForm from "./Containers/PatientCardCreatingForm/PatientCardCreatingForm";
+import PrimaryAttendance from "./Containers/PrimaryAttendance/PrimaryAttendance";
 
 const Routes = () => {
   return (
     <Switch>
+      <Route path="/primary-attendance" component={PrimaryAttendance} />
       <Route path="/patient" component={Patient} />
       <Route path="/attendance" component={Attendance} />
       <Route path="/plan" component={HealingPlan} />
