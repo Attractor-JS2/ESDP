@@ -11,6 +11,7 @@ import {
 } from "./components/HealingPlanChart/healingPlanDataLatest";
 import Patient from "./Containers/Patient/Patient";
 import PatientCardCreatingForm from "./Containers/PatientCardCreatingForm/PatientCardCreatingForm";
+import SiteMap from "./Containers/SiteMap/SiteMap";
 
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
           diagnosis={diagnosis}
         />
       </Route>
+      <Route path="/siteMap" component={SiteMap} />
     </Switch>
   );
 };
