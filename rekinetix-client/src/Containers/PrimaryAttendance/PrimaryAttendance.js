@@ -3,21 +3,22 @@ import {Button, Container} from "reactstrap";
 import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
 import ModifiedInput from "./Components/ModifiedInput";
-import TextField from "@material-ui/core/TextField";
 import DatePicker from 'react-date-picker';
 import {sendPatientData} from "../../store/actions/patientCards";
 import FormTextarea from "../Course/components/FormTextarea";
 import {Checkbox} from "@material-ui/core";
+import StatusAutocomplete from "./Components/StatusAutocomplete";
 
 
 class PatientCardCreatingForm extends Component {
   render() {
-    const redFlags = ["Сахарный диабет", "Асцит", "Аневризмы", "Остеомелит"];
+    const redFlags = ["Сахарный диабет", "Асцит", "Аневризмы", "Красный флаг 4", 'Красный флаг 5', 'Красный флаг 6', 'Красный флаг 7', 'Красный флаг 8', 'Красный флаг 9'];
     const diagnosis = ["Диагноз 1", "Диагноз 2", "Диагноз 3"];
+    const statusProps = ['Состояние 1', 'Состояние 2', 'Состояние 3'];
     
     return (
       <Container className="mt-5">
-        <h3>Новый пациент</h3>
+        <h3>Протокол первичного приема</h3>
         <Formik
           initialValues={{
             redFlags: [],
@@ -27,14 +28,14 @@ class PatientCardCreatingForm extends Component {
             anamnesisMorbi: '',
             examinations: '',
             statusPraesens: {
-              foot: {D: '', S: '', additionalInfo: ''},
-              knee: {D: '', S: '', additionalInfo: ''},
-              hip: {D: '', S: '', additionalInfo: ''},
-              pelvicSpine: {D: '', S: '', additionalInfo: ''},
-              lumbarSpine: {D: '', S: '', additionalInfo: ''},
-              thoracicSpine: {D: '', S: '', additionalInfo: ''},
-              shoulderGirdel: {D: '', S: '', additionalInfo: ''},
-              headAndNeck: {D: '', S: '', additionalInfo: ''}
+              foot: {title: 'Стопа', D: '', S: '', additionalInfo: ''},
+              knee: {title: 'Колени', D: '', S: '', additionalInfo: ''},
+              hip: {title: 'Тазобедренный сустав', D: '', S: '', additionalInfo: ''},
+              pelvicSpine: {title: 'Тазовый отдел', D: '', S: '', additionalInfo: ''},
+              lumbarSpine: {title: 'Поясничный отдел', D: '', S: '', additionalInfo: ''},
+              thoracicSpine: {title: 'Грудной отдел', D: '', S: '', additionalInfo: ''},
+              shoulderGirdel: {title: 'Плечо/лопатка', D: '', S: '', additionalInfo: ''},
+              headAndNeck: {title: 'Шея, голова', D: '', S: '', additionalInfo: ''}
             },
             diagnosis: [],
           }}
@@ -44,14 +45,7 @@ class PatientCardCreatingForm extends Component {
           {({values, setFieldValue}) => (
             <Form>
               <div className='mb-3'>
-                <Field
-                  name="patientName"
-                  as={TextField}
-                  label='ФИО пациента'
-                />
-              </div>
-              <div className='mb-3'>
-                <div>Дата приема: </div>
+                <div>Дата приема:</div>
                 <DatePicker
                   value={values.attendanceDate}
                   onChange={(val) => {
@@ -62,19 +56,24 @@ class PatientCardCreatingForm extends Component {
                   disableCalendar
                 />
               </div>
+              
               <div className='mb-3'>
                 <div> Красные флаги:</div>
-                {redFlags.map(redFlag => {
-                  return <label>
-                    <span>{redFlag}: </span>
-                    <Field
-                    type="checkbox"
-                    name="redFlags"
-                    as={Checkbox}
-                    value={redFlag}
-                  /></label>
+                {redFlags.map((redFlag, index) => {
+                  return (
+                    <label key={index}>
+                      <Field
+                        type="checkbox"
+                        name="redFlags"
+                        as={Checkbox}
+                        value={redFlag}
+                      />
+                      <span>{redFlag} </span>
+
+                    </label>)
                 })}
               </div>
+              
               <div className='mb-3'>
                 <Field
                   name="complaints"
@@ -103,6 +102,18 @@ class PatientCardCreatingForm extends Component {
                   label='Данные инструментальных и лабораторных обследований: '
                 />
               </div>
+              
+              {
+                Object.keys(values.statusPraesens).map(bodyPart => (
+                  <StatusAutocomplete key={bodyPart}
+                    name={`statusPraesens.${bodyPart}`}
+                    values={values.statusPraesens[bodyPart]}
+                    label={values.statusPraesens[bodyPart].title}
+                    autocompleteOptions={statusProps}
+                  />
+                ))
+                
+              }
               
               
               <ModifiedInput
