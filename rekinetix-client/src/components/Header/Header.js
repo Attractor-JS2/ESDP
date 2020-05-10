@@ -20,6 +20,7 @@ const useStyles = makeStyles(() =>
       flexGrow: 1,
     },
     menuLink: {
+      fontSize: "14px",
       color: "red",
       marginLeft: "50px",
     },
@@ -43,22 +44,17 @@ export default function Header() {
                 <RouterNavLink className={classes.menuLink} to="/patient" exact>
                   Пациенты
                 </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
-                  to="/attendance"
-                  exact
-                >
+                <RouterNavLink className={classes.menuLink} to="/attendance" exact>
                   Отчет по приёму
                 </RouterNavLink>
                 <RouterNavLink className={classes.menuLink} to="/plan" exact>
                   План лечения{" "}
                 </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
-                  to="/plan-chart"
-                  exact
-                >
+                <RouterNavLink className={classes.menuLink} to="/plan-chart" exact>
                   Таблица плана
+                </RouterNavLink>
+                <RouterNavLink className={classes.menuLink} to="/siteMap" exact>
+                  Карта сайта
                 </RouterNavLink>
               </Typography>
               <Button color="inherit">Login</Button>
