@@ -5,7 +5,7 @@ const rootPath = __dirname;
 module.exports = {
   rootPath,
   db: {
-    name: "recinetixdb",
+    name: "rekinetixdb",
     url: "mongodb://localhost",
     getDbPath() {
       return this.url + "/" + this.name;
