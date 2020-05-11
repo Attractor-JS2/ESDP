@@ -12,6 +12,7 @@ import {
 import Patient from "./Containers/Patient/Patient";
 import PatientCardCreatingForm from "./Containers/PatientCardCreatingForm/PatientCardCreatingForm";
 import PrimaryAttendance from "./Containers/PrimaryAttendance/PrimaryAttendance";
+import SiteMap from "./Containers/SiteMap/SiteMap";
 
 const Routes = () => {
   return (
@@ -29,6 +30,7 @@ const Routes = () => {
           diagnosis={diagnosis}
         />
       </Route>
+      <Route path="/siteMap" component={SiteMap} />
     </Switch>
   );
 };
