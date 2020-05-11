@@ -8,7 +8,7 @@ const HealingPlanSchema = new Schema({
     ref: 'PrimaryAssessment',
     required: true,
   },
-});
+}, { timestamps: true });
 
 const HealingPlan = mongoose.model('HealingPlan', HealingPlanSchema);
 
