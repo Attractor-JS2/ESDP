@@ -4,10 +4,10 @@ import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
 import ModifiedInput from "./Components/ModifiedInput";
 import DatePicker from 'react-date-picker';
-import {sendPatientData} from "../../store/actions/patientCards";
 import FormTextarea from "../Course/components/FormTextarea";
 import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
+import {submitPrimaryAttendance} from "../../store/actions/primaryAttendance";
 
 const patient = {
   patientName: "John Doe",
@@ -144,7 +144,7 @@ class PatientCardCreatingForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitForm: (data) => dispatch(sendPatientData(data))
+    submitForm: (data) => dispatch(submitPrimaryAttendance(data))
   };
 };
 
