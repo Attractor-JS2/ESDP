@@ -12,7 +12,7 @@ const PatientSchema = new Schema(
       type: Date,
       required: true,
     },
-    floor: {
+    gender: {
       type: String,
       required: true,
     },
