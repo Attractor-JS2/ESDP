@@ -19,7 +19,7 @@ const ModifiedInput = (props) => {
               <div className='w-25'>
                 <span className="mr-4">D: </span>
                 <Field
-                  name={`${props.name}[d]`}
+                  name={`${props.name}[D]`}
                   component={FormikAutocomplete}
                   debug
                   clearOnEscape
@@ -28,9 +28,9 @@ const ModifiedInput = (props) => {
               </div>
   
               <div className='w-25'>
-                <span className="mr-4">s: </span>
+                <span className="mr-4">S: </span>
                 <Field
-                  name={`${props.name}[s]`}
+                  name={`${props.name}[S]`}
                   component={FormikAutocomplete}
                   debug
                   clearOnEscape
