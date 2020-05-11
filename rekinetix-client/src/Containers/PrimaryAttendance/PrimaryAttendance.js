@@ -133,7 +133,6 @@ class PatientCardCreatingForm extends Component {
               />
               
               <Button type="submit">Сохранить</Button>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
             </Form>
           )}
         </Formik>
