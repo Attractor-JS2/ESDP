@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const Patient = require('./Patient');
-const User = require('./User');
 
 const { Schema } = mongoose;
 
@@ -29,6 +27,11 @@ const PrimaryAssessmentSchema = new Schema({
   },
   anamnesisMorbi: {
     type: String,
+    required: true,
+  },
+  objectiveExam: {
+    type: Schema.Types.ObjectId,
+    ref: 'ObjectiveExam',
     required: true,
   },
   examinations: {
