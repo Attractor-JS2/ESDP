@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Container} from "reactstrap";
+import {Button, Container, Row} from "reactstrap";
 import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
 import ModifiedInput from "./Components/ModifiedInput";
@@ -8,6 +8,11 @@ import {sendPatientData} from "../../store/actions/patientCards";
 import FormTextarea from "../Course/components/FormTextarea";
 import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
+
+const patient = {
+  patientName: "John Doe",
+  birthDate: "Wed Dec 12 2012 00:00:00 GMT+0600 (East Kazakhstan Time)"
+};
 
 
 class PatientCardCreatingForm extends Component {
@@ -18,6 +23,10 @@ class PatientCardCreatingForm extends Component {
     
     return (
       <Container className="mt-5">
+        <Row className='mb-5 d-flex justify-content-between border-bottom border-dark'>
+          <span>Имя Пациента: {patient.patientName}</span>
+          <span>Дата рождения: {new Date(patient.birthDate).toLocaleDateString()}</span>
+        </Row>
         <h3>Протокол первичного приема</h3>
         <Formik
           initialValues={{
@@ -69,7 +78,7 @@ class PatientCardCreatingForm extends Component {
                         value={redFlag}
                       />
                       <span>{redFlag} </span>
-
+                    
                     </label>)
                 })}
               </div>
@@ -106,10 +115,10 @@ class PatientCardCreatingForm extends Component {
               {
                 Object.keys(values.statusPraesens).map(bodyPart => (
                   <StatusAutocomplete key={bodyPart}
-                    name={`statusPraesens.${bodyPart}`}
-                    values={values.statusPraesens[bodyPart]}
-                    label={values.statusPraesens[bodyPart].title}
-                    autocompleteOptions={statusProps}
+                                      name={`statusPraesens.${bodyPart}`}
+                                      values={values.statusPraesens[bodyPart]}
+                                      label={values.statusPraesens[bodyPart].title}
+                                      autocompleteOptions={statusProps}
                   />
                 ))
                 
