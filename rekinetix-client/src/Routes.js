@@ -17,7 +17,7 @@ import SiteMap from "./Containers/SiteMap/SiteMap";
 const Routes = () => {
   return (
     <Switch>
-      <Route path="/primary-assesment" component={PrimaryAssessment} />
+      <Route path="/primary-assessment" component={PrimaryAssessment} />
       <Route path="/patient" component={Patient} />
       <Route path="/attendance" component={Attendance} />
       <Route path="/plan" component={HealingPlan} />
