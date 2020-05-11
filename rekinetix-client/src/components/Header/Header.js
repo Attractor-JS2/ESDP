@@ -20,7 +20,7 @@ const useStyles = makeStyles(() =>
       flexGrow: 1,
     },
     menuLink: {
-      fontSize: "14px",
+      fontSize: "12px",
       color: "red",
       marginLeft: "50px",
     },
@@ -38,6 +38,9 @@ export default function Header() {
             <Toolbar>
               <Logo />
               <Typography variant="h6" className={classes.title}>
+                <RouterNavLink className={classes.menuLink} to="/primary-attendance" exact>
+                  Первичный осмотр
+                </RouterNavLink>
                 <RouterNavLink className={classes.menuLink} to="/createPatient" exact>
                   Создать пациента
                 </RouterNavLink>
