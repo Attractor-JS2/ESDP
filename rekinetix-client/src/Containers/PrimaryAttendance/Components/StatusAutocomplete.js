@@ -39,7 +39,7 @@ const ModifiedInput = (props) => {
               </div>
   
               <div className='w-25'>
-                <span className="mr-4">Дополнительная информация: </span>
+                <span className="mr-4">В движении: </span>
                 <Field
                   name={`${props.name}[additionalInfo]`}
                   component={FormikAutocomplete}
@@ -48,7 +48,7 @@ const ModifiedInput = (props) => {
                   {...arrayToAutocomplete}
                 />
               </div>
-                
+              
             </div>
           </div>
         )}
