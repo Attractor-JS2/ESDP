@@ -38,7 +38,7 @@ export default function Header() {
             <Toolbar>
               <Logo />
               <Typography variant="h6" className={classes.title}>
-                <RouterNavLink className={classes.menuLink} to="/primary-attendance" exact>
+                <RouterNavLink className={classes.menuLink} to="/primary-assessment" exact>
                   Первичный осмотр
                 </RouterNavLink>
                 <RouterNavLink className={classes.menuLink} to="/createPatient" exact>

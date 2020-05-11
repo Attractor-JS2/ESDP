@@ -7,7 +7,7 @@ import DatePicker from 'react-date-picker';
 import FormTextarea from "../Course/components/FormTextarea";
 import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
-import {submitPrimaryAttendance} from "../../store/actions/primaryAttendance";
+import {submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
 
 const patient = {
   patientName: "John Doe",
