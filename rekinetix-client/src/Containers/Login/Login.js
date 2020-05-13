@@ -4,6 +4,12 @@ import { TextField } from 'formik-material-ui';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  userName: yup.string().required("Введите имя"),
+  password: yup.string().required("Введите пароль"),
+});
 
 const Login = () => {
   return (
@@ -15,6 +21,7 @@ const Login = () => {
               userName: '',
               password: '',
             }}
+            validationSchema={validationSchema}
             onSubmit={(values) => console.dir(values)}
           >
             <Form>
