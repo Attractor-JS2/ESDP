@@ -13,6 +13,7 @@ import Patient from "./Containers/Patient/Patient";
 import PatientCardCreatingForm from "./Containers/PatientCardCreatingForm/PatientCardCreatingForm";
 import PrimaryAssessment from "./Containers/PrimaryAssessment/PrimaryAssessment";
 import Login from "./Containers/Login/Login";
+import Register from "./Containers/Register/Register";
 import SiteMap from "./Containers/SiteMap/SiteMap";
 
 const Routes = () => {
@@ -31,7 +32,10 @@ const Routes = () => {
           diagnosis={diagnosis}
         />
       </Route>
+
       <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+
       <Route path="/siteMap" component={SiteMap} />
     </Switch>
   );
