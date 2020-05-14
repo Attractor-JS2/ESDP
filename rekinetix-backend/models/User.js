@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const config = require('../configs/auth.config');
 
 const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
@@ -21,8 +24,8 @@ const UserSchema = new Schema({
   role: {
     type: String,
     required: true,
-    default: "user",
-    enum: ["user", "doctor", "frontDesk"],
+    default: 'user',
+    enum: ['user', 'doctor', 'frontDesk'],
   },
 });
 
@@ -42,6 +45,16 @@ UserSchema.set('toJSON', {
   },
 });
 
-const User = mongoose.model("User", UserSchema);
+UserSchema.methods.checkPassword = function checkPassword(password) {
+  return bcrypt.compare(password, this.password);
+};
+
+UserSchema.methods.generateToken = function generateToken() {
+  this.token = jwt.sign({ userId: this._id }, config.secret, {
+    expiresIn: '12h',
+  });
+};
+
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
