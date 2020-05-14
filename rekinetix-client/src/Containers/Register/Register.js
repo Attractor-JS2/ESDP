@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { TextField, Select } from 'formik-material-ui';
 import * as yup from 'yup';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { registerUser } from '../../store/actions/users';
 
@@ -54,13 +57,23 @@ const Register = ({ onRegisterUser }) => {
                 label="Пароль:"
                 fullWidth
               />
-              <Field
-                component={TextField}
-                type="text"
-                name="role"
-                label="Роль"
-                fullWidth
-              />
+              <FormControl fullWidth>
+                <InputLabel htmlFor="userRole">Роль</InputLabel>
+                <Field
+                  component={Select}
+                  type="text"
+                  name="role"
+                  label="Роль"
+                  fullWidth
+                  inputProps={{
+                    id: 'userRole',
+                  }}
+                >
+                  <MenuItem value={'doctor'}>Врач</MenuItem>
+                  <MenuItem value={'frontdesk'}>Регистратура</MenuItem>
+                  <MenuItem value={'admin'}>Админ</MenuItem>
+                </Field>
+              </FormControl>
               <Button type="submit">Сохранить</Button>
             </Form>
           </Formik>
