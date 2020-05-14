@@ -20,7 +20,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route path="/primary-assessment" component={PrimaryAssessment} />
-      <Route path="/patient" component={Patient} />
+      <Route path="/patients" component={Patient} />
       <Route path="/attendance" component={Attendance} />
       <Route path="/plan" component={HealingPlan} />
       <Route path="/createPatient" component={PatientCardCreatingForm} />

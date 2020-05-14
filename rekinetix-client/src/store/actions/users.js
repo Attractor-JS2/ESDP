@@ -46,7 +46,7 @@ export const loginUser = (userData) => (dispatch) => {
   axios.post('/users/sessions', userData).then(
     (response) => {
       dispatch(loginUserSuccess(response.data));
-      dispatch(push('/'));
+      dispatch(push('/patients'));
     },
     (error) => {
       dispatch(loginUserFailure(error));
