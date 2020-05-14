@@ -13,7 +13,7 @@ const verifyToken = (request, response, next) => {
     if (error) {
       return response.status(401).send({ message: 'Invalid token!' });
     }
-    request.username = decoded.username;
+    request.userId = decoded.userId;
     next();
   });
 };
