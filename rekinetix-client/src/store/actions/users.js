@@ -58,6 +58,6 @@ export const logoutUser = () => (dispatch) => {
   axios.delete('/users/sessions').then(() => {
     dispatch({ type: LOGOUT_USER });
     dispatch(push('/'));
-    NotificationManager.success('Logged out');
+    NotificationManager.success('Вы успешно вышли из профиля');
   });
 };

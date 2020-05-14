@@ -10,6 +10,8 @@ import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
 
 import "./Header.css";
 import Logo from "../Logo/Logo";
+import { connect } from "react-redux";
+import { logoutUser } from "../../store/actions/users";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -27,7 +29,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function Header() {
+const Header = ({ onLogoutUser }) => {
   const classes = useStyles();
 
   return (
@@ -60,11 +62,17 @@ export default function Header() {
                   Карта сайта
                 </RouterNavLink>
               </Typography>
-              <Button color="inherit">Login</Button>
+              <Button color="inherit" onClick={onLogoutUser}>Выйти</Button>
             </Toolbar>
           </Container>
         </ScopedCssBaseline>
       </AppBar>
     </div>
   );
-}
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onLogoutUser: () => dispatch(logoutUser())
+})
+
+export default connect(null, mapDispatchToProps)(Header);
