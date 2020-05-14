@@ -7,7 +7,7 @@ import {
   LOGIN_USER_FAILURE,
   LOGOUT_USER,
 } from './actionTypes';
-import axios from '../../axios-api';
+import axios from '../../axiosBackendInstance';
 
 const registerUserSuccess = () => ({ type: REGISTER_USER_SUCCESS });
 
