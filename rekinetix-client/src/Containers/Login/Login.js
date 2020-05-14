@@ -1,34 +1,37 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
+import { connect } from 'react-redux';
+import * as yup from 'yup';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import * as yup from 'yup';
+
+import { loginUser } from '../../store/actions/users';
 
 const validationSchema = yup.object().shape({
-  userName: yup.string().required("Введите имя"),
-  password: yup.string().required("Введите пароль"),
+  username: yup.string().required('Введите имя'),
+  password: yup.string().required('Введите пароль'),
 });
 
-const Login = () => {
+const Login = ({ onLoginUser }) => {
   return (
     <Container>
       <Grid container direction="column" alignItems="center">
         <Grid item sm={12} md={6}>
           <Formik
             initialValues={{
-              userName: '',
+              username: '',
               password: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => console.dir(values)}
+            onSubmit={(values) => onLoginUser(values)}
           >
             <Form>
               <Field
                 component={TextField}
                 type="text"
-                name="userName"
+                name="username"
                 label="Имя пользователя:"
                 fullWidth
               />
@@ -48,4 +51,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  onLoginUser: (userData) => dispatch(loginUser(userData)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
