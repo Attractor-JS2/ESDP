@@ -1,19 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
+import * as yup from 'yup';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import * as yup from 'yup';
+
+import { registerUser } from '../../store/actions/users';
 
 const validationSchema = yup.object().shape({
-  fullName: yup.string().required('Введите ФИО'),
-  userName: yup.string().required('Введите логин'),
+  fullname: yup.string().required('Введите ФИО'),
+  username: yup.string().required('Введите логин'),
   password: yup.string().required('Введите пароль'),
 });
 
-const Register = () => {
+const Register = ({ onRegisterUser }) => {
   return (
     <Container>
       <Grid container direction="column" alignItems="center">
@@ -21,25 +24,26 @@ const Register = () => {
         <Grid item sm={12} md={6}>
           <Formik
             initialValues={{
-              fullName: '',
-              userName: '',
+              fullname: '',
+              username: '',
               password: '',
+              role: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => console.dir(values)}
+            onSubmit={(values) => onRegisterUser(values)}
           >
             <Form>
               <Field
                 component={TextField}
                 type="text"
-                name="fullName"
+                name="fullname"
                 label="Ф.И.О:"
                 fullWidth
               />
               <Field
                 component={TextField}
                 type="text"
-                name="userName"
+                name="username"
                 label="Логин:"
                 fullWidth
               />
@@ -50,7 +54,14 @@ const Register = () => {
                 label="Пароль:"
                 fullWidth
               />
-              <Button type="submit">Войти</Button>
+              <Field
+                component={TextField}
+                type="text"
+                name="role"
+                label="Роль"
+                fullWidth
+              />
+              <Button type="submit">Сохранить</Button>
             </Form>
           </Formik>
         </Grid>
@@ -59,4 +70,8 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+  onRegisterUser: (userData) => dispatch(registerUser(userData)),
+});
+
+export default connect(null, mapDispatchToProps)(Register);
