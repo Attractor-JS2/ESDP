@@ -42,6 +42,20 @@ const createRouter = () => {
     return res.status(200).send(getResponseSafeData(savedData));
   });
 
+  router.delete('/sessions', async (req, res) => {
+    const token = req.get('x-access-token');
+    const success = { message: 'Success' };
+    if (!token) return res.send(success);
+
+    const user = await User.findOne({ token });
+    if (!user) return res.send(success);
+
+    user.generateToken();
+    await user.save();
+
+    return res.send(success);
+  });
+
   return router;
 };
 
