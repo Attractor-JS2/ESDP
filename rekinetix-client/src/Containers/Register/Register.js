@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import * as yup from 'yup';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,19 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { registerUser } from '../../store/actions/users';
 
+const useStyles = makeStyles({
+  root: {
+    padding: '30px 0',
+  },
+  formField: {
+    marginBottom: '20px',
+  },
+  buttonGroupCentered: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+});
+
 const validationSchema = yup.object().shape({
   fullname: yup.string().required('Введите ФИО'),
   username: yup.string().required('Введите логин'),
@@ -20,11 +34,14 @@ const validationSchema = yup.object().shape({
 });
 
 const Register = ({ onRegisterUser }) => {
+  const classes = useStyles();
   return (
-    <Container>
+    <Container className={classes.root}>
       <Grid container direction="column" alignItems="center">
-        <Typography variant="h5">Регистрация нового пользователя</Typography>
         <Grid item sm={12} md={6}>
+          <Typography variant="h5" align="center">
+            Регистрация нового пользователя
+          </Typography>
           <Formik
             initialValues={{
               fullname: '',
@@ -37,27 +54,33 @@ const Register = ({ onRegisterUser }) => {
           >
             <Form>
               <Field
+                className={classes.formField}
                 component={TextField}
                 type="text"
                 name="fullname"
                 label="Ф.И.О:"
                 fullWidth
               />
+
               <Field
+                className={classes.formField}
                 component={TextField}
                 type="text"
                 name="username"
                 label="Логин:"
                 fullWidth
               />
+
               <Field
+                className={classes.formField}
                 component={TextField}
                 type="password"
                 name="password"
                 label="Пароль:"
                 fullWidth
               />
-              <FormControl fullWidth>
+
+              <FormControl fullWidth className={classes.formField}>
                 <InputLabel htmlFor="userRole">Роль</InputLabel>
                 <Field
                   component={Select}
@@ -74,7 +97,12 @@ const Register = ({ onRegisterUser }) => {
                   <MenuItem value={'admin'}>Админ</MenuItem>
                 </Field>
               </FormControl>
-              <Button type="submit">Сохранить</Button>
+
+              <div className={classes.buttonGroupCentered}>
+                <Button type="submit" variant="outlined">
+                  Сохранить
+                </Button>
+              </div>
             </Form>
           </Formik>
         </Grid>

@@ -33,7 +33,7 @@ const Routes = () => {
         />
       </Route>
 
-      <Route path="/login" component={Login} />
+      <Route path="/" exact component={Login} />
       <Route path="/register" component={Register} />
 
       <Route path="/siteMap" component={SiteMap} />
