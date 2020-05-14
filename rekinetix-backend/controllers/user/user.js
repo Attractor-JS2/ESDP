@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+const auth = require('../../middleware/auth');
+const permit = require('../../middleware/permit');
 const User = require('../../models/User');
 
 const getResponseSafeData = (data) => ({
@@ -9,7 +11,7 @@ const getResponseSafeData = (data) => ({
 });
 
 const createRouter = () => {
-  router.post('/', async (req, res) => {
+  router.post('/', [auth.verifyToken, permit('admin')], async (req, res) => {
     const user = new User({
       fullname: req.body.fullname,
       username: req.body.username,

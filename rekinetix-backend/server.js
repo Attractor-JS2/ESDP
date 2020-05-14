@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const config = require("./config");
+const users = require("./controllers/user/user");
 const healingPlan = require("./controllers/healingPlan/healingPlan");
 const attendance = require("./controllers/attendance/attendance");
 const patientCard = require('./controllers/patientCard/patientCard');
@@ -19,6 +20,7 @@ mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   app.use("/attendance", attendance());
   app.use("/healingPlan", healingPlan());
   app.use('/patientCards', patientCard());
+  app.use("/users", users());
 
   app.listen(PORT, () => {
     console.log(`Server started on ${PORT} port!`);
