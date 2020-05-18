@@ -10,22 +10,24 @@ const getResponseSafeData = (data) => ({
   role: data.role,
 });
 
-const createRouter = () => {
-  router.post('/', [auth.verifyToken, permit('admin')], async (req, res) => {
-    const user = new User({
-      fullname: req.body.fullname,
-      username: req.body.username,
-      role: req.body.role,
-      password: req.body.password,
-    });
-
-    try {
-      await user.save();
-      res.status(201).send({ message: 'Success' });
-    } catch (error) {
-      res.sendStatus(400);
-    }
+const createUser = async(req, res) => {
+  const user = new User({
+    fullname: req.body.fullname,
+    username: req.body.username,
+    role: req.body.role,
+    password: req.body.password,
   });
+
+  try {
+    await user.save();
+    res.status(201).send({ message: 'Success' });
+  } catch (error) {
+    res.sendStatus(400);
+  }
+}
+
+const createRouter = () => {
+  router.post('/', [auth.verifyToken, permit('admin')], createUser);
 
   router.post('/sessions', async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
