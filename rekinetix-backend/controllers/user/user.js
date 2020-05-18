@@ -30,12 +30,12 @@ const createRouter = () => {
   router.post('/sessions', async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.status(400).send({ message: 'Wrong login or password' });
+      return res.status(400).send({ error: 'Wrong login or password' });
     }
 
     const isMatch = await user.checkPassword(req.body.password);
     if (!isMatch) {
-      return res.status(400).send({ message: 'Wrong login or password' });
+      return res.status(400).send({ error: 'Wrong login or password' });
     }
 
     user.generateToken();

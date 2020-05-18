@@ -44,31 +44,39 @@ const Login = ({ onLoginUser }) => {
               password: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => onLoginUser(values)}
+            onSubmit={(values, { setSubmitting }) =>
+              onLoginUser(values, setSubmitting)
+            }
           >
-            <Form>
-              <Field
-                className={classes.formField}
-                component={TextField}
-                type="text"
-                name="username"
-                label="Имя пользователя:"
-                fullWidth
-              />
-              <Field
-                className={classes.formField}
-                component={TextField}
-                type="password"
-                name="password"
-                label="Пароль:"
-                fullWidth
-              />
-              <div className={classes.buttonGroupCentered}>
-                <Button type="submit" variant="outlined">
-                  Войти
-                </Button>
-              </div>
-            </Form>
+            {({ isSubmitting }) => (
+              <Form>
+                <Field
+                  className={classes.formField}
+                  component={TextField}
+                  type="text"
+                  name="username"
+                  label="Имя пользователя:"
+                  fullWidth
+                />
+                <Field
+                  className={classes.formField}
+                  component={TextField}
+                  type="password"
+                  name="password"
+                  label="Пароль:"
+                  fullWidth
+                />
+                <div className={classes.buttonGroupCentered}>
+                  <Button
+                    type="submit"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                  >
+                    Войти
+                  </Button>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Grid>
       </Grid>
@@ -77,7 +85,8 @@ const Login = ({ onLoginUser }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoginUser: (userData) => dispatch(loginUser(userData)),
+  onLoginUser: (userData, formikSetter) =>
+    dispatch(loginUser(userData, formikSetter)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

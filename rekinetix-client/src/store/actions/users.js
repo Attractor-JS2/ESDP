@@ -42,14 +42,16 @@ const loginUserFailure = (error) => ({
   payload: error,
 });
 
-export const loginUser = (userData) => (dispatch) => {
+export const loginUser = (userData, formikSetter) => (dispatch) => {
   axios.post('/users/sessions', userData).then(
     (response) => {
       dispatch(loginUserSuccess(response.data));
       dispatch(push('/patients'));
     },
     (error) => {
-      dispatch(loginUserFailure(error));
+      dispatch(loginUserFailure(error.response.data));
+      NotificationManager.error('Неправильно указаны данные');
+      formikSetter(false);
     },
   );
 };
