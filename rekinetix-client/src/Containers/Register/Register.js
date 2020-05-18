@@ -50,60 +50,66 @@ const Register = ({ onRegisterUser }) => {
               role: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => onRegisterUser(values)}
+            onSubmit={(values, { setSubmitting }) => onRegisterUser(values, setSubmitting)}
           >
-            <Form>
-              <Field
-                className={classes.formField}
-                component={TextField}
-                type="text"
-                name="fullname"
-                label="Ф.И.О:"
-                fullWidth
-              />
-
-              <Field
-                className={classes.formField}
-                component={TextField}
-                type="text"
-                name="username"
-                label="Логин:"
-                fullWidth
-              />
-
-              <Field
-                className={classes.formField}
-                component={TextField}
-                type="password"
-                name="password"
-                label="Пароль:"
-                fullWidth
-              />
-
-              <FormControl fullWidth className={classes.formField}>
-                <InputLabel htmlFor="userRole">Роль</InputLabel>
+            {({ isSubmitting }) => (
+              <Form>
                 <Field
-                  component={Select}
+                  className={classes.formField}
+                  component={TextField}
                   type="text"
-                  name="role"
-                  label="Роль"
+                  name="fullname"
+                  label="Ф.И.О:"
                   fullWidth
-                  inputProps={{
-                    id: 'userRole',
-                  }}
-                >
-                  <MenuItem value={'doctor'}>Врач</MenuItem>
-                  <MenuItem value={'frontDesk'}>Регистратура</MenuItem>
-                  <MenuItem value={'admin'}>Админ</MenuItem>
-                </Field>
-              </FormControl>
+                />
 
-              <div className={classes.buttonGroupCentered}>
-                <Button type="submit" variant="outlined">
-                  Сохранить
-                </Button>
-              </div>
-            </Form>
+                <Field
+                  className={classes.formField}
+                  component={TextField}
+                  type="text"
+                  name="username"
+                  label="Логин:"
+                  fullWidth
+                />
+
+                <Field
+                  className={classes.formField}
+                  component={TextField}
+                  type="password"
+                  name="password"
+                  label="Пароль:"
+                  fullWidth
+                />
+
+                <FormControl fullWidth className={classes.formField}>
+                  <InputLabel htmlFor="userRole">Роль</InputLabel>
+                  <Field
+                    component={Select}
+                    type="text"
+                    name="role"
+                    label="Роль"
+                    fullWidth
+                    inputProps={{
+                      id: 'userRole',
+                    }}
+                  >
+                    <MenuItem value={'doctor'}>Врач</MenuItem>
+                    <MenuItem value={'frontDesk'}>Регистратура</MenuItem>
+                    <MenuItem value={'admin'}>Админ</MenuItem>
+                  </Field>
+                </FormControl>
+
+                <div className={classes.buttonGroupCentered}>
+                  <Button
+                    type="submit"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                  >
+                    Сохранить
+                  </Button>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Grid>
       </Grid>
@@ -112,7 +118,10 @@ const Register = ({ onRegisterUser }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onRegisterUser: (userData) => dispatch(registerUser(userData)),
+  onRegisterUser: (userData, formikIsSubmittingSetter) =>
+    dispatch(
+      registerUser(userData, formikIsSubmittingSetter),
+    ),
 });
 
 export default connect(null, mapDispatchToProps)(Register);

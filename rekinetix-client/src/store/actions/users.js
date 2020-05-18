@@ -16,7 +16,7 @@ const registerUserFailure = (error) => ({
   payload: error,
 });
 
-export const registerUser = (userData) => (dispatch) => {
+export const registerUser = (userData, formikIsSubmittingSetter) => (dispatch) => {
   axios.post('/users', userData).then(
     () => {
       dispatch(registerUserSuccess());
@@ -28,6 +28,7 @@ export const registerUser = (userData) => (dispatch) => {
       } else {
         dispatch(registerUserFailure(error));
       }
+      formikIsSubmittingSetter(false);
     },
   );
 };
