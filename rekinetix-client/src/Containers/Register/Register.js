@@ -93,7 +93,7 @@ const Register = ({ onRegisterUser }) => {
                   }}
                 >
                   <MenuItem value={'doctor'}>Врач</MenuItem>
-                  <MenuItem value={'frontdesk'}>Регистратура</MenuItem>
+                  <MenuItem value={'frontDesk'}>Регистратура</MenuItem>
                   <MenuItem value={'admin'}>Админ</MenuItem>
                 </Field>
               </FormControl>
