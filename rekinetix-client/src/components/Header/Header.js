@@ -29,7 +29,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const Header = ({ onLogoutUser }) => {
+const Header = ({ onLogoutUser, user }) => {
   const classes = useStyles();
 
   return (
@@ -62,7 +62,7 @@ const Header = ({ onLogoutUser }) => {
                   Карта сайта
                 </RouterNavLink>
               </Typography>
-              <Button color="inherit" onClick={onLogoutUser}>Выйти</Button>
+              {user && user.token && <Button color="inherit" onClick={onLogoutUser}>Выйти</Button>}
             </Toolbar>
           </Container>
         </ScopedCssBaseline>
@@ -71,8 +71,12 @@ const Header = ({ onLogoutUser }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  user: state.users.user,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onLogoutUser: () => dispatch(logoutUser())
-})
+});
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
