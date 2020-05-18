@@ -44,8 +44,8 @@ const Login = ({ onLoginUser }) => {
               password: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) =>
-              onLoginUser(values, setSubmitting)
+            onSubmit={(values, { setSubmitting, setFieldValue }) =>
+              onLoginUser(values, setSubmitting, setFieldValue)
             }
           >
             {({ isSubmitting }) => (
@@ -85,8 +85,8 @@ const Login = ({ onLoginUser }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoginUser: (userData, formikSetter) =>
-    dispatch(loginUser(userData, formikSetter)),
+  onLoginUser: (userData, formikIsSubmittingSetter, formikFieldSetter) =>
+    dispatch(loginUser(userData, formikIsSubmittingSetter, formikFieldSetter)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
