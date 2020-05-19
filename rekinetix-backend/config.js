@@ -6,7 +6,7 @@ module.exports = {
   rootPath,
   db: {
     name: "rekinetixdb",
-    url: "mongodb://localhost",
+    url: `${process.env.MONGO_URL || 'mongodb://localhost'}`,
     getDbPath() {
       return this.url + "/" + this.name;
     },
