@@ -20,9 +20,10 @@ const createUser = async (req, res) => {
 
     try {
         await user.save();
-        res.status(201).send({message: 'Success'});
+        return res.status(201).send({message: 'Success'});
     } catch (error) {
-        res.sendStatus(400);
+        console.log(error)
+        return res.status(400).send(error);
     }
 }
 const createRouter = () => {
