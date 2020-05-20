@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-ssh -tt root@rekinetix.ajs2.esdp.almaty.attractor.school <<SSH
+ssh -v -tt root@rekinetix.ajs2.esdp.almaty.attractor.school <<SSH
   set -ex
   cd ESDP
   ls -al
