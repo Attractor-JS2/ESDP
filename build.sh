@@ -14,4 +14,5 @@ ssh -o StrictHostKeyChecking=no -tt -i ${ssh_key} root@rekinetix.ajs2.esdp.almat
   git pull
   ./deploy-backend.sh
   ./deploy-frontend.sh
+  exit
 SSH
