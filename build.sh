@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 ssh_key=~/.ssh/id_rsa
 [[ -f /opt/bitnami/jenkins/jenkins_home/.ssh/id_rsa ]] && ssh_key=/opt/bitnami/jenkins/jenkins_home/.ssh/id_rsa
