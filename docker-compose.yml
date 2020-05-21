@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  backend:
+    build: ./rekinetix-backend
+    depends_on:
+      - mongo
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+    environment:
+      - MONGO_URL=mongodb://mongo
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - dbdata:/data/db
+    restart: unless-stopped
+
+volumes:
+  dbdata:
+
