@@ -14,6 +14,7 @@ RUN npm install
 
 # копируем исходный код
 COPY . .
-CMD ["node", "fixtures.js"]
+
 EXPOSE 8000
+CMD ['ls -al']
 CMD [ "node", "server.js" ]
