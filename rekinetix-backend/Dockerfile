@@ -16,5 +16,7 @@ RUN npm install
 COPY . .
 
 EXPOSE 8000
-CMD ['ls -al']
+RUN ls -al
+RUN node fixtures.js
+CMD ["node", "fixtures.js"]
 CMD [ "node", "server.js" ]
