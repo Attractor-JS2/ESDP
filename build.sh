@@ -9,7 +9,7 @@ ssh -o StrictHostKeyChecking=no -i ${ssh_key} root@rekinetix.ajs2.esdp.almaty.at
   cd ESDP
   ls -al
   git reset --hard
-  git checkout feature- deployment
+  git checkout feature-deployment
   git status
   git pull
   ./deploy-backend.sh
