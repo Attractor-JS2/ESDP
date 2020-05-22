@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const RedFlagSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
   patient: {
     type: Schema.Types.ObjectId,
     ref: 'Patient',
@@ -20,7 +24,6 @@ const RedFlagSchema = new Schema({
   cancelledBy: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
   },
 }, { timestamps: true });
 
