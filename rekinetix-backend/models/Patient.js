@@ -15,6 +15,7 @@ const PatientSchema = new Schema(
     gender: {
       type: String,
       required: true,
+      enum: ['мужской', 'женский'],
     },
     height: {
       type: Number,
@@ -25,7 +26,7 @@ const PatientSchema = new Schema(
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
     address: {

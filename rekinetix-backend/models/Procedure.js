@@ -36,12 +36,17 @@ const ProcedureSchema = new Schema({
     type: Number,
     min: 0,
   },
-  patientName: {
+  healingPlan: {
+    type: Schema.Types.ObjectId,
+    ref: 'HealingPlan',
+    required: true,
+  },
+  patient: {
     type: Schema.Types.ObjectId,
     ref: 'Patient',
     required: true,
   },
-  medicName: {
+  medic: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
