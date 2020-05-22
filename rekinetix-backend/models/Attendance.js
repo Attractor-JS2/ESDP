@@ -17,10 +17,12 @@ const AttendanceSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  // procedures:[{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Procedure',
-  // }]
+  procedures: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Procedure',
+    },
+  ],
 });
 
 const Attendance = mongoose.model('Attendance', AttendanceSchema);
