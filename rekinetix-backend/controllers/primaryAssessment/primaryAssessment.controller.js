@@ -14,9 +14,8 @@ const create = async (req, res) => {
     res.sendStatus(400);
   }
 
-  const objectiveExamData = getObjectiveExamData(objectiveExam);
-
   try {
+    const objectiveExamData = getObjectiveExamData(objectiveExam);
     const objectiveExamDoc = await ObjectiveExam.create(objectiveExamData);
     const primaryAssessmentData = getPrimaryAssessmentData(
       body,

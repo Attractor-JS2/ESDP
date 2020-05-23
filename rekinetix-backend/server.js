@@ -20,7 +20,7 @@ app.use(cors());
 mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   console.log("Mongoose connected!");
 
-  app.use("/attendances", attendances);
+  app.use("/attendances", auth.verifyToken, attendances);
   app.use("/healingPlan", auth.verifyToken, healingPlans);
   app.use('/patientCards', patientCard());
   app.use("/users", users);
