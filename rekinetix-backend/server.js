@@ -9,7 +9,7 @@ const users = require("./routes/user.routes");
 const patients = require("./routes/patient.routes");
 const primaryAssessments = require("./routes/primaryAssessment.routes");
 const healingPlans = require("./routes/healingPlan.routes");
-const attendance = require("./controllers/attendance/attendance");
+const attendances = require("./routes/attendance.routes");
 const patientCard = require('./controllers/patientCard/patientCard');
 
 const PORT = 8000;
@@ -20,7 +20,7 @@ app.use(cors());
 mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   console.log("Mongoose connected!");
 
-  app.use("/attendance", attendance());
+  app.use("/attendances", attendances);
   app.use("/healingPlan", auth.verifyToken, healingPlans);
   app.use('/patientCards', patientCard());
   app.use("/users", users);
