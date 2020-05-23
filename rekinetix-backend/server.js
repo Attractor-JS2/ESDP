@@ -6,9 +6,9 @@ const mongoose = require("mongoose");
 const config = require("./config");
 const auth = require("./middleware/auth");
 const users = require("./routes/user.routes");
-const primaryAssessments = require("./routes/primaryAssessment.route");
 const patients = require("./routes/patient.routes");
-const healingPlan = require("./controllers/healingPlan/healingPlan");
+const primaryAssessments = require("./routes/primaryAssessment.routes");
+const healingPlans = require("./routes/healingPlan.routes");
 const attendance = require("./controllers/attendance/attendance");
 const patientCard = require('./controllers/patientCard/patientCard');
 
@@ -21,7 +21,7 @@ mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   console.log("Mongoose connected!");
 
   app.use("/attendance", attendance());
-  app.use("/healingPlan", healingPlan());
+  app.use("/healingPlan", healingPlans);
   app.use('/patientCards', patientCard());
   app.use("/users", users);
   app.use("/patients", patients);
