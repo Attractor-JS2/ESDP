@@ -4,4 +4,6 @@ const primaryAssessmentController = require('../controllers/primaryAssessment/pr
 
 router.post('/', primaryAssessmentController.create);
 
+router.get('/', primaryAssessmentController.findByPatient);
+
 module.exports = router;
