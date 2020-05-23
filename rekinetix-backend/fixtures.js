@@ -108,7 +108,7 @@ connection.once('open', async () => {
     const primaryAssessment = await PrimaryAssessment.create({
       patient: testPatient.id,
       attendingDoctor: testUser.id,
-      datetime: new Date().toISOString(),
+      assessmentDate: new Date().toISOString(),
       complaints: 'Боли в пояснице',
       anamnesisVitae: 'Сидячий образ жизни',
       anamnesisMorbi:
