@@ -1,4 +1,4 @@
-const getProcedureData = (data, patientId, userId, healingPlanId) => {
+const getProcedureData = (data, healingPlanId) => {
   const {
     stage,
     procedureArea,
@@ -10,8 +10,6 @@ const getProcedureData = (data, patientId, userId, healingPlanId) => {
   } = data;
 
   return {
-    medic: userId,
-    patient: patientId,
     healingPlan: healingPlan || healingPlanId,
     comments: comments || '',
     status: status,
