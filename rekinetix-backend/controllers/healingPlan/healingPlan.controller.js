@@ -23,7 +23,7 @@ const findByPrimaryAssessment = async (req, res) => {
 
 const create = async (req, res) => {
   const { body, userId } = req;
-  const { primaryAssessment, patient, procedures } = body;
+  const { primaryAssessment, procedures } = body;
 
   try {
     const healingPlanDoc = await HealingPlan.create({

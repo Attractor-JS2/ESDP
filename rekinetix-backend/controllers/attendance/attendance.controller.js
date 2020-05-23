@@ -1,11 +1,24 @@
 const router = require('express').Router();
+
+const Attendance = require('../../models/Attendance');
+
 const db = require('./db/db');
 
 db.init();
 
-const findAll = async (req, res) => {
-  const data = db.getData();
-  res.send(data);
+const findByHealingPlan = async (req, res) => {
+  const filter = { healingPlan: req.query.healingPlan };
+
+  try {
+    const attendancesDocs = await Attendance.find(filter).populate({
+      path: 'procedures.procedure',
+      model: 'Procedure',
+    });
+    res.send(attendancesDocs);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
 };
 
 const create = async (req, res) => {
@@ -70,7 +83,7 @@ const create = async (req, res) => {
 };
 
 const attendanceController = {
-  findAll,
+  findByHealingPlan,
   create,
 };
 
