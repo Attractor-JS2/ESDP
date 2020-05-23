@@ -44,12 +44,12 @@ const getPrimaryAssessmentData = (requestData, userId, objectiveExamId) => {
     attendingDoctor: userId,
     assessmentDate: attendanceDate,
     objectiveExam: objectiveExamId,
-    patient,
-    complaints,
-    anamnesisVitae,
-    anamnesisMorbi,
-    examinations,
-    diagnosis,
+    patient: patient,
+    complaints: complaints,
+    anamnesisVitae: anamnesisVitae,
+    anamnesisMorbi: anamnesisMorbi,
+    examinations: examinations,
+    diagnosis: diagnosis,
   };
 };
 

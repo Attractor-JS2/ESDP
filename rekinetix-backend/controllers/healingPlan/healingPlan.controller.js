@@ -26,7 +26,7 @@ const create = async (req, res) => {
     await Procedure.create(...proceduresData);
 
     res.status(201).send({ id: healingPlanDoc.id });
-  } catch (e) {
+  } catch (error) {
     return res.sendStatus(500);
   }
 };
