@@ -45,7 +45,7 @@ const create = async (req, res) => {
   }
 };
 
-const addProcedure = (req, res) => {
+const addProcedure = async (req, res) => {
   const { body, params } = req;
   const { id } = params;
   try {
@@ -57,15 +57,19 @@ const addProcedure = (req, res) => {
   }
 };
 
-const deleteProcedure = (req, res) => {
-  if (req.query && req.query.stage && req.query.procedureName) {
-    const { stage, procedureName } = req.query;
-    try {
-      db.deleteProcedure(stage, procedureName);
+const deleteProcedure = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const procedureDoc = await Procedure.findById(id);
+    if (procedureDoc && procedureDoc.status === "запланировано") {
+      await procedureDoc.remove();
       res.sendStatus(204);
-    } catch (error) {
-      res.sendStatus(500);
+    } else {
+      res.sendStatus(400);
     }
+  } catch (error) {
+    res.sendStatus(500);
   }
 };
 
