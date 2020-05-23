@@ -21,7 +21,7 @@ mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   console.log("Mongoose connected!");
 
   app.use("/attendance", attendance());
-  app.use("/healingPlan", healingPlans);
+  app.use("/healingPlan", auth.verifyToken, healingPlans);
   app.use('/patientCards', patientCard());
   app.use("/users", users);
   app.use("/patients", patients);

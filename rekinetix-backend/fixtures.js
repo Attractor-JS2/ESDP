@@ -121,6 +121,7 @@ connection.once('open', async () => {
   
     const healingPlan = await HealingPlan.create({
       primaryAssessment: primaryAssessment.id,
+      medic: testUser.id,
     });
   
     const procedure = await Procedure.create({
