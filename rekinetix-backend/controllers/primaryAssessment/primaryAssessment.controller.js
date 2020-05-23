@@ -32,8 +32,24 @@ const create = async (req, res) => {
   }
 };
 
+const findByPatient = async (req, res) => {
+  const filter = { patient: req.query.patient };
+
+  try {
+    const primaryAssessmentDocs = await PrimaryAssessment.find(filter)
+      .sort({ assessmentDate: 'asc' })
+      .populate({ path: 'objectiveExam' })
+      .populate({ path: 'attendingDoctor', select: { fullname: 1, _id: 0 } });
+
+    res.send(primaryAssessmentDocs);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+};
+
 const primaryAssessmentController = {
   create,
+  findByPatient,
 };
 
 module.exports = primaryAssessmentController;
