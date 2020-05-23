@@ -35,7 +35,7 @@ const create = async (req, res) => {
       medic: userId,
     });
     const proceduresData = procedures.map((procedure) =>
-      getProcedureData(procedure, patient, userId, healingPlanDoc.id),
+      getProcedureData(procedure, healingPlanDoc.id),
     );
     await Procedure.create(...proceduresData);
 
@@ -45,15 +45,13 @@ const create = async (req, res) => {
   }
 };
 
-const addProcedures = (req, res) => {
-  const { stage, procedureName, procedureArea } = req.body;
+const addProcedure = (req, res) => {
+  const { body, params } = req;
+  const { id } = params;
   try {
-    db.addProcedure(stage, {
-      procedureArea,
-      procedureName,
-      status: 'запланировано',
-    });
-    res.sendStatus(201);
+    const procedureData = getProcedureData(body, id)
+    const procedureDoc = await Procedure.create(procedureData);
+    res.status(201).send({ id: procedureDoc.id });
   } catch (error) {
     res.sendStatus(500);
   }
@@ -74,7 +72,7 @@ const deleteProcedure = (req, res) => {
 const healingPlanController = {
   findByPrimaryAssessment,
   create,
-  addProcedures,
+  addProcedure,
   deleteProcedure,
 };
 

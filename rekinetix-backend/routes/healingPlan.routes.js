@@ -6,7 +6,7 @@ router.get('/', healingPlanController.findByPrimaryAssessment);
 
 router.post('/', healingPlanController.create);
 
-router.patch('/procedure', healingPlanController.addProcedures);
+router.patch('/:id', healingPlanController.addProcedure);
 
 router.delete('/procedure', healingPlanController.deleteProcedure);
 

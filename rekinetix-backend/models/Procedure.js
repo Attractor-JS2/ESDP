@@ -42,16 +42,6 @@ const ProcedureSchema = new Schema({
     ref: 'HealingPlan',
     required: true,
   },
-  patient: {
-    type: Schema.Types.ObjectId,
-    ref: 'Patient',
-    required: true,
-  },
-  medic: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
 });
 
 const Procedure = mongoose.model('Procedure', ProcedureSchema);

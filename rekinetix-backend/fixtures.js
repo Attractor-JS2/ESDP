@@ -132,8 +132,6 @@ connection.once('open', async () => {
       status: 'запланировано',
       procedureQuantity: 4,
       healingPlan: healingPlan.id,
-      patient: testPatient._id,
-      medic: testUser._id,
     });
   
     const attendance = await Attendance.create({
