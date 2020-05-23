@@ -15,10 +15,10 @@ const getProcedureData = (data, patientId, userId, healingPlanId) => {
     healingPlan: healingPlan || healingPlanId,
     comments: comments || '',
     status: status,
-    stage,
-    procedureArea,
-    procedureName,
-    procedureQuantity,
+    stage: stage,
+    procedureArea: procedureArea,
+    procedureName: procedureName,
+    procedureQuantity: procedureQuantity,
   };
 };
 

@@ -6,9 +6,23 @@ const db = require('./db/db');
 
 db.init();
 
-const findOne = (req, res) => {
-  const data = db.getData();
-  res.send(data);
+const findByPrimaryAssessment = async (req, res) => {
+  const filter = { primaryAssessment: req.query.primaryAssessment };
+
+  try {
+    const healingPlanDoc = await HealingPlan.findOne(filter);
+    const proceduresFilter = { healingPlan: healingPlanDoc.id };
+    const procedureDocs = await Procedure.find(proceduresFilter);
+
+    const resultData = {
+      ...healingPlanDoc.toObject(),
+      procedures: [...procedureDocs],
+    }
+
+    res.send(resultData);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 };
 
 const create = async (req, res) => {
@@ -58,7 +72,7 @@ const deleteProcedure = (req, res) => {
 };
 
 const healingPlanController = {
-  findOne,
+  findByPrimaryAssessment,
   create,
   addProcedures,
   deleteProcedure,
