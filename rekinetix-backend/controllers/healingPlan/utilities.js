@@ -3,6 +3,8 @@ const getProcedureData = (data, patientId, userId, healingPlanId) => {
     stage,
     procedureArea,
     procedureName,
+    comments,
+    status,
     procedureQuantity,
     healingPlan,
   } = data;
@@ -11,11 +13,11 @@ const getProcedureData = (data, patientId, userId, healingPlanId) => {
     medic: userId,
     patient: patientId,
     healingPlan: healingPlan || healingPlanId,
+    comments: comments || '',
+    status: status,
     stage,
     procedureArea,
     procedureName,
-    comments,
-    status,
     procedureQuantity,
   };
 };

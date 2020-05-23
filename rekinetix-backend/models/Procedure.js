@@ -35,6 +35,7 @@ const ProcedureSchema = new Schema({
   procedureQuantity: {
     type: Number,
     min: 0,
+    default: 0,
   },
   healingPlan: {
     type: Schema.Types.ObjectId,
