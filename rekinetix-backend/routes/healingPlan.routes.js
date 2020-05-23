@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const healingPlanController = require('../controllers/healingPlan/healingPlan.controller');
 
-router.get('/', healingPlanController.findOne);
+router.get('/', healingPlanController.findByPrimaryAssessment);
 
 router.post('/', healingPlanController.create);
 
