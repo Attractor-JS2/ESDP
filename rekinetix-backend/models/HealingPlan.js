@@ -8,6 +8,15 @@ const HealingPlanSchema = new Schema({
     ref: 'PrimaryAssessment',
     required: true,
   },
+  medic: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  statusActive: {
+    type: Boolean,
+    default: true,
+  }
 }, { timestamps: true });
 
 const HealingPlan = mongoose.model('HealingPlan', HealingPlanSchema);

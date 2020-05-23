@@ -1,4 +1,7 @@
-const router = require('express').Router();
+const HealingPlan = require('../../models/HealingPlan');
+const Procedure = require('../../models/Procedure');
+const { getProcedureData } = require('./utilities');
+
 const db = require('./db/db');
 
 db.init();
@@ -8,53 +11,24 @@ const findOne = (req, res) => {
   res.send(data);
 };
 
-const create = (req, res) => {
-  const healingPlan = req.body.healingPlan;
-  const {
-    firstStage,
-    secondStage,
-    thirdStage,
-    fourthStage,
-    fifthStage,
-  } = healingPlan;
-  const healingPlanWithStatuses = {
-    firstStage: [
-      ...firstStage.map((procedure) => ({
-        ...procedure,
-        status: procedure.status || 'запланировано',
-      })),
-    ],
-    secondStage: [
-      ...secondStage.map((procedure) => ({
-        ...procedure,
-        status: procedure.status || 'запланировано',
-      })),
-    ],
-    thirdStage: [
-      ...thirdStage.map((procedure) => ({
-        ...procedure,
-        status: procedure.status || 'запланировано',
-      })),
-    ],
-    fourthStage: [
-      ...fourthStage.map((procedure) => ({
-        ...procedure,
-        status: procedure.status || 'запланировано',
-      })),
-    ],
-    fifthStage: [
-      ...fifthStage.map((procedure) => ({
-        ...procedure,
-        status: procedure.status || 'запланировано',
-      })),
-    ],
-  };
+const create = async (req, res) => {
+  const { body, userId } = req;
+  const { primaryAssessment, patient, procedures } = body;
+
   try {
-    db.addItem(healingPlanWithStatuses);
+    const healingPlanDoc = await HealingPlan.create({
+      primaryAssessment: primaryAssessment,
+      medic: userId,
+    });
+    const proceduresData = procedures.map((procedure) =>
+      getProcedureData(procedure, patient, userId, healingPlanDoc.id),
+    );
+    await Procedure.create(...proceduresData);
+
+    res.status(201).send({ id: healingPlanDoc.id });
   } catch (e) {
     return res.sendStatus(500);
   }
-  res.status(200).send(`successfully added`);
 };
 
 const addProcedures = (req, res) => {
