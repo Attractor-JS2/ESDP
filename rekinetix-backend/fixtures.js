@@ -138,7 +138,7 @@ connection.once('open', async () => {
       healingPlan: healingPlan.id,
       medic: testUser.id,
       attendanceDate: new Date().toISOString(),
-      procedures: [
+      procedureDynamics: [
         {
           procedure: procedure.id,
           procedureDynamic: 1,
