@@ -41,7 +41,7 @@ const AttendanceSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  procedures: [ProcedureDynamicSchema],
+  procedureDynamics: [ProcedureDynamicSchema],
   patientDynamic: {
     type: Number,
     min: 0,

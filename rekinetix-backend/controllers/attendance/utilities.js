@@ -28,7 +28,7 @@ const getAttendanceData = (requestData, userId, healingPlanId) => {
     patientDynamic,
     beforeAttendance,
     afterAttendance,
-    procedures,
+    procedureDynamics,
   } = requestData;
 
   return {
@@ -36,7 +36,7 @@ const getAttendanceData = (requestData, userId, healingPlanId) => {
     medic: userId,
     attendanceDate: attendanceDate,
     patientDynamic: patientDynamic,
-    procedures: getProceduresData(procedures),
+    procedureDynamics: getProceduresData(procedureDynamics),
     beforeAttendance: getPainData(beforeAttendance),
     afterAttendance: getPainData(afterAttendance),
   };
