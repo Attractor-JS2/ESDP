@@ -7,6 +7,10 @@ const RedFlagTypeSchema = new Schema({
     type: String,
     required: true,
   },
+  orderNumber: {
+    type: Number,
+    min: 1,
+  }
 });
 
 const RedFlagType = mongoose.model('RedFlagType', RedFlagTypeSchema);
