@@ -7,7 +7,7 @@ const StageTypeSchema = new Schema({
     type: String,
     required: true,
   },
-  orderNumber: {
+  stageNumber: {
     type: Number,
     required: true,
     min: 1,

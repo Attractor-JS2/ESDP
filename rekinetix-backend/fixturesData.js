@@ -61,3 +61,26 @@ const redFlagTypesData = [
     orderNumber: 15,
   },
 ];
+
+const stageTypes = [
+  {
+    title: '1. Обезболивание',
+    stageNumber: 1,
+  },
+  {
+    title: '2. Мобилизация',
+    stageNumber: 2,
+  },
+  {
+    title: '3. НМА и Стабилизация',
+    stageNumber: 3,
+  },
+  {
+    title: '4. Восстановление фукнций миофасциальных лент',
+    stageNumber: 4,
+  },
+  {
+    title: '5. Профилактика',
+    stageNumber: 5,
+  },
+]
