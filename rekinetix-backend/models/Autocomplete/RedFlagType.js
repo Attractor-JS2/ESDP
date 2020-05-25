@@ -9,6 +9,6 @@ const RedFlagTypeSchema = new Schema({
   },
 });
 
-const RedFlagType = mongoose.model('RedFlagType', RedFlagSchema);
+const RedFlagType = mongoose.model('RedFlagType', RedFlagTypeSchema);
 
 module.exports = RedFlagType;
