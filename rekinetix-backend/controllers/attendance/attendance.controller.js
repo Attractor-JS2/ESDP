@@ -55,9 +55,8 @@ const create = async (req, res) => {
     );
 
     const attendanceDoc = await Attendance.create(attendanceData);
-    res.status(201).send({ id: attendanceDoc.id });
+    return res.status(201).send({ id: attendanceDoc.id });
   } catch (error) {
-    console.log(error);
     return res.sendStatus(500);
   }
 };

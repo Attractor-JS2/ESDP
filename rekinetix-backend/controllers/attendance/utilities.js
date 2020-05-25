@@ -1,5 +1,4 @@
 const sortProcedureDynamicsByPresence = (procedureDynamics) => {
-  console.log(procedureDynamics);
   return procedureDynamics.reduce(
     (acc, curValue) => {
       const { procedure } = curValue;
