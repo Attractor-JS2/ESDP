@@ -1,5 +1,11 @@
 const Attendance = require('../../models/Attendance');
-const { getAttendanceData } = require('./utilities');
+const Procedure = require('../../models/Procedure');
+
+const {
+  getAttendanceData,
+  sortProcedureDynamicsByPresence,
+  getProcedureFullData,
+} = require('./utilities');
 
 const findByHealingPlan = async (req, res) => {
   const filter = { healingPlan: req.query.healingPlan };
@@ -19,12 +25,39 @@ const findByHealingPlan = async (req, res) => {
 
 const create = async (req, res) => {
   const { body, userId } = req;
+  const { procedureDynamics, healingPlan } = body;
 
   try {
-    const attendanceData = getAttendanceData(body, userId);
+    const {
+      dynamicsWithNewProcedures,
+      dynamicsWithExistingProcedures,
+    } = sortProcedureDynamicsByPresence(procedureDynamics);
+    const newProcedures = dynamicsWithNewProcedures.map(({ procedure }) =>
+      getProcedureFullData(procedure, healingPlan),
+    );
+
+    const newProceduresDocs = await Procedure.create(newProcedures);
+
+    const procedureDynamicsWithIds = dynamicsWithNewProcedures.map(
+      (curValue, index) => ({
+        ...curValue,
+        procedure: newProceduresDocs[index]._id,
+      }),
+    );
+    const procedureDynamicsCorrected = [
+      ...procedureDynamicsWithIds,
+      ...dynamicsWithExistingProcedures,
+    ];
+    const attendanceData = getAttendanceData(
+      body,
+      procedureDynamicsCorrected,
+      userId,
+    );
+
     const attendanceDoc = await Attendance.create(attendanceData);
     res.status(201).send({ id: attendanceDoc.id });
   } catch (error) {
+    console.log(error);
     return res.sendStatus(500);
   }
 };
