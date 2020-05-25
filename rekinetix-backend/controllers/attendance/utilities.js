@@ -1,15 +1,55 @@
-const getProcedureDynamicsData = (dynamicsData) => {
+const sortProcedureDynamicsByPresence = (procedureDynamics) => {
+  console.log(procedureDynamics);
+  return procedureDynamics.reduce(
+    (acc, curValue) => {
+      const { procedure } = curValue;
+      if (!procedure._id || procedure.procedureIsNew) {
+        acc.dynamicsWithNewProcedures.push(curValue);
+      } else {
+        acc.dynamicsWithExistingProcedures.push(curValue);
+      }
+      return acc;
+    },
+    { dynamicsWithNewProcedures: [], dynamicsWithExistingProcedures: [] },
+  );
+};
+
+const getProcedureFullData = (procedure, healingPlanId) => {
+  const {
+    stage,
+    procedureArea,
+    procedureName,
+    comments,
+    status,
+    procedureQuantity,
+    healingPlan,
+  } = procedure;
+
+  return {
+    stage: stage,
+    procedureArea: procedureArea,
+    procedureName: procedureName,
+    comments: comments,
+    status: status,
+    procedureQuantity: procedureQuantity,
+    healingPlan: healingPlan || healingPlanId,
+  };
+};
+
+const getProcedureDynamicData = (dynamicsData) => {
   const data = { ...dynamicsData };
   const { procedure, procedureDynamic } = data;
 
   return {
-    procedure: procedure,
+    procedure: procedure._id,
     procedureDynamic: procedureDynamic,
   };
 };
 
-const getProceduresData = (proceduresData) => {
-  return proceduresData.map((procedure) => getProcedureDynamicsData(procedure));
+const getProceduresDynamicsData = (proceduresDynamics) => {
+  return proceduresDynamics.map((procedureDynamic) =>
+    getProcedureDynamicData(procedureDynamic),
+  );
 };
 
 const getPainData = (painData) => {
@@ -21,14 +61,13 @@ const getPainData = (painData) => {
   };
 };
 
-const getAttendanceData = (requestData, userId, healingPlanId) => {
+const getAttendanceData = (requestData, procedureDynamics, userId, healingPlanId) => {
   const {
     healingPlan,
     attendanceDate,
     patientDynamic,
     beforeAttendance,
     afterAttendance,
-    procedureDynamics,
   } = requestData;
 
   return {
@@ -36,7 +75,7 @@ const getAttendanceData = (requestData, userId, healingPlanId) => {
     medic: userId,
     attendanceDate: attendanceDate,
     patientDynamic: patientDynamic,
-    procedureDynamics: getProceduresData(procedureDynamics),
+    procedureDynamics: getProceduresDynamicsData(procedureDynamics),
     beforeAttendance: getPainData(beforeAttendance),
     afterAttendance: getPainData(afterAttendance),
   };
@@ -44,6 +83,8 @@ const getAttendanceData = (requestData, userId, healingPlanId) => {
 
 const utilities = {
   getAttendanceData,
+  sortProcedureDynamicsByPresence,
+  getProcedureFullData,
 };
 
 module.exports = utilities;
