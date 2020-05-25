@@ -17,7 +17,23 @@ const PORT = 8000;
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
+const connectToDb = () => {
+  return new Promise((resolve, reject) => {
+    
+    if(process.env.NODE_ENV === 'test') {
+    
+    } else {
+      mongoose.connect(config.db.getDbPath(), {useNewUrlParser: true})
+        .then((res, err) => {
+          if (err) return reject(err);
+          resolve();
+        });
+    }
+    
+  })
+};
+
+connectToDb().then(() => {
   console.log("Mongoose connected!");
 
   app.use("/attendances", auth.verifyToken, attendances);
