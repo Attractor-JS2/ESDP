@@ -1,4 +1,5 @@
 const Patient = require('../../models/Patient');
+const HealingPlan = require('../../models/HealingPlan');
 
 const getPatientData = (data) => ({
   fullname: data.fullname,
@@ -31,9 +32,24 @@ const findAll = async (req, res) => {
   }
 };
 
+const findByActiveHealingPlans = async (req, res) => {
+  const filter = { statusActive: true };
+
+  try {
+    const healingPlans = await HealingPlan.find(filter).populate({
+      path: 'primaryAssessment',
+      populate: { path: 'patient' },
+    });
+    res.send(healingPlans);
+  } catch (error) {
+    res.send(500);
+  }
+};
+
 const patientController = {
   create,
   findAll,
+  findByActiveHealingPlans,
 };
 
 module.exports = patientController;
