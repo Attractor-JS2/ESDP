@@ -10,6 +10,11 @@ const HealingPlan = require('./models/HealingPlan');
 const Procedure = require('./models/Procedure');
 const Attendance = require('./models/Attendance');
 
+const RedFlagType = require('./models/Autocomplete/RedFlagType');
+const StageType = require('./models/Autocomplete/StageType');
+
+const { redFlagTypesData, stageTypesData } = require('./fixturesData');
+
 mongoose.connect(config.db.getDbPath(), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,7 +23,7 @@ mongoose.connect(config.db.getDbPath(), {
 const { connection } = mongoose;
 
 connection.once('open', async () => {
-  console.log('----Mongoose connected----')
+  console.log('----Mongoose connected----');
   const { db } = connection;
   try {
     await db.dropCollection('users');
@@ -41,7 +46,7 @@ connection.once('open', async () => {
       password: 'testuser',
       role: 'admin',
     });
-  
+
     const testPatient = await Patient.create({
       fullname: 'Сидоров Иван Петрович',
       birthday: new Date(1970, 1, 2).toISOString(),
@@ -51,7 +56,7 @@ connection.once('open', async () => {
       phone: '77057778899',
       address: 'Казыбек би 47, 51',
     });
-  
+
     const objectiveExam = await ObjectiveExam.create({
       foot: {
         D: 'вальгус',
@@ -89,7 +94,7 @@ connection.once('open', async () => {
         additionalInfo: '',
       },
     });
-  
+
     const redFlag = await RedFlag.create(
       {
         title: 'Мочекаменная и желчекаменная болезни',
@@ -104,7 +109,7 @@ connection.once('open', async () => {
         createdBy: testUser.id,
       },
     );
-  
+
     const primaryAssessment = await PrimaryAssessment.create({
       patient: testPatient.id,
       attendingDoctor: testUser.id,
@@ -118,12 +123,12 @@ connection.once('open', async () => {
       diagnosis:
         '«Внутренняя ротация плеча. Тендиноз собственной связки надколенника. Верхний и нижний кросс синдром.» 1) Мягкие мануальные техники ( глубокий мануальный массаж, терапия триггерных точек, растяжение мышц ) — внутренние ротаторы плеча, верхняя трапеция, четырехлавая мышца бедра. 2) Кинезитерапия — коррекция осанки, стабилизация лопаток, плечевого и коленного сустава. 3) Коррекция стельками Родион Фомин 8 747 587 43 67',
     });
-  
+
     const healingPlan = await HealingPlan.create({
       primaryAssessment: primaryAssessment.id,
       medic: testUser.id,
     });
-  
+
     const procedure = await Procedure.create({
       stage: 1,
       procedureArea: 'Плечо: левое',
@@ -133,7 +138,7 @@ connection.once('open', async () => {
       procedureQuantity: 4,
       healingPlan: healingPlan.id,
     });
-  
+
     const attendance = await Attendance.create({
       healingPlan: healingPlan.id,
       medic: testUser.id,
@@ -154,7 +159,11 @@ connection.once('open', async () => {
         pain: 5,
       },
     });
-    console.log('----Documents created----');  
+
+    await RedFlagType.create(redFlagTypesData);
+    await StageType.create(stageTypesData);
+
+    console.log('----Documents created----');
   } catch (error) {
     console.log(error);
   }

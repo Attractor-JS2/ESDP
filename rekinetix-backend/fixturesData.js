@@ -62,7 +62,7 @@ const redFlagTypesData = [
   },
 ];
 
-const stageTypes = [
+const stageTypesData = [
   {
     title: '1. Обезболивание',
     stageNumber: 1,
@@ -83,4 +83,11 @@ const stageTypes = [
     title: '5. Профилактика',
     stageNumber: 5,
   },
-]
+];
+
+const mockData = {
+  redFlagTypesData,
+  stageTypesData,
+};
+
+module.exports = mockData;
