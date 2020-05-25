@@ -2,7 +2,7 @@ const sortProcedureDynamicsByPresence = (procedureDynamics) => {
   return procedureDynamics.reduce(
     (acc, curValue) => {
       const { procedure } = curValue;
-      if (!procedure._id || procedure.procedureIsNew) {
+      if (procedure.procedureIsNew || !procedure._id) {
         acc.dynamicsWithNewProcedures.push(curValue);
       } else {
         acc.dynamicsWithExistingProcedures.push(curValue);
