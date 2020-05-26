@@ -47,6 +47,7 @@ const findByActiveHealingPlans = async (req, res) => {
       },
     });
     const patients = reducePlansToPatients(healingPlanDocs);
+    console.log(patients);
     res.send(patients);
   } catch (error) {
     res.sendStatus(500);
