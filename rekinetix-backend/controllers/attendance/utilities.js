@@ -31,7 +31,7 @@ const getProcedureFullData = (procedure, healingPlanId) => {
     comments: comments,
     status: status,
     procedureQuantity: procedureQuantity,
-    healingPlan: healingPlan || healingPlanId,
+    healingPlan: healingPlanId || healingPlan,
   };
 };
 
