@@ -38,11 +38,16 @@ const findByActiveHealingPlans = async (req, res) => {
   try {
     const healingPlans = await HealingPlan.find(filter).populate({
       path: 'primaryAssessment',
-      populate: { path: 'patient' },
+      select: 'patient',
+      populate: {
+        path: 'patient',
+        select: 'fullname birthday gender',
+      },
+      options: { sort: '-fullname' },
     });
     res.send(healingPlans);
   } catch (error) {
-    res.send(500);
+    res.sendStatus(500);
   }
 };
 

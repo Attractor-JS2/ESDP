@@ -47,15 +47,26 @@ connection.once('open', async () => {
       role: 'admin',
     });
 
-    const testPatient = await Patient.create({
-      fullname: 'Сидоров Иван Петрович',
-      birthday: new Date(1970, 1, 2).toISOString(),
-      gender: 'мужской',
-      height: '178',
-      weight: '78',
-      phone: '77057778899',
-      address: 'Казыбек би 47, 51',
-    });
+    const testPatients = await Patient.create([
+      {
+        fullname: 'Сидоров Иван Петрович',
+        birthday: new Date(1970, 1, 2).toISOString(),
+        gender: 'мужской',
+        height: '178',
+        weight: '78',
+        phone: '77057778899',
+        address: 'Казыбек би 47, 51',
+      },
+      {
+        fullname: 'Иванов Пётр Сергеевич',
+        birthday: new Date(1970, 1, 2).toISOString(),
+        gender: 'мужской',
+        height: '178',
+        weight: '78',
+        phone: '77057778899',
+        address: 'Казыбек би 47, 51',
+      },
+    ]);
 
     const objectiveExam = await ObjectiveExam.create({
       foot: {
@@ -98,36 +109,57 @@ connection.once('open', async () => {
     const redFlag = await RedFlag.create(
       {
         title: 'Мочекаменная и желчекаменная болезни',
-        patient: testPatient.id,
+        patient: testPatients[0].id,
         active: true,
         createdBy: testUser.id,
       },
       {
         title: 'Сахарный диабет',
-        patient: testPatient.id,
+        patient: testPatients[0].id,
         active: true,
         createdBy: testUser.id,
       },
     );
 
-    const primaryAssessment = await PrimaryAssessment.create({
-      patient: testPatient.id,
-      attendingDoctor: testUser.id,
-      assessmentDate: new Date().toISOString(),
-      complaints: 'Боли в пояснице',
-      anamnesisVitae: 'Сидячий образ жизни',
-      anamnesisMorbi:
-        'Беспокоит в течении многих лет. Лечения и диагностики не было.',
-      objectiveExam: objectiveExam.id,
-      examinations: '',
-      diagnosis:
-        '«Внутренняя ротация плеча. Тендиноз собственной связки надколенника. Верхний и нижний кросс синдром.» 1) Мягкие мануальные техники ( глубокий мануальный массаж, терапия триггерных точек, растяжение мышц ) — внутренние ротаторы плеча, верхняя трапеция, четырехлавая мышца бедра. 2) Кинезитерапия — коррекция осанки, стабилизация лопаток, плечевого и коленного сустава. 3) Коррекция стельками Родион Фомин 8 747 587 43 67',
-    });
+    const primaryAssessments = await PrimaryAssessment.create([
+      {
+        patient: testPatients[0].id,
+        attendingDoctor: testUser.id,
+        assessmentDate: new Date().toISOString(),
+        complaints: 'Боли в пояснице',
+        anamnesisVitae: 'Сидячий образ жизни',
+        anamnesisMorbi:
+          'Беспокоит в течении многих лет. Лечения и диагностики не было.',
+        objectiveExam: objectiveExam.id,
+        examinations: '',
+        diagnosis:
+          '«Внутренняя ротация плеча. Тендиноз собственной связки надколенника. Верхний и нижний кросс синдром.» 1) Мягкие мануальные техники ( глубокий мануальный массаж, терапия триггерных точек, растяжение мышц ) — внутренние ротаторы плеча, верхняя трапеция, четырехлавая мышца бедра. 2) Кинезитерапия — коррекция осанки, стабилизация лопаток, плечевого и коленного сустава. 3) Коррекция стельками Родион Фомин 8 747 587 43 67',
+      },
+      {
+        patient: testPatients[1].id,
+        attendingDoctor: testUser.id,
+        assessmentDate: new Date().toISOString(),
+        complaints: 'Боли в пояснице',
+        anamnesisVitae: 'Сидячий образ жизни',
+        anamnesisMorbi:
+          'Беспокоит в течении многих лет. Лечения и диагностики не было.',
+        objectiveExam: objectiveExam.id,
+        examinations: '',
+        diagnosis:
+          '«Внутренняя ротация плеча. Тендиноз собственной связки надколенника. Верхний и нижний кросс синдром.» 1) Мягкие мануальные техники ( глубокий мануальный массаж, терапия триггерных точек, растяжение мышц ) — внутренние ротаторы плеча, верхняя трапеция, четырехлавая мышца бедра. 2) Кинезитерапия — коррекция осанки, стабилизация лопаток, плечевого и коленного сустава. 3) Коррекция стельками Родион Фомин 8 747 587 43 67',
+      },
+    ]);
 
-    const healingPlan = await HealingPlan.create({
-      primaryAssessment: primaryAssessment.id,
-      medic: testUser.id,
-    });
+    const healingPlans = await HealingPlan.create([
+      {
+        primaryAssessment: primaryAssessments[0].id,
+        medic: testUser.id,
+      },
+      {
+        primaryAssessment: primaryAssessments[1].id,
+        medic: testUser.id,
+      },
+    ]);
 
     const procedure = await Procedure.create({
       stage: 1,
@@ -136,11 +168,11 @@ connection.once('open', async () => {
       comments: '60 дж 8гц 1500 уд',
       status: 'запланировано',
       procedureQuantity: 4,
-      healingPlan: healingPlan.id,
+      healingPlan: healingPlans[0].id,
     });
 
     const attendance = await Attendance.create({
-      healingPlan: healingPlan.id,
+      healingPlan: healingPlans[0].id,
       medic: testUser.id,
       attendanceDate: new Date().toISOString(),
       procedureDynamics: [
