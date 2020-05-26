@@ -1,5 +1,7 @@
 const Patient = require('../../models/Patient');
 const HealingPlan = require('../../models/HealingPlan');
+const RedFlag = require('../../models/RedFlag');
+const PrimaryAssessment = require('../../models/PrimaryAssessment/PrimaryAssessment');
 
 const { reducePlansToPatients } = require('./patient.utilities');
 
@@ -29,7 +31,7 @@ const findAll = async (req, res) => {
   try {
     const patients = await Patient.find();
     res.send(patients);
-  } catch (e) {
+  } catch (error) {
     res.sendStatus(500);
   }
 };
@@ -47,10 +49,31 @@ const findByActiveHealingPlans = async (req, res) => {
       },
     });
     const patients = reducePlansToPatients(healingPlanDocs);
-    console.log(patients);
     res.send(patients);
   } catch (error) {
     res.sendStatus(500);
+  }
+};
+
+const findById = async (req, res) => {
+  const patientId = req.params.id;
+  const filter = { patient: patientId };
+
+  try {
+    const patient = await Patient.findById(patientId);
+
+    const redFlags = await RedFlag.find(filter);
+    const latestPrimaryAssessment = await PrimaryAssessment.findOne(
+      filter,
+    ).sort({ assessmentDate: 'asc' }).populate({ path: 'objectiveExam'});
+    const result = {
+      patient,
+      redFlags,
+      primaryAssessment: latestPrimaryAssessment,
+    };
+    res.send(result);
+  } catch (error) {
+    res.send(error);
   }
 };
 
@@ -58,6 +81,7 @@ const patientController = {
   create,
   findAll,
   findByActiveHealingPlans,
+  findById,
 };
 
 module.exports = patientController;

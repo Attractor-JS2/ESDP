@@ -12,4 +12,6 @@ router.get('/', (req, res) => {
   }
 });
 
+router.get('/:id', patientController.findById);
+
 module.exports = router;
