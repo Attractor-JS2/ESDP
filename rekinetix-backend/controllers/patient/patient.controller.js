@@ -61,6 +61,9 @@ const findById = async (req, res) => {
 
   try {
     const patient = await Patient.findById(patientId);
+    if (!patient) {
+      return res.sendStatus(404);
+    }
 
     const redFlags = await RedFlag.find(filter);
     const latestPrimaryAssessment = await PrimaryAssessment.findOne(
@@ -71,9 +74,9 @@ const findById = async (req, res) => {
       redFlags,
       primaryAssessment: latestPrimaryAssessment,
     };
-    res.send(result);
+    return res.send(result);
   } catch (error) {
-    res.send(error);
+    return res.sendStatus(500);
   }
 };
 

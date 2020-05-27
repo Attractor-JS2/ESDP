@@ -169,36 +169,145 @@ connection.once('open', async () => {
       },
     ]);
 
-    const procedure = await Procedure.create({
-      stage: 1,
-      procedureArea: 'Плечо: левое',
-      procedureName: 'ММТ: ПИР',
-      comments: '60 дж 8гц 1500 уд',
-      status: 'запланировано',
-      procedureQuantity: 4,
-      healingPlan: healingPlans[0].id,
-    });
+    const procedures = await Procedure.create(
+      {
+        stage: 1,
+        procedureArea: 'Плечо: левое. Большай круглая мышца',
+        procedureName: 'ММТ: ПИР',
+        comments: '60 дж 8гц 1500 уд',
+        status: 'запланировано',
+        procedureQuantity: 4,
+        healingPlan: healingPlans[0].id,
+      },
+      {
+        stage: 1,
+        procedureArea: 'Плечо: левое. Длинная головка бицепса',
+        procedureName: 'Тейпирование функциональное',
+        comments: 'внутренней и наружной лодыжки',
+        status: 'запланировано',
+        procedureQuantity: 4,
+        healingPlan: healingPlans[0].id,
+      },
+      {
+        stage: 2,
+        procedureArea: 'Плечо: правое. Малая круглая мышца',
+        procedureName: 'СТЖ Помпаж',
+        comments: '',
+        status: 'запланировано',
+        procedureQuantity: 4,
+        healingPlan: healingPlans[0].id,
+      },
+      {
+        stage: 3,
+        procedureArea: 'Верхний цилиндр',
+        procedureName: 'Постановка шейного отдела на животе',
+        comments: 'На животе',
+        status: 'запланировано',
+        procedureQuantity: 4,
+        healingPlan: healingPlans[0].id,
+      },
+      {
+        stage: 4,
+        procedureArea: 'Задняя МФЛ',
+        procedureName: 'Мостик лёжа на спине',
+        comments: 'Техниак: упражнение в статике',
+        status: 'запланировано',
+        procedureQuantity: 4,
+        healingPlan: healingPlans[0].id,
+      },
+      {
+        stage: 5,
+        procedureArea: 'Плечевой пояс. Подлопаточная мышца',
+        procedureName: 'Отвеедение бедра 90',
+        comments: 'Изометрическое напряжение 2/2/6',
+        status: 'запланировано',
+        procedureQuantity: 4,
+        healingPlan: healingPlans[0].id,
+      },
+    );
 
-    const attendance = await Attendance.create({
-      healingPlan: healingPlans[0].id,
-      medic: testUser.id,
-      attendanceDate: new Date().toISOString(),
-      procedureDynamics: [
-        {
-          procedure: procedure.id,
-          procedureDynamic: 1,
+    const attendances = await Attendance.create(
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 27).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
         },
-      ],
-      patientDynamic: 1,
-      beforeAttendance: {
-        comments: '',
-        pain: 5,
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
       },
-      afterAttendance: {
-        comments: '',
-        pain: 5,
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 26).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 0,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
       },
-    });
+    );
 
     await RedFlagType.create(redFlagTypesData);
     await StageType.create(stageTypesData);

@@ -7,6 +7,10 @@ const findByPrimaryAssessment = async (req, res) => {
 
   try {
     const healingPlanDoc = await HealingPlan.findOne(filter);
+    if (!healingPlanDoc) {
+      return res.sendStatus(404);
+    }
+
     const proceduresFilter = { healingPlan: healingPlanDoc.id };
     const procedureDocs = await Procedure.find(proceduresFilter);
 
