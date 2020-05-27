@@ -15,6 +15,16 @@ const StageType = require('./models/Autocomplete/StageType');
 
 const { redFlagTypesData, stageTypesData } = require('./fixturesData');
 
+const dropCollection = async (connectedDB, collectionName) => {
+  try {
+    await connectedDB.dropCollection(collectionName);
+  } catch (error) {
+    if (error.code !== 26) {
+      console.log(error);
+    }
+  }
+};
+
 mongoose.connect(config.db.getDbPath(), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -25,19 +35,17 @@ const { connection } = mongoose;
 connection.once('open', async () => {
   console.log('----Mongoose connected----');
   const { db } = connection;
-  try {
-    await db.dropCollection('users');
-    await db.dropCollection('patients');
-    await db.dropCollection('procedures');
-    await db.dropCollection('objectiveexams');
-    await db.dropCollection('redflags');
-    await db.dropCollection('primaryassessments');
-    await db.dropCollection('healingplans');
-    await db.dropCollection('attendances');
-    console.log('----Collections dropped----');
-  } catch (error) {
-    console.log(error);
-  }
+
+  dropCollection(db, 'users');
+  dropCollection(db, 'patients');
+  dropCollection(db, 'procedures');
+  dropCollection(db, 'objectiveexams');
+  dropCollection(db, 'redflags');
+  dropCollection(db, 'primaryassessments');
+  dropCollection(db, 'healingplans');
+  dropCollection(db, 'attendances');
+  dropCollection(db, 'redflagtypes');
+  dropCollection(db, 'stagetypes');
 
   try {
     const testUser = await User.create({
