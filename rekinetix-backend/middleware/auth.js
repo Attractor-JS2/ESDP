@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const config = require('../configs/auth.config');
+const config = require('../config');
 
 const verifyToken = (request, response, next) => {
   const token = request.get('x-access-token');
@@ -9,7 +9,7 @@ const verifyToken = (request, response, next) => {
     return response.status(401).send({ message: 'No token provided!' });
   }
 
-  jwt.verify(token, config.secret, (error, decoded) => {
+  jwt.verify(token, config.auth.secret, (error, decoded) => {
     if (error) {
       return response.status(401).send({ message: 'Invalid token!' });
     }

@@ -10,7 +10,6 @@ const patients = require("./routes/patient.routes");
 const primaryAssessments = require("./routes/primaryAssessment.routes");
 const healingPlans = require("./routes/healingPlan.routes");
 const attendances = require("./routes/attendance.routes");
-const patientCard = require('./controllers/patientCard/patientCard');
 
 const PORT = 8000;
 
@@ -20,12 +19,11 @@ app.use(cors());
 mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   console.log("Mongoose connected!");
 
-  app.use("/attendances", auth.verifyToken, attendances);
-  app.use("/healingPlan", auth.verifyToken, healingPlans);
-  app.use('/patientCards', patientCard());
   app.use("/users", users);
   app.use("/patients", patients);
-  app.use("/primary-assessment", auth.verifyToken, primaryAssessments);
+  app.use("/primary-assessments", auth.verifyToken, primaryAssessments);
+  app.use("/healing-plan", auth.verifyToken, healingPlans);
+  app.use("/attendances", auth.verifyToken, attendances);
 
   app.listen(PORT, () => {
     console.log(`Server started on ${PORT} port!`);

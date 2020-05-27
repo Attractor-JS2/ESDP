@@ -1,6 +1,6 @@
 const HealingPlan = require('../../models/HealingPlan');
 const Procedure = require('../../models/Procedure');
-const { getProcedureData } = require('./utilities');
+const { getProcedureData } = require('./healingPlan.utilities');
 
 const findByPrimaryAssessment = async (req, res) => {
   const filter = { primaryAssessment: req.query.primaryAssessment };

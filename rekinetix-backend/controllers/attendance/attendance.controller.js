@@ -5,7 +5,7 @@ const {
   getAttendanceData,
   sortProcedureDynamicsByPresence,
   getProcedureFullData,
-} = require('./utilities');
+} = require('./attendance.utilities');
 
 const findByHealingPlan = async (req, res) => {
   const filter = { healingPlan: req.query.healingPlan };

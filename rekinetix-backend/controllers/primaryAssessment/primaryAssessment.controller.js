@@ -3,7 +3,7 @@ const ObjectiveExam = require('../../models/PrimaryAssessment/ObjectiveExam');
 const {
   getObjectiveExamData,
   getPrimaryAssessmentData,
-} = require('./utilities');
+} = require('./primaryAssessment.utilities');
 
 const create = async (req, res) => {
   const { body, userId } = req;
