@@ -13,13 +13,11 @@ const PatientInfo = ({ patient, medic, diagnosis, redFlags }) => {
         <Paper className="PatientInfo-paper">
           <Typography>
             <span>ПАЦИЕНТ: </span>
-            {patient &&
-              `${patient.secondName} ${patient.firstName} ${patient.patronymic}`}
+            {patient || ''}
           </Typography>
           <Typography>
             <span>ВРАЧ: </span>
-            {medic &&
-              `${medic.secondName} ${medic.firstName} ${medic.patronymic}`}
+            {medic || ''}
           </Typography>
         </Paper>
       </Grid>
@@ -27,7 +25,7 @@ const PatientInfo = ({ patient, medic, diagnosis, redFlags }) => {
         <Paper className="PatientInfo-paper">
           <Typography>
             <b>Диагноз: </b>
-            {diagnosis && `${diagnosis.main}`}
+            {diagnosis || ''}
           </Typography>
         </Paper>
       </Grid>

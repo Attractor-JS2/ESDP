@@ -24,8 +24,8 @@ const fetchPlanSuccess = (healingPlan) => ({
   payload: healingPlan,
 });
 
-export const fetchHealingPlan = () => (dispatch) => {
-  axios.get('/healingPlan').then(
+export const fetchPlanByPrimaryAssessment = (primaryAssessmentId) => (dispatch) => {
+  axios.get(`/healing-plans?primaryAssessment=${primaryAssessmentId}`).then(
     (res) => dispatch(fetchPlanSuccess(res.data)),
     (error) => console.log(error),
   );
@@ -37,7 +37,7 @@ export const addProcedureToPlan = (procedureData) => (dispatch) => {
   axios.patch('/healingPlan/procedure/', procedureData).then(
     () => {
       dispatch(addProcedureSuccess());
-      dispatch(fetchHealingPlan());
+      // dispatch(fetchHealingPlan());
     },
     (error) => console.log(error),
   );
@@ -49,7 +49,7 @@ export const removeProcedureFromPlan = (procedureStage, procedureName) => (dispa
   axios.delete(`/healingPlan/procedure?stage=${procedureStage}&procedureName=${procedureName}`).then(
     () => {
       dispatch(removeProcedureSuccess());
-      dispatch(fetchHealingPlan());
+      // dispatch(fetchHealingPlan());
     },
     (error) => console.log(error),
   );

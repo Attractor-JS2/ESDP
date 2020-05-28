@@ -14,7 +14,7 @@ import PatientInfo from './PatientInfo/PatientInfo';
 import AddProcedureForm from './AddProcedureForm/AddProcedureForm';
 import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import {
-  fetchHealingPlan,
+  fetchPlanByPrimaryAssessment,
   removeProcedureFromPlan,
 } from '../../store/actions/healingPlan';
 import {
@@ -23,20 +23,13 @@ import {
 } from '../../store/actions/attendance';
 import DailyDynamicsTypes from './DailyDynamicsTypes';
 
-import {
-  redFlags,
-  patient,
-  medic,
-  diagnosis,
-} from "./healingPlanDataLatest";
+import mockPatient from './mockPatientData';
 
 const HealingPlanChart = ({
   healingPlan,
   attendance,
-  redFlags,
   patient,
   medic,
-  diagnosis,
   onFetchHealingPlan,
   onFetchAttendances,
   onProcedureDelete,
@@ -281,7 +274,7 @@ const HealingPlanChart = ({
   );
 
   useEffect(() => {
-    onFetchHealingPlan();
+    onFetchHealingPlan(patient.primaryAssessment._id);
     onFetchAttendances();
   }, []);
 
@@ -342,10 +335,10 @@ const HealingPlanChart = ({
           procedure={deletedProcedure}
         />
         <PatientInfo
-          patient={patient}
+          patient={patient.patient.fullname}
           medic={medic}
-          diagnosis={diagnosis}
-          redFlags={redFlags}
+          diagnosis={patient.primaryAssessment.diagnosis}
+          redFlags={patient.redFlags}
         />
         {chartData && chartData.length > 0 && (
           <Table
@@ -363,12 +356,14 @@ const HealingPlanChart = ({
 };
 
 const mapStateToProps = (state) => ({
+  patient: mockPatient,
   healingPlan: state.healingPlan.healingPlan,
   attendance: state.attendance,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchHealingPlan: () => dispatch(fetchHealingPlan()),
+  onFetchHealingPlan: (primaryAssessmentId) =>
+    dispatch(fetchPlanByPrimaryAssessment(primaryAssessmentId)),
   onFetchAttendances: () => dispatch(fetchAttendanceData()),
   onProcedureDelete: (stage, procedureName) =>
     dispatch(removeProcedureFromPlan(stage, procedureName)),
