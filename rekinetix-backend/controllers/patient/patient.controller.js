@@ -3,24 +3,17 @@ const HealingPlan = require('../../models/HealingPlan');
 const RedFlag = require('../../models/RedFlag');
 const PrimaryAssessment = require('../../models/PrimaryAssessment/PrimaryAssessment');
 
-const { reducePlansToPatients } = require('./patient.utilities');
-
-const getPatientData = (data) => ({
-  fullname: data.fullname,
-  birthday: data.birthday,
-  gender: data.gender,
-  height: data.height,
-  weight: data.weight,
-  phone: data.phone,
-  address: data.address,
-});
+const {
+  getPatientData,
+  reducePlansToPatients,
+} = require('./patient.utilities');
 
 const create = async (req, res) => {
   const { body } = req;
-  const patientData = getPatientData(body);
-  const patient = new Patient(patientData);
 
   try {
+    const patientData = getPatientData(body);
+    const patient = await Patient.create(patientData);
     res.send(await patient.save());
   } catch (error) {
     res.sendStatus(400);
@@ -66,9 +59,9 @@ const findById = async (req, res) => {
     }
 
     const redFlags = await RedFlag.find(filter);
-    const latestPrimaryAssessment = await PrimaryAssessment.findOne(
-      filter,
-    ).sort({ assessmentDate: 'desc' }).select('assessmentDate diagnosis');
+    const latestPrimaryAssessment = await PrimaryAssessment.findOne(filter)
+      .sort({ assessmentDate: 'desc' })
+      .select('assessmentDate diagnosis');
 
     const result = {
       patient,
