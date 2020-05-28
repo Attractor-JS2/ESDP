@@ -53,9 +53,28 @@ const getPrimaryAssessmentData = (requestData, userId, objectiveExamId) => {
   };
 };
 
+const getNewRedFlagData = (redFlagName, userId, patientId) => {
+  return {
+    title: redFlagName,
+    patient: patientId,
+    createdBy: userId,
+  };
+};
+
+const getRedFlagsData = (redFlagNames, userId, patientId) => {
+  if (redFlagNames.length > 1) {
+    return redFlagNames.map((curFlagName) => {
+      return getNewRedFlagData(curFlagName, userId, patientId);
+    });
+  } else {
+    return getNewRedFlagData(redFlagNames[0], userId, patientId);
+  }
+};
+
 const utilities = {
   getObjectiveExamData,
   getPrimaryAssessmentData,
+  getRedFlagsData,
 };
 
 module.exports = utilities;

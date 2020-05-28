@@ -87,6 +87,7 @@ connection.once('open', async () => {
         S: '',
         additionalInfo: '',
       },
+      redFlags: [],
       pelvicSpine: {
         D: 'передний наклон',
         S: 'передний наклон',
@@ -114,7 +115,7 @@ connection.once('open', async () => {
       },
     });
 
-    const redFlag = await RedFlag.create(
+    const redFlags = await RedFlag.create(
       {
         title: 'Мочекаменная и желчекаменная болезни',
         patient: testPatients[0].id,

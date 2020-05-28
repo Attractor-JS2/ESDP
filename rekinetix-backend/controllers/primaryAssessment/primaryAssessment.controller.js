@@ -1,13 +1,16 @@
 const PrimaryAssessment = require('../../models/PrimaryAssessment/PrimaryAssessment');
 const ObjectiveExam = require('../../models/PrimaryAssessment/ObjectiveExam');
+const RedFlag = require('../../models/RedFlag');
+
 const {
   getObjectiveExamData,
   getPrimaryAssessmentData,
+  getRedFlagsData,
 } = require('./primaryAssessment.utilities');
 
 const create = async (req, res) => {
   const { body, userId } = req;
-  const { objectiveExam } = body;
+  const { patient, objectiveExam, redFlags } = body;
 
   // TODO: Добавить валидацию.
   if (!(objectiveExam && objectiveExam.constructor === Object)) {
@@ -17,6 +20,7 @@ const create = async (req, res) => {
   try {
     const objectiveExamData = getObjectiveExamData(objectiveExam);
     const objectiveExamDoc = await ObjectiveExam.create(objectiveExamData);
+
     const primaryAssessmentData = getPrimaryAssessmentData(
       body,
       userId,
@@ -25,6 +29,12 @@ const create = async (req, res) => {
     const primaryAssessmentDoc = await PrimaryAssessment.create(
       primaryAssessmentData,
     );
+
+    if (redFlags && redFlags.length > 0) {
+      const redFlagsData = getRedFlagsData(redFlags, userId, patient);
+      await RedFlag.create(redFlagsData);
+    }
+
     res.status(201).send({ id: primaryAssessmentDoc.id });
   } catch (error) {
     res.sendStatus(400);
