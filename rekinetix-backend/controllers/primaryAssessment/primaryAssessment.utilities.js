@@ -32,7 +32,6 @@ const getObjectiveExamData = (requestData) => {
 const getPrimaryAssessmentData = (requestData, userId, objectiveExamId) => {
   const {
     patient,
-    attendanceDate,
     complaints,
     anamnesisVitae,
     anamnesisMorbi,
@@ -42,7 +41,6 @@ const getPrimaryAssessmentData = (requestData, userId, objectiveExamId) => {
 
   return {
     attendingDoctor: userId,
-    assessmentDate: attendanceDate,
     objectiveExam: objectiveExamId,
     patient: patient,
     complaints: complaints,
