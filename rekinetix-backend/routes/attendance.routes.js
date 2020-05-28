@@ -4,6 +4,8 @@ const attendanceController = require('../controllers/attendance/attendance.contr
 
 router.get('/', attendanceController.findByHealingPlan);
 
+// TODO: Add findLastOne
+
 router.post('/', attendanceController.create);
 
 module.exports = router;

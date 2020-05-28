@@ -13,7 +13,7 @@ const findByHealingPlan = async (req, res) => {
   try {
     const attendancesDocs = await Attendance.find(filter)
       .populate({
-        path: 'procedures.procedure',
+        path: 'procedureDynamics.procedure',
         model: 'Procedure',
       })
       .sort({ attendanceDate: 'asc' });
