@@ -68,12 +68,14 @@ const findById = async (req, res) => {
     const redFlags = await RedFlag.find(filter);
     const latestPrimaryAssessment = await PrimaryAssessment.findOne(
       filter,
-    ).sort({ assessmentDate: 'asc' }).select('assessmentDate diagnosis');
+    ).sort({ assessmentDate: 'desc' }).select('assessmentDate diagnosis');
+
     const result = {
       patient,
       redFlags,
       primaryAssessment: latestPrimaryAssessment,
     };
+
     return res.send(result);
   } catch (error) {
     return res.sendStatus(500);
