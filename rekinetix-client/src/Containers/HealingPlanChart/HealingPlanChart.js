@@ -23,6 +23,13 @@ import {
 } from '../../store/actions/attendance';
 import DailyDynamicsTypes from './DailyDynamicsTypes';
 
+import {
+  redFlags,
+  patient,
+  medic,
+  diagnosis,
+} from "./healingPlanDataLatest";
+
 const HealingPlanChart = ({
   healingPlan,
   attendance,
