@@ -11,6 +11,8 @@ const primaryAssessments = require("./routes/primaryAssessment.routes");
 const healingPlans = require("./routes/healingPlan.routes");
 const attendances = require("./routes/attendance.routes");
 
+const autocomplete = require("./routes/autocomplete.routes");
+
 const PORT = 8000;
 
 app.use(express.json());
@@ -24,6 +26,8 @@ mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   app.use("/primary-assessments", auth.verifyToken, primaryAssessments);
   app.use("/healing-plans", auth.verifyToken, healingPlans);
   app.use("/attendances", auth.verifyToken, attendances);
+
+  app.use("/suggestions", autocomplete);
 
   app.listen(PORT, () => {
     console.log(`Server started on ${PORT} port!`);
