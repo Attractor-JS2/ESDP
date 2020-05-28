@@ -22,7 +22,7 @@ mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   app.use("/users", users);
   app.use("/patients", patients);
   app.use("/primary-assessments", auth.verifyToken, primaryAssessments);
-  app.use("/healing-plan", auth.verifyToken, healingPlans);
+  app.use("/healing-plans", auth.verifyToken, healingPlans);
   app.use("/attendances", auth.verifyToken, attendances);
 
   app.listen(PORT, () => {

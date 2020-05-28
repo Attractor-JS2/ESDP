@@ -23,6 +23,28 @@ const findByHealingPlan = async (req, res) => {
   }
 };
 
+const findByHealingPlanLatestOne = async (req, res) => {
+  const filter = { healingPlan: req.query.healingPlan };
+
+  try {
+    const attendancesDoc = await Attendance.findOne(filter)
+      .sort({ attendanceDate: 'desc' })
+      .populate({
+        path: 'procedureDynamics.procedure',
+        model: 'Procedure',
+      });
+
+    if (!attendancesDoc) {
+      return res.sendStatus(404);
+    }
+
+    return res.send(attendancesDoc);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+};
+
 const create = async (req, res) => {
   const { body, userId } = req;
   const { procedureDynamics, healingPlan } = body;
@@ -63,6 +85,7 @@ const create = async (req, res) => {
 
 const attendanceController = {
   findByHealingPlan,
+  findByHealingPlanLatestOne,
   create,
 };
 
