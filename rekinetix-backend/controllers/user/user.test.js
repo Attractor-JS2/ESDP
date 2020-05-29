@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 app.use("/users", users);
 app.use(express.json());
 const testUser = {"fullname": "John Doe", "username": "john", "password": "doe"};
+let token;
 
 
 describe('User creating function', () => {
@@ -36,13 +37,22 @@ describe('User creating function', () => {
         expect(res.body.message).toEqual('Success')
       })
   });
-  test('Should successfully log in', async () => {
+  test('Should log in', async () => {
     await request(app).post('/users/sessions')
       .send({...testUser})
       .then(res => {
         expect(res.body.token).toBeTruthy();
         expect(res.body.fullname).toEqual(testUser.fullname);
+        token = res.body.token;
       })
   });
+  test('Should delete user', async() => {
+    await request(app).delete('/users/sessions')
+      .set('x-access-token', token)
+      .send()
+      .then(res => {
+        expect(res.body.message).toEqual('Success')
+      })
+  })
   
 });
