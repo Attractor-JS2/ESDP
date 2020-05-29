@@ -48,7 +48,7 @@ const HealingPlanChart = ({
   });
 
   const getButtonRow = (stage) => ({
-    rowTitle: 'AddRowButton',
+    targetArea: 'AddRowButton',
     status: 'shouldBeEmpty',
     stage,
   });
@@ -104,11 +104,11 @@ const HealingPlanChart = ({
       {
         Header: 'На что направлено',
         accessor: 'targetArea',
+        Cell: AddActionButton,
       },
       {
         Header: 'Что делаем',
         accessor: 'procedureName',
-        Cell: AddActionButton,
       },
       {
         Header: 'Комментарии',
