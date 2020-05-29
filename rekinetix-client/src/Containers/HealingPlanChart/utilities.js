@@ -4,11 +4,7 @@ import DailyDynamicsTypes from './DailyDynamicsTypes';
 
 const getDates = (attendances) => {
   const today = format(new Date(), 'yyyy-MM-dd');
-  if (
-    attendances &&
-    attendances.length > 0 &&
-    Object.keys(attendances[0]).length > 0
-  ) {
+  if (attendances && attendances.length > 0) {
     const dates = attendances.map(({ attendanceDate }) => {
       return format(new Date(attendanceDate), 'yyyy-MM-dd');
     });
@@ -20,25 +16,46 @@ const getDates = (attendances) => {
   }
 };
 
-const getStageRowsFromPlan = (planData, stage) => {
-  const procedures = [...planData[stage]];
+const getStageProcedures = (allProcedures, stageNumber) => {
+  return allProcedures.filter(({ stage }) => stage === stageNumber);
+};
+
+const getRowsFromProcedures = (procedures) => {
   return procedures.reduce(
-    (acc, { procedureName, procedureArea, procedureQuantity, status }) => {
+    (
+      acc,
+      {
+        _id,
+        procedureName,
+        procedureArea,
+        procedureQuantity,
+        status,
+        stage,
+        comments,
+      },
+    ) => {
       return [
         ...acc,
         {
-          rowTitle: procedureName,
-          procedureArea,
-          status,
+          _id: _id,
+          targetArea: procedureArea,
+          procedureName: procedureName,
+          comments: comments || '',
+          status: status,
           planned: procedureQuantity,
           completed: 0,
-          stage,
-          purpose: 'procedureData',
+          stageNumber: stage,
+          role: 'procedureData',
         },
       ];
     },
     [],
   );
+};
+
+const getStageRowsFromPlan = (planProcedures, stageNumber) => {
+  const stageProcedures = getStageProcedures(planProcedures, stageNumber);
+  return getRowsFromProcedures(stageProcedures);
 };
 
 const isRowDeletable = (row) => {
@@ -61,8 +78,7 @@ const getStageRows = (attendances, stage, planData) => {
   if (
     attendances &&
     Array.isArray(attendances) &&
-    attendances.length > 0 &&
-    Object.keys(attendances[0]).length > 0
+    attendances.length > 0
   ) {
     attendances.forEach((curAttendance) => {
       const { attendanceDate } = curAttendance;
@@ -145,6 +161,6 @@ const utilities = {
   getDates,
   getStageRows,
   getDynamicAndPainScaleRows,
-}
+};
 
 export default utilities;

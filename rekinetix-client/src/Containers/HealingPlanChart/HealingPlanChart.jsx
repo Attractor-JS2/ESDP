@@ -22,12 +22,11 @@ import {
 } from '../../store/actions/attendance';
 import utilities from './utilities';
 
-
 import mockPatient from './mockPatientData';
 
 const HealingPlanChart = ({
   healingPlan,
-  attendance,
+  attendances,
   patient,
   medic,
   onFetchHealingPlan,
@@ -42,10 +41,9 @@ const HealingPlanChart = ({
   const [isProcedureDeleting, setDeleting] = useState(false);
   const [deletedProcedure, setToDelete] = useState({});
 
-
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
-    rowTitle: <b>{rowTitle}</b>,
+    targetArea: <b>{rowTitle}</b>,
     status: 'shouldBeEmpty',
   });
 
@@ -104,13 +102,17 @@ const HealingPlanChart = ({
         Cell: DeleteActionButton,
       },
       {
+        Header: 'На что направлено',
+        accessor: 'targetArea',
+      },
+      {
         Header: 'Что делаем',
-        accessor: 'rowTitle',
+        accessor: 'procedureName',
         Cell: AddActionButton,
       },
       {
-        Header: 'На что направлено',
-        accessor: 'procedureArea',
+        Header: 'Комментарии',
+        accessor: 'comments',
       },
       {
         Header: 'Статус',
@@ -136,7 +138,6 @@ const HealingPlanChart = ({
   }, []);
 
   useEffect(() => {
-    const attendances = [{ ...attendance }]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
     const formattedDates = utilities.getDates(attendances);
     const dynamicColumns = formattedDates.map((title) => ({
       id: title,
@@ -145,32 +146,31 @@ const HealingPlanChart = ({
       Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
     }));
     setHeaderTitles(dynamicColumns);
-  }, [attendance]);
+  }, [attendances]);
 
   useEffect(() => {
-    const attendances = [{ ...attendance }]; // Изменить при подключении БД. Так как сейчас приходит один объект приёма я из него сформировал массив.
     if (healingPlan && Object.keys(healingPlan).length > 0) {
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),
-        ...utilities.getStageRows(attendances, 'firstStage', healingPlan),
+        ...utilities.getStageRows(attendances, 1, healingPlan.procedures),
         getButtonRow('firstStage'),
         getRowGroupHeader('2. Мобилизация'),
-        ...utilities.getStageRows(attendances, 'secondStage', healingPlan),
+        ...utilities.getStageRows(attendances, 2, healingPlan.procedures),
         getButtonRow('secondStage'),
         getRowGroupHeader('3. НМА и стабилизация'),
-        ...utilities.getStageRows(attendances, 'thirdStage', healingPlan),
+        ...utilities.getStageRows(attendances, 3, healingPlan.procedures),
         getButtonRow('thirdStage'),
         getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
-        ...utilities.getStageRows(attendances, 'fourthStage', healingPlan),
+        ...utilities.getStageRows(attendances, 4, healingPlan.procedures),
         getButtonRow('fourthStage'),
         getRowGroupHeader('5. Профилактика дома'),
-        ...utilities.getStageRows(attendances, 'fifthStage', healingPlan),
+        ...utilities.getStageRows(attendances, 5, healingPlan.procedures),
         getButtonRow('fifthStage'),
         ...utilities.getDynamicAndPainScaleRows(attendances),
       ];
       setChartData(tableRows);
     }
-  }, [healingPlan, attendance]);
+  }, [healingPlan, attendances]);
 
   return (
     <ScopedCssBaseline>
@@ -213,9 +213,9 @@ const HealingPlanChart = ({
 };
 
 const mapStateToProps = (state) => ({
-  patient: mockPatient,
+  patient: mockPatient, // Временный мок
   healingPlan: state.healingPlan.healingPlan,
-  attendance: state.attendance,
+  attendances: [], // Временный мок
 });
 
 const mapDispatchToProps = (dispatch) => ({
