@@ -137,10 +137,10 @@ const HealingPlanChart = ({
   }, [patient]);
 
   useEffect(() => {
-    if (healingPlan) {
+    if (healingPlan && healingPlan._id) {
       onFetchAttendances(healingPlan._id);
     }
-  }, [healingPlan]);
+  }, [healingPlan._id]);
 
   useEffect(() => {
     const formattedDates = utilities.getDates(attendances);
