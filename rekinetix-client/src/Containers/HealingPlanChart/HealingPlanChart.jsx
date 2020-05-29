@@ -17,9 +17,9 @@ import {
   removeProcedureFromPlan,
 } from '../../store/actions/healingPlan';
 import {
-  fetchAttendanceData,
+  fetchAttendancesByHealingPlan,
   proceedToAttendance,
-} from '../../store/actions/attendance';
+} from '../../store/actions/attendances';
 import utilities from './utilities';
 
 import mockPatient from './mockPatientData';
@@ -134,8 +134,13 @@ const HealingPlanChart = ({
 
   useEffect(() => {
     onFetchHealingPlan(patient.primaryAssessment._id);
-    onFetchAttendances();
-  }, []);
+  }, [patient]);
+
+  useEffect(() => {
+    if (healingPlan) {
+      onFetchAttendances(healingPlan._id);
+    }
+  }, [healingPlan])
 
   useEffect(() => {
     const formattedDates = utilities.getDates(attendances);
@@ -215,13 +220,13 @@ const HealingPlanChart = ({
 const mapStateToProps = (state) => ({
   patient: mockPatient, // Временный мок
   healingPlan: state.healingPlan.healingPlan,
-  attendances: [], // Временный мок
+  attendances: state.attendances.attendances,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchHealingPlan: (primaryAssessmentId) =>
     dispatch(fetchPlanByPrimaryAssessment(primaryAssessmentId)),
-  onFetchAttendances: () => dispatch(fetchAttendanceData()),
+  onFetchAttendances: (healingPlanId) => dispatch(fetchAttendancesByHealingPlan(healingPlanId)),
   onProcedureDelete: (stage, procedureName) =>
     dispatch(removeProcedureFromPlan(stage, procedureName)),
   onProceedToAttendance: (attendanceData) =>
