@@ -7,7 +7,7 @@ const getResponseSafeData = (data) => ({
 });
 
 const createUser = async (req, res) => {
-    console.log(req)const user = new User({
+    const user = new User({
         fullname: req.body.fullname,
         username: req.body.username,
         role: req.body.role,

@@ -6,16 +6,15 @@ const conn = require('../../index.js');
 const express = require('express');
 
 
-
 beforeAll((done) => {
   conn.connect()
     .then(() => done())
     .catch((err) => done(err));
 });
 afterAll((done) => {
-    conn.close()
-      .then(() => done())
-      .catch(err => done(err))
+  conn.close()
+    .then(() => done())
+    .catch(err => done(err))
 });
 
 
@@ -26,15 +25,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use("/users", users);
 app.use(express.json());
+const testUser = {"fullname": "John Doe", "username": "john", "password": "doe"};
 
 
 describe('User creating function', () => {
-  test('Should be defined', () => {
-    request(app).post('/users').send({"fullname": "john"}).then(res => {
-      console.log(res)
-    })
-    
-    
+  test('Should create user with correct data', async () => {
+    await request(app).post('/users')
+      .send({...testUser})
+      .then((res) => {
+        expect(res.body.message).toEqual('Success')
+      })
+  });
+  test('Should successfully log in', async () => {
+    await request(app).post('/users/sessions')
+      .send({...testUser})
+      .then(res => {
+        expect(res.body.token).toBeTruthy();
+        expect(res.body.fullname).toEqual(testUser.fullname);
+      })
   });
   
 });
