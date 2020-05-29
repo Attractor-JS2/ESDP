@@ -36,8 +36,8 @@ const PatientInfo = ({ patient, medic, diagnosis, redFlags }) => {
               <b>Красные флаги: </b>
             </Typography>
             {redFlags && redFlags.length > 0
-              ? redFlags.map(({ id, title }) => (
-                  <Chip key={id} color="secondary" label={title} />
+              ? redFlags.map(({ _id, title }) => (
+                  <Chip key={_id} color="secondary" label={title} />
                 ))
               : null}
           </div>
