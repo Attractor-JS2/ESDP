@@ -1,7 +1,6 @@
 process.env.NODE_ENV = 'test';
 jest.setTimeout(20000);
 const request = require('supertest');
-// const app = require("../../server").app;
 const conn = require('../../index.js');
 const express = require('express');
 
@@ -25,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use("/users", users);
 app.use(express.json());
-const testUser = {"fullname": "John Doe", "username": "john", "password": "doe"};
+const testUser = {"fullname": "Test User", "username": "testuser", "password": "testuser"};
 let token;
 
 
@@ -34,7 +33,7 @@ describe('User creating function', () => {
     await request(app).post('/users')
       .send({...testUser})
       .then((res) => {
-        expect(res.body.message).toEqual('Success')
+        expect(res.body.message).toEqual('Success');
       })
   });
   test('Should log in', async () => {
@@ -54,5 +53,4 @@ describe('User creating function', () => {
         expect(res.body.message).toEqual('Success')
       })
   })
-  
 });

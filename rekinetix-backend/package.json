@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "node server.js",
     "dev": "nodemon server.js --ignore './controllers/healingPlan/db/db.json' --ignore './controllers/attendance/db/attendancedb.json'"
   },
