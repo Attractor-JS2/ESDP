@@ -84,9 +84,10 @@ const populateRowsWithAttendance = (rows, attendance) => {
       ({ procedure }) => procedure._id === _id,
     );
     if (curProcedureDynamics) {
+      const {procedureDynamic} = curProcedureDynamics;
       return {
         ...row,
-        [formattedDate]: curProcedureDynamics.procedureDynamic,
+        [formattedDate]: DailyDynamicsTypes[procedureDynamic],
         completed: row.completed + 1,
       };
     } else {

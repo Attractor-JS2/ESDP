@@ -185,6 +185,7 @@ const HealingPlanChart = ({
           handleClose={cancelProcedureAdding}
           selectedStage={currentStage}
         />
+
         <ConfirmDialog
           open={isProcedureDeleting}
           handleConfirm={() =>
@@ -196,12 +197,14 @@ const HealingPlanChart = ({
           handleClose={cancelProcedureDeleting}
           procedure={deletedProcedure}
         />
+
         <PatientInfo
           patient={patient.patient.fullname}
           medic={medic}
           diagnosis={patient.primaryAssessment.diagnosis}
           redFlags={patient.redFlags}
         />
+
         {chartData && chartData.length > 0 && (
           <Table
             columns={columns}
