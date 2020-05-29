@@ -84,11 +84,10 @@ const populateRowsWithAttendance = (rows, attendance) => {
       ({ procedure }) => procedure._id === _id,
     );
     if (curProcedureDynamics) {
-      console.log(curProcedureDynamics);
       return {
         ...row,
         [formattedDate]: curProcedureDynamics.procedureDynamic,
-        completed: row.completed + 1
+        completed: row.completed + 1,
       };
     } else {
       return row;
@@ -113,44 +112,25 @@ const getStageRows = (stageNumber, planProcedures, attendances) => {
 };
 
 const getDynamicAndPainScaleRows = (attendances) => {
-  const conditionRow = { rowTitle: 'Состояние пациента' };
-  const painScaleBeforeRow = { rowTitle: 'Шкала боли до' };
-  const painScaleAfterRow = { rowTitle: 'Шкала боли после' };
-  if (
-    attendances &&
-    Array.isArray(attendances) &&
-    attendances.length > 0 &&
-    Object.keys(attendances[0]).length > 0
-  ) {
-    const rows = attendances.reduce(
-      (acc, curAttendance) => {
-        const {
-          attendanceDate,
-          patientDynamic,
-          beforeAttendance: { pain: painBefore },
-          afterAttendance: { pain: painAfter },
-        } = curAttendance;
-        const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
-        acc[0] = {
-          ...acc[0],
-          [formattedDate]: DailyDynamicsTypes[patientDynamic],
-        };
-        acc[1] = {
-          ...acc[1],
-          [formattedDate]: painBefore,
-        };
-        acc[2] = {
-          ...acc[2],
-          [formattedDate]: painAfter,
-        };
-        return acc;
-      },
-      [conditionRow, painScaleBeforeRow, painScaleAfterRow],
-    );
-    return rows;
-  } else {
-    return [conditionRow, painScaleBeforeRow, painScaleAfterRow];
-  }
+  const conditionRow = { targetArea: 'Состояние пациента' };
+  const painScaleBeforeRow = { targetArea: 'Шкала боли до' };
+  const painScaleAfterRow = { targetArea: 'Шкала боли после' };
+  return attendances.reduce(
+    (rows, curAttendance) => {
+      const {
+        attendanceDate,
+        patientDynamic,
+        beforeAttendance: { pain: painBefore },
+        afterAttendance: { pain: painAfter },
+      } = curAttendance;
+      const date = getFormattedDate(attendanceDate);
+      rows[0][date] = DailyDynamicsTypes[patientDynamic];
+      rows[1][date] = painBefore;
+      rows[2][date] = painAfter;
+      return rows;
+    },
+    [conditionRow, painScaleBeforeRow, painScaleAfterRow],
+  );
 };
 
 const utilities = {

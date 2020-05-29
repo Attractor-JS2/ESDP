@@ -171,7 +171,7 @@ const HealingPlanChart = ({
         getRowGroupHeader('5. Профилактика дома'),
         ...utilities.getStageRows(5, healingPlan.procedures, attendances),
         getButtonRow('fifthStage'),
-        // ...utilities.getDynamicAndPainScaleRows(attendances),
+        ...utilities.getDynamicAndPainScaleRows(attendances),
       ];
       setChartData(tableRows);
     }
