@@ -4,10 +4,14 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const config = require("./config");
-const users = require("./controllers/user/user");
-const healingPlan = require("./controllers/healingPlan/healingPlan");
-const attendance = require("./controllers/attendance/attendance");
-const patientCard = require('./controllers/patientCard/patientCard');
+const auth = require("./middleware/auth");
+const users = require("./routes/user.routes");
+const patients = require("./routes/patient.routes");
+const primaryAssessments = require("./routes/primaryAssessment.routes");
+const healingPlans = require("./routes/healingPlan.routes");
+const attendances = require("./routes/attendance.routes");
+
+const autocomplete = require("./routes/autocomplete.routes");
 
 const PORT = 8000;
 
@@ -17,10 +21,13 @@ app.use(cors());
 mongoose.connect(config.db.getDbPath(), { useNewUrlParser: true }).then(() => {
   console.log("Mongoose connected!");
 
-  app.use("/attendance", attendance());
-  app.use("/healingPlan", healingPlan());
-  app.use('/patientCards', patientCard());
-  app.use("/users", users());
+  app.use("/users", users);
+  app.use("/patients", patients);
+  app.use("/primary-assessments", auth.verifyToken, primaryAssessments);
+  app.use("/healing-plans", auth.verifyToken, healingPlans);
+  app.use("/attendances", auth.verifyToken, attendances);
+
+  app.use("/suggestions", autocomplete);
 
   app.listen(PORT, () => {
     console.log(`Server started on ${PORT} port!`);

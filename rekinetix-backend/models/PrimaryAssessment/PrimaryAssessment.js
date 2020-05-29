@@ -13,7 +13,7 @@ const PrimaryAssessmentSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  datetime: {
+  assessmentDate: {
     type: Date,
     default: Date.now,
   },
