@@ -140,7 +140,7 @@ const HealingPlanChart = ({
     if (healingPlan) {
       onFetchAttendances(healingPlan._id);
     }
-  }, [healingPlan])
+  }, [healingPlan]);
 
   useEffect(() => {
     const formattedDates = utilities.getDates(attendances);
@@ -157,21 +157,21 @@ const HealingPlanChart = ({
     if (healingPlan && Object.keys(healingPlan).length > 0) {
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),
-        ...utilities.getStageRows(attendances, 1, healingPlan.procedures),
+        ...utilities.getStageRows(1, healingPlan.procedures, attendances),
         getButtonRow('firstStage'),
         getRowGroupHeader('2. Мобилизация'),
-        ...utilities.getStageRows(attendances, 2, healingPlan.procedures),
+        ...utilities.getStageRows(2, healingPlan.procedures, attendances),
         getButtonRow('secondStage'),
         getRowGroupHeader('3. НМА и стабилизация'),
-        ...utilities.getStageRows(attendances, 3, healingPlan.procedures),
+        ...utilities.getStageRows(3, healingPlan.procedures, attendances),
         getButtonRow('thirdStage'),
         getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
-        ...utilities.getStageRows(attendances, 4, healingPlan.procedures),
+        ...utilities.getStageRows(4, healingPlan.procedures, attendances),
         getButtonRow('fourthStage'),
         getRowGroupHeader('5. Профилактика дома'),
-        ...utilities.getStageRows(attendances, 5, healingPlan.procedures),
+        ...utilities.getStageRows(5, healingPlan.procedures, attendances),
         getButtonRow('fifthStage'),
-        ...utilities.getDynamicAndPainScaleRows(attendances),
+        // ...utilities.getDynamicAndPainScaleRows(attendances),
       ];
       setChartData(tableRows);
     }
@@ -226,7 +226,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFetchHealingPlan: (primaryAssessmentId) =>
     dispatch(fetchPlanByPrimaryAssessment(primaryAssessmentId)),
-  onFetchAttendances: (healingPlanId) => dispatch(fetchAttendancesByHealingPlan(healingPlanId)),
+  onFetchAttendances: (healingPlanId) =>
+    dispatch(fetchAttendancesByHealingPlan(healingPlanId)),
   onProcedureDelete: (stage, procedureName) =>
     dispatch(removeProcedureFromPlan(stage, procedureName)),
   onProceedToAttendance: (attendanceData) =>

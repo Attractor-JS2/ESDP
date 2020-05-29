@@ -2,11 +2,14 @@ import { format } from 'date-fns';
 
 import DailyDynamicsTypes from './DailyDynamicsTypes';
 
+const getFormattedDate = (dateIsoString) =>
+  format(new Date(dateIsoString), 'yyyy-MM-dd');
+
 const getDates = (attendances) => {
   const today = format(new Date(), 'yyyy-MM-dd');
   if (attendances && attendances.length > 0) {
     const dates = attendances.map(({ attendanceDate }) => {
-      return format(new Date(attendanceDate), 'yyyy-MM-dd');
+      return getFormattedDate(attendanceDate);
     });
     if (!dates.includes(today)) dates.push(today);
     dates.sort((a, b) => new Date(a) - new Date(b));
@@ -72,47 +75,38 @@ const addRowDeleteCondition = (rows) => {
   });
 };
 
-const getStageRows = (attendances, stage, planData) => {
-  let planStageRows = getStageRowsFromPlan(planData, stage);
+const populateRowsWithAttendance = (rows, attendance) => {
+  const { procedureDynamics, attendanceDate } = attendance;
+  return rows.map((row) => {
+    const { _id } = row;
+    const formattedDate = getFormattedDate(attendanceDate);
+    const curProcedureDynamics = procedureDynamics.find(
+      ({ procedure }) => procedure._id === _id,
+    );
+    if (curProcedureDynamics) {
+      return {
+        ...row,
+        [formattedDate]: curProcedureDynamics.procedureDynamic,
+      };
+    } else {
+      return row;
+    }
+  });
+};
 
-  if (
-    attendances &&
-    Array.isArray(attendances) &&
-    attendances.length > 0
-  ) {
-    attendances.forEach((curAttendance) => {
-      const { attendanceDate } = curAttendance;
-      const formattedDate = format(new Date(attendanceDate), 'yyyy-MM-dd');
-      const stageProcedures = [...curAttendance[stage]];
-      stageProcedures.forEach((procedure) => {
-        const rowIndex = planStageRows.findIndex(
-          ({ rowTitle }) => rowTitle === procedure.procedureName,
-        );
-        if (rowIndex >= 0) {
-          planStageRows[rowIndex] = {
-            ...planStageRows[rowIndex],
-            completed: planStageRows[rowIndex].completed + 1,
-            [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
-          };
-        } else {
-          const procedureAbsentInPlan = {
-            ...procedure,
-            rowTitle: procedure.procedureName,
-            status: 'действует',
-            planned: '',
-            completed: 1,
-            [formattedDate]: DailyDynamicsTypes[procedure.procedureDynamic],
-            stage: stage,
-            purpose: 'procedureData',
-          };
-          planStageRows = [...planStageRows, procedureAbsentInPlan];
-        }
-      });
-    });
-  }
+const getPopulatedRowsWithAttendances = (rowsData, attendancesData) => {
+  return attendancesData.reduce((rows, attendance) => {
+    return populateRowsWithAttendance(rows, attendance);
+  }, rowsData);
+};
 
-  const stageRows = addRowDeleteCondition(planStageRows);
-
+const getStageRows = (stageNumber, planProcedures, attendances) => {
+  const stageRowsFromPlan = getStageRowsFromPlan(planProcedures, stageNumber);
+  const populatedRows = getPopulatedRowsWithAttendances(
+    stageRowsFromPlan,
+    attendances,
+  );
+  const stageRows = addRowDeleteCondition(populatedRows);
   return stageRows;
 };
 
