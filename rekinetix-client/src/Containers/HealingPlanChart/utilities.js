@@ -13,7 +13,7 @@ const getDates = (attendances) => {
     });
     if (!dates.includes(today)) dates.push(today);
     dates.sort((a, b) => new Date(a) - new Date(b));
-    return [...dates];
+    return dates;
   } else {
     return [today];
   }
@@ -61,13 +61,13 @@ const getStageRowsFromPlan = (planProcedures, stageNumber) => {
   return getRowsFromProcedures(stageProcedures);
 };
 
-const isRowDeletable = (row) => {
+const isRowRemovable = (row) => {
   return row.status === 'запланировано' && row.completed === 0;
 };
 
-const addRowDeleteCondition = (rows) => {
+const addRowStatusRemovable = (rows) => {
   return rows.map((row) => {
-    if (!isRowDeletable(row)) return row;
+    if (!isRowRemovable(row)) return row;
     return {
       ...row,
       deleteControl: 'DeleteRowButton',
@@ -108,7 +108,7 @@ const getStageRows = (stageNumber, planProcedures, attendances) => {
     stageRowsFromPlan,
     attendances,
   );
-  const stageRows = addRowDeleteCondition(populatedRows);
+  const stageRows = addRowStatusRemovable(populatedRows);
   return stageRows;
 };
 
