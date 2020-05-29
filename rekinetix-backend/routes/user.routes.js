@@ -6,7 +6,7 @@ const userController = require('../controllers/user/user');
 
 router.post(
   '/',
-  [auth.verifyToken, permit('admin')],
+  // [auth.verifyToken, permit('admin')],
   userController.createUser,
 );
 

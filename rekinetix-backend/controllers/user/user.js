@@ -7,7 +7,7 @@ const getResponseSafeData = (data) => ({
 });
 
 const createUser = async (req, res) => {
-    const user = new User({
+    console.log(req)const user = new User({
         fullname: req.body.fullname,
         username: req.body.username,
         role: req.body.role,
@@ -16,9 +16,9 @@ const createUser = async (req, res) => {
 
   try {
     await user.save();
-    res.status(201).send({ message: 'Success' });
+    return res.status(201).send({ message: 'Success' });
   } catch (error) {
-    res.sendStatus(400);
+    return res.status(400).send(error);
   }
 };
 

@@ -1,28 +1,40 @@
-const {mockRequest, mockResponse} = require('../../configs/mockInterceptors');
-const userController = require('./user');
+process.env.NODE_ENV = 'test';
+jest.setTimeout(20000);
+const request = require('supertest');
+// const app = require("../../server").app;
+const conn = require('../../index.js');
+const express = require('express');
 
-let req;
-let res;
-let createUser = userController.createUser;
 
 
-beforeEach(() => {
-    req = mockRequest();
-    res = mockResponse();
+beforeAll((done) => {
+  conn.connect()
+    .then(() => done())
+    .catch((err) => done(err));
+});
+afterAll((done) => {
+    conn.close()
+      .then(() => done())
+      .catch(err => done(err))
 });
 
-describe('User creating function', () => {
-    test('Should be defined', () => {
-        expect(createUser(req, res)).toBeDefined()
-    });
-    test('Should response with 201 on correct request', async () => {
-        req.body.fullname = 'User';
-        req.body.username = 'testuser';
-        req.body.role = 'doctcor';
-        req.body.password =  'user';
-        await createUser(req, res);
-        expect(res.send).toBeCalledTimes(1)
-        expect(res.status).toHaveBeenCalledWith(201)
 
+const app = express();
+const users = require("../../routes/user.routes");
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use("/users", users);
+app.use(express.json());
+
+
+describe('User creating function', () => {
+  test('Should be defined', () => {
+    request(app).post('/users').send({"fullname": "john"}).then(res => {
+      console.log(res)
     })
-})
+    
+    
+  });
+  
+});
