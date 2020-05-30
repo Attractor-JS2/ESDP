@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const DeleteActionButton = ({
   value: initialValue,
-  row: { original },
+  row: {
+    original: { _id },
+  },
   proceedToDeleteProcedure,
 }) => {
   return (
@@ -14,14 +16,14 @@ const DeleteActionButton = ({
           <IconButton
             size="medium"
             color="primary"
-            onClick={() => proceedToDeleteProcedure(original)}
+            onClick={() => proceedToDeleteProcedure(_id)}
           >
             <DeleteForeverIcon size="medium" />
           </IconButton>
         ),
       }[initialValue] || initialValue}
     </>
-  )
-}
+  );
+};
 
 export default DeleteActionButton;

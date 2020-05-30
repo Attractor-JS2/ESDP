@@ -39,7 +39,7 @@ const HealingPlanChart = ({
   const [isProcedureBeingAdded, setIsAdding] = useState(false);
   const [currentStage, setCurrentStage] = useState('');
   const [isProcedureBeingDeleted, setIsDeleting] = useState(false);
-  const [deletedProcedure, setToDelete] = useState({});
+  const [deletedProcedureId, setToDelete] = useState(null);
 
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
@@ -67,14 +67,13 @@ const HealingPlanChart = ({
     setIsDeleting(false);
   };
 
-  const proceedToDeleteProcedure = (row) => {
-    const { stage, rowTitle } = row;
-    setToDelete({ stage, rowTitle });
+  const proceedToDeleteProcedure = (procedureId) => {
+    setToDelete(procedureId);
     setIsDeleting(true);
   };
 
-  const procedureDeleteHandler = (planStage, procedureName) => {
-    onProcedureDelete(planStage, procedureName);
+  const procedureDeleteHandler = (procedureId) => {
+    onProcedureDelete(procedureId);
     cancelProcedureDeleting();
   };
 
@@ -189,13 +188,9 @@ const HealingPlanChart = ({
         <ConfirmDialog
           open={isProcedureBeingDeleted}
           handleConfirm={() =>
-            procedureDeleteHandler(
-              deletedProcedure.stage,
-              deletedProcedure.rowTitle,
-            )
+            procedureDeleteHandler(deletedProcedureId)
           }
           handleClose={cancelProcedureDeleting}
-          procedure={deletedProcedure}
         />
 
         <PatientInfo

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 
 const AddActionButton = ({
   value: initialValue,
-  row: { original },
+  row: { original: { stageNumber } },
   addProcedureHandler,
 }) => {
   return (
@@ -13,7 +13,7 @@ const AddActionButton = ({
           <Button
             size="small"
             variant="outlined"
-            onClick={() => addProcedureHandler(original.stageNumber)}
+            onClick={() => addProcedureHandler(stageNumber)}
           >
             Добавить действие
           </Button>

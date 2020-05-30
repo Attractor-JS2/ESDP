@@ -75,20 +75,16 @@ const removeProcedureFailure = (error) => ({
   payload: error,
 });
 
-export const removeProcedureFromPlan = (procedureStage, procedureName) => (
+export const removeProcedureFromPlan = (procedureId) => (
   dispatch,
   getState,
 ) => {
   const { _id } = getState().healingPlan.healingPlan;
-  axios
-    .delete(
-      `/healingPlan/procedure?stage=${procedureStage}&procedureName=${procedureName}`,
-    )
-    .then(
-      () => {
-        dispatch(removeProcedureSuccess());
-        dispatch(fetchPlanById(_id));
-      },
-      (error) => dispatch(removeProcedureFailure(error)),
-    );
+  axios.delete(`/healing-plans/procedure/${procedureId}`).then(
+    () => {
+      dispatch(removeProcedureSuccess());
+      dispatch(fetchPlanById(_id));
+    },
+    (error) => dispatch(removeProcedureFailure(error)),
+  );
 };
