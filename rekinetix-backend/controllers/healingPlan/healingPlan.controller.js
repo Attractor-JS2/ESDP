@@ -2,6 +2,26 @@ const HealingPlan = require('../../models/HealingPlan');
 const Procedure = require('../../models/Procedure');
 const { getProcedureData } = require('./healingPlan.utilities');
 
+const create = async (req, res) => {
+  const { body, userId } = req;
+  const { primaryAssessment, procedures } = body;
+
+  try {
+    const healingPlanDoc = await HealingPlan.create({
+      primaryAssessment: primaryAssessment,
+      medic: userId,
+    });
+    const proceduresData = procedures.map((procedure) =>
+      getProcedureData(procedure, healingPlanDoc.id),
+    );
+    await Procedure.create(...proceduresData);
+
+    res.status(201).send({ id: healingPlanDoc.id });
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+};
+
 const findByPrimaryAssessment = async (req, res) => {
   const filter = { primaryAssessment: req.query.primaryAssessment };
 
@@ -25,25 +45,27 @@ const findByPrimaryAssessment = async (req, res) => {
   }
 };
 
-const create = async (req, res) => {
-  const { body, userId } = req;
-  const { primaryAssessment, procedures } = body;
-
+const findById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const healingPlanDoc = await HealingPlan.create({
-      primaryAssessment: primaryAssessment,
-      medic: userId,
-    });
-    const proceduresData = procedures.map((procedure) =>
-      getProcedureData(procedure, healingPlanDoc.id),
-    );
-    await Procedure.create(...proceduresData);
+    const healingPlanDoc = await HealingPlan.findById(id);
+    if (!healingPlanDoc) {
+      return res.sendStatus(404);
+    }
 
-    res.status(201).send({ id: healingPlanDoc.id });
+    const proceduresFilter = { healingPlan: healingPlanDoc.id };
+    const procedureDocs = await Procedure.find(proceduresFilter);
+
+    const resultData = {
+      ...healingPlanDoc.toObject(),
+      procedures: [...procedureDocs],
+    }
+
+    res.send(resultData);
   } catch (error) {
-    return res.sendStatus(500);
+    res.sendStatus(500);
   }
-};
+}
 
 const addProcedure = async (req, res) => {
   const { body, params } = req;
@@ -74,8 +96,9 @@ const deleteProcedure = async (req, res) => {
 };
 
 const healingPlanController = {
-  findByPrimaryAssessment,
   create,
+  findByPrimaryAssessment,
+  findById,
   addProcedure,
   deleteProcedure,
 };

@@ -4,6 +4,8 @@ const healingPlanController = require('../controllers/healingPlan/healingPlan.co
 
 router.get('/', healingPlanController.findByPrimaryAssessment);
 
+router.get('/:id', healingPlanController.findById);
+
 router.post('/', healingPlanController.create);
 
 router.patch('/:id', healingPlanController.addProcedure);
