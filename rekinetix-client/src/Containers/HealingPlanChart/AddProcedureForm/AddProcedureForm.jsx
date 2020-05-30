@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,7 +16,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import stageTypes from './stageTypes';
 import { addProcedureToPlan } from '../../../store/actions/healingPlan';
 
-const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) => {
+const validationSchema = yup.object().shape({
+  stage: yup.number().required(),
+  procedureArea: yup.string().required('Введите название области'),
+  procedureName: yup.string().required('Введите название процедуры'),
+})
+
+const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedure }) => {
   const handleSubmit = (data) => {
     onAddProcedure(data);
   };
@@ -36,10 +43,11 @@ const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) 
 
         <Formik
           initialValues={{
-            stage: selectedStage || '',
-            procedureName: '',
+            stage: selectedStageNumber || '',
             procedureArea: '',
+            procedureName: '',
           }}
+          validationSchema={validationSchema}
           onSubmit={(values) => handleSubmit(values)}
         >
           {({ values: {stage, procedureArea, procedureName}, handleChange }) => (
@@ -86,7 +94,7 @@ const AddProcedureForm = ({ open, handleClose, selectedStage, onAddProcedure }) 
               />
 
               <DialogActions>
-                <Button onClick={handleClose} type="submit" color="primary">
+                <Button type="submit" color="primary">
                   Добавить
                 </Button>
                 <Button onClick={handleClose} type="button" color="primary">

@@ -13,7 +13,7 @@ const AddActionButton = ({
           <Button
             size="small"
             variant="outlined"
-            onClick={() => addProcedureHandler(original.stage)}
+            onClick={() => addProcedureHandler(original.stageNumber)}
           >
             Добавить действие
           </Button>

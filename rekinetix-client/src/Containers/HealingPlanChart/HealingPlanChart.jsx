@@ -47,14 +47,14 @@ const HealingPlanChart = ({
     status: 'shouldBeEmpty',
   });
 
-  const getButtonRow = (stage) => ({
+  const getAddProcedureButtonRow = (stageNumber) => ({
     targetArea: 'AddRowButton',
     status: 'shouldBeEmpty',
-    stage,
+    stageNumber,
   });
 
-  const addProcedureHandler = (stageType) => {
-    setCurrentStage(stageType);
+  const addProcedureHandler = (stageNumber) => {
+    setCurrentStage(stageNumber);
     setIsAdding(true);
   };
 
@@ -158,19 +158,19 @@ const HealingPlanChart = ({
       const tableRows = [
         getRowGroupHeader('1. Обезболивание/противовоспалительная'),
         ...utilities.getStageRows(1, healingPlan.procedures, attendances),
-        getButtonRow('firstStage'),
+        getAddProcedureButtonRow(1),
         getRowGroupHeader('2. Мобилизация'),
         ...utilities.getStageRows(2, healingPlan.procedures, attendances),
-        getButtonRow('secondStage'),
+        getAddProcedureButtonRow(2),
         getRowGroupHeader('3. НМА и стабилизация'),
         ...utilities.getStageRows(3, healingPlan.procedures, attendances),
-        getButtonRow('thirdStage'),
+        getAddProcedureButtonRow(3),
         getRowGroupHeader('4. Восстановление функций миофасциальных лент'),
         ...utilities.getStageRows(4, healingPlan.procedures, attendances),
-        getButtonRow('fourthStage'),
+        getAddProcedureButtonRow(4),
         getRowGroupHeader('5. Профилактика дома'),
         ...utilities.getStageRows(5, healingPlan.procedures, attendances),
-        getButtonRow('fifthStage'),
+        getAddProcedureButtonRow(5),
         ...utilities.getDynamicAndPainScaleRows(attendances),
       ];
       setChartData(tableRows);
@@ -183,7 +183,7 @@ const HealingPlanChart = ({
         <AddProcedureForm
           open={isProcedureBeingAdded}
           handleClose={cancelProcedureAdding}
-          selectedStage={currentStage}
+          selectedStageNumber={currentStage}
         />
 
         <ConfirmDialog
