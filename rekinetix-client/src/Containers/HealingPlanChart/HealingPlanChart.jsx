@@ -36,9 +36,9 @@ const HealingPlanChart = ({
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const [isProcedureAdding, setAddProcedure] = useState(false);
+  const [isProcedureBeingAdded, setIsAdding] = useState(false);
   const [currentStage, setCurrentStage] = useState('');
-  const [isProcedureDeleting, setDeleting] = useState(false);
+  const [isProcedureBeingDeleted, setIsDeleting] = useState(false);
   const [deletedProcedure, setToDelete] = useState({});
 
   const getRowGroupHeader = (rowTitle) => ({
@@ -55,22 +55,22 @@ const HealingPlanChart = ({
 
   const addProcedureHandler = (stageType) => {
     setCurrentStage(stageType);
-    setAddProcedure(true);
+    setIsAdding(true);
   };
 
   const cancelProcedureAdding = () => {
-    setAddProcedure(false);
+    setIsAdding(false);
   };
 
   const cancelProcedureDeleting = () => {
     setToDelete({ stage: undefined, rowTitle: undefined });
-    setDeleting(false);
+    setIsDeleting(false);
   };
 
   const proceedToDeleteProcedure = (row) => {
     const { stage, rowTitle } = row;
     setToDelete({ stage, rowTitle });
-    setDeleting(true);
+    setIsDeleting(true);
   };
 
   const procedureDeleteHandler = (planStage, procedureName) => {
@@ -181,13 +181,13 @@ const HealingPlanChart = ({
     <ScopedCssBaseline>
       <Container className="HealingPlanChart-content">
         <AddProcedureForm
-          open={isProcedureAdding}
+          open={isProcedureBeingAdded}
           handleClose={cancelProcedureAdding}
           selectedStage={currentStage}
         />
 
         <ConfirmDialog
-          open={isProcedureDeleting}
+          open={isProcedureBeingDeleted}
           handleConfirm={() =>
             procedureDeleteHandler(
               deletedProcedure.stage,
