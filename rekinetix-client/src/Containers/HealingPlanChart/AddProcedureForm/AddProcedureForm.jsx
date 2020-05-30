@@ -20,11 +20,16 @@ const validationSchema = yup.object().shape({
   stage: yup.number().required(),
   procedureArea: yup.string().required('Введите название области'),
   procedureName: yup.string().required('Введите название процедуры'),
-})
+});
 
-const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedure }) => {
+const AddProcedureForm = ({
+  open,
+  handleClose,
+  selectedStageNumber,
+  onAddProcedure,
+}) => {
   const handleSubmit = (data) => {
-    onAddProcedure(data);
+    onAddProcedure(data, handleClose);
   };
 
   return (
@@ -50,7 +55,10 @@ const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedu
           validationSchema={validationSchema}
           onSubmit={(values) => handleSubmit(values)}
         >
-          {({ values: {stage, procedureArea, procedureName}, handleChange }) => (
+          {({
+            values: { stage, procedureArea, procedureName },
+            handleChange,
+          }) => (
             <Form>
               <InputLabel id="stageSelect">Что делать</InputLabel>
               <Select
@@ -60,15 +68,17 @@ const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedu
                 labelId="stageSelect"
                 variant="outlined"
                 fullWidth
-                name='stage'
+                name="stage"
                 value={stage}
                 onChange={handleChange}
                 autoWidth
               >
                 {Object.keys(stageTypes).map((key) => {
                   return (
-                    <MenuItem key={key} value={key}>{stageTypes[key]}</MenuItem>
-                  )
+                    <MenuItem key={key} value={key}>
+                      {stageTypes[key]}
+                    </MenuItem>
+                  );
                 })}
               </Select>
               <TextField
@@ -77,7 +87,7 @@ const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedu
                 label="Анатомическая область"
                 type="text"
                 fullWidth
-                name='procedureArea'
+                name="procedureArea"
                 value={procedureArea}
                 onChange={handleChange}
               />
@@ -88,7 +98,7 @@ const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedu
                 label="Название процедуры"
                 type="text"
                 fullWidth
-                name='procedureName'
+                name="procedureName"
                 value={procedureName}
                 onChange={handleChange}
               />
@@ -110,7 +120,8 @@ const AddProcedureForm = ({ open, handleClose, selectedStageNumber, onAddProcedu
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onAddProcedure: (procedureData) => dispatch(addProcedureToPlan(procedureData)),
-})
+  onAddProcedure: (procedureData, modalCloseHandler) =>
+    dispatch(addProcedureToPlan(procedureData, modalCloseHandler)),
+});
 
 export default connect(null, mapDispatchToProps)(AddProcedureForm);

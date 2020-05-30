@@ -12,13 +12,12 @@ import {
 } from './actionTypes';
 
 export const submitForm = (form) => {
-  return dispatch => {
-    axios.post('/healingPlan', {healingPlan: form})
-      .then(res => {
-        console.log(res); // сервер в качестве ответа добавляет обычную строку об успешном создании
-        NotificationManager.success('Форма успешно отправлена'); // триггер успешного оповещения
-        dispatch(push('/')); // редирект на главную
-      });
+  return (dispatch) => {
+    axios.post('/healingPlan', { healingPlan: form }).then((res) => {
+      console.log(res); // сервер в качестве ответа добавляет обычную строку об успешном создании
+      NotificationManager.success('Форма успешно отправлена'); // триггер успешного оповещения
+      dispatch(push('/')); // редирект на главную
+    });
   };
 };
 
@@ -52,11 +51,15 @@ const addProcedureFailure = (error) => ({
   payload: error,
 });
 
-export const addProcedureToPlan = (procedureData) => (dispatch, getState) => {
+export const addProcedureToPlan = (procedureData, modalCloseHandler) => (
+  dispatch,
+  getState,
+) => {
   const { _id } = getState().healingPlan.healingPlan;
   axios.patch(`/healing-plans/${_id}`, procedureData).then(
     () => {
       dispatch(addProcedureSuccess());
+      modalCloseHandler();
       dispatch(fetchPlanById(_id));
     },
     (error) => dispatch(addProcedureFailure(error)),
