@@ -48,7 +48,7 @@ const getRowsFromProcedures = (procedures) => {
           planned: procedureQuantity,
           completed: 0,
           stageNumber: stage,
-          role: 'procedureData',
+          role: 'PROCEDURE_DATA',
         },
       ];
     },

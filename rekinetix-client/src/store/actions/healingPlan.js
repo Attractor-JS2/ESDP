@@ -34,14 +34,14 @@ const fetchPlanFailure = (error) => ({
 export const fetchPlanByPrimaryAssessment = (assessmentId) => (dispatch) => {
   axios.get(`/healing-plans?primaryAssessment=${assessmentId}`).then(
     (res) => dispatch(fetchPlanSuccess(res.data)),
-    (error) => console.log(error),
+    (error) => fetchPlanFailure(error),
   );
 };
 
 export const fetchPlanById = (healingPlanId) => (dispatch) => {
   axios.get(`/healing-plans/${healingPlanId}`).then(
     (res) => dispatch(fetchPlanSuccess(res.data)),
-    (error) => console.log(error),
+    (error) => fetchPlanFailure(error),
   );
 };
 

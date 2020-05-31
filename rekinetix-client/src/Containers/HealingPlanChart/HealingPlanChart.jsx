@@ -44,12 +44,10 @@ const HealingPlanChart = ({
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
     targetArea: <b>{rowTitle}</b>,
-    status: 'shouldBeEmpty',
   });
 
   const getAddProcedureButtonRow = (stageNumber) => ({
     targetArea: 'AddRowButton',
-    status: 'shouldBeEmpty',
     stageNumber,
   });
 
@@ -78,6 +76,7 @@ const HealingPlanChart = ({
   };
 
   const updateProcedureStatus = (rowIndex, optionValue) => {
+    console.log(rowIndex, optionValue);
     setChartData((prevState) =>
       prevState.map((row, index) => {
         if (index === rowIndex) {

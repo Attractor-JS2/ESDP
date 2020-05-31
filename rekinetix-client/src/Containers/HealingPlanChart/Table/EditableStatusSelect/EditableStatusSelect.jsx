@@ -4,13 +4,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const EditableStatusSelect = ({
   value: initialValue,
-  row: { index },
+  row: { index, original: { role } },
   updateSelectData,
 }) => {
   const [selectValue, setValue] = useState(getValidSelectValue(initialValue));
 
   function getValidSelectValue(cellValue) {
-    if (cellValue !== 'shouldBeEmpty' && cellValue !== undefined) {
+    if (cellValue !== undefined) {
       return cellValue;
     } else {
       return '';
@@ -29,7 +29,7 @@ const EditableStatusSelect = ({
     setValue(getValidSelectValue(initialValue));
   }, [initialValue]);
 
-  return initialValue !== 'shouldBeEmpty' && initialValue !== undefined ? (
+  return role === 'PROCEDURE_DATA' && initialValue !== undefined ? (
     <Select value={selectValue} onChange={onChange} onBlur={onBlur}>
       <MenuItem value="действует">действует</MenuItem>
       <MenuItem value="завершено">завершено</MenuItem>
