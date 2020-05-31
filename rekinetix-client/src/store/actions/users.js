@@ -50,10 +50,15 @@ export const loginUser = (userData, formikIsSubmittingSetter, formikFieldSetter)
       dispatch(push('/patients'));
     },
     (error) => {
-      dispatch(loginUserFailure(error.response.data));
-      NotificationManager.error('Неправильно указаны данные');
+      if (error.response && error.response.data) {
+        dispatch(loginUserFailure(error.response.data));
+        formikFieldSetter('password', '');
+        NotificationManager.error('Неправильно указаны данные');
+      } else {
+        dispatch(loginUserFailure(error));
+        NotificationManager.error('Что-то пошло не так');
+      }
       formikIsSubmittingSetter(false);
-      formikFieldSetter('password', '');
     },
   );
 };
