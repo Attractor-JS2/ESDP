@@ -46,7 +46,7 @@ const Table = ({
           ),
           Cell: ({ row }) => (
             <>
-              {row.original.purpose === 'procedureData' && (
+              {row.original.role === 'PROCEDURE_DATA' && (
                 <CheckboxCell {...row.getToggleRowSelectedProps()} />
               )}
             </>
