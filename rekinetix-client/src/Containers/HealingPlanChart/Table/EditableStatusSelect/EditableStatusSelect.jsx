@@ -24,16 +24,18 @@ const EditableStatusSelect = ({
     setValue(event.target.value);
   };
 
-  const onBlur = () => {
-    updateSelectData(_id, selectValue);
-  };
-
   useEffect(() => {
     setValue(getValidSelectValue(initialValue));
   }, [initialValue]);
 
+  useEffect(() => {
+    if (initialValue !== selectValue && selectValue) {
+      updateSelectData(_id, selectValue);
+    }
+  }, [selectValue]);
+
   return role === 'PROCEDURE_DATA' && initialValue !== undefined ? (
-    <Select value={selectValue} onChange={onChange} onBlur={onBlur}>
+    <Select value={selectValue} onChange={onChange}>
       <MenuItem value="действует">действует</MenuItem>
       <MenuItem value="завершено">завершено</MenuItem>
       <MenuItem value="приостановлено">приостановлено</MenuItem>
