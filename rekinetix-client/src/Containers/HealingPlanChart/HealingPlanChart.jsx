@@ -20,7 +20,7 @@ import {
   fetchAttendancesByHealingPlan,
   proceedToAttendance,
 } from '../../store/actions/attendances';
-import utilities from './utilities';
+import utilities from './utilities/utilities';
 
 import mockPatient from './mockPatientData';
 

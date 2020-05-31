@@ -1,6 +1,6 @@
 import React from 'react';
 import './DynamicIndicators.css';
-import DailyDinamicsTypes from '../../DailyDynamicsTypes';
+import DailyDinamicsTypes from '../../utilities/DailyDynamicsTypes';
 
 const ColorIndicator = ({ cellValue }) => {
   return (
