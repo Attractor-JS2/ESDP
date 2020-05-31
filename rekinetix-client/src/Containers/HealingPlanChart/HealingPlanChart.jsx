@@ -15,6 +15,7 @@ import ConfirmDialog from './ConfirmDialog/ConfirmDialog';
 import {
   fetchPlanByPrimaryAssessment,
   removeProcedureFromPlan,
+  updateProcedureStatus,
 } from '../../store/actions/healingPlan';
 import {
   fetchAttendancesByHealingPlan,
@@ -32,6 +33,7 @@ const HealingPlanChart = ({
   onFetchHealingPlan,
   onFetchAttendances,
   onProcedureDelete,
+  onUpdateProcedureStatus,
   onProceedToAttendance,
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
@@ -75,21 +77,21 @@ const HealingPlanChart = ({
     cancelProcedureDeleting();
   };
 
-  const updateProcedureStatus = (rowIndex, optionValue) => {
-    console.log(rowIndex, optionValue);
-    setChartData((prevState) =>
-      prevState.map((row, index) => {
-        if (index === rowIndex) {
-          return {
-            ...prevState[rowIndex],
-            status: optionValue,
-          };
-        } else {
-          return row;
-        }
-      }),
-    );
-  };
+  // const updateProcedureStatus = (rowIndex, optionValue) => {
+  //   console.log(rowIndex, optionValue);
+  //   setChartData((prevState) =>
+  //     prevState.map((row, index) => {
+  //       if (index === rowIndex) {
+  //         return {
+  //           ...prevState[rowIndex],
+  //           status: optionValue,
+  //         };
+  //       } else {
+  //         return row;
+  //       }
+  //     }),
+  //   );
+  // };
 
   const columns = useMemo(
     () => [
@@ -186,9 +188,7 @@ const HealingPlanChart = ({
 
         <ConfirmDialog
           open={isProcedureBeingDeleted}
-          handleConfirm={() =>
-            procedureDeleteHandler(deletedProcedureId)
-          }
+          handleConfirm={() => procedureDeleteHandler(deletedProcedureId)}
           handleClose={cancelProcedureDeleting}
         />
 
@@ -205,7 +205,7 @@ const HealingPlanChart = ({
             data={chartData}
             addProcedureHandler={addProcedureHandler}
             proceedToDeleteProcedure={proceedToDeleteProcedure}
-            updateSelectData={updateProcedureStatus}
+            updateSelectData={onUpdateProcedureStatus}
             handleProceed={onProceedToAttendance}
           />
         )}
@@ -229,6 +229,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(removeProcedureFromPlan(stage, procedureName)),
   onProceedToAttendance: (attendanceData) =>
     dispatch(proceedToAttendance(attendanceData)),
+  onUpdateProcedureStatus: (procedureId, status) =>
+    dispatch(updateProcedureStatus(procedureId, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HealingPlanChart);

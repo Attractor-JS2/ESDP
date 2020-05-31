@@ -88,3 +88,14 @@ export const removeProcedureFromPlan = (procedureId) => (
     (error) => dispatch(removeProcedureFailure(error)),
   );
 };
+
+export const updateProcedureStatus = (procedureID, status) => (
+  dispatch,
+  getState,
+) => {
+  const { _id } = getState().healingPlan.healingPlan;
+  axios.patch(`/healing-plans/procedure/${procedureID}`, { status }).then(
+    () => dispatch(fetchPlanById(_id)),
+    (error) => console.log(error),
+  );
+};

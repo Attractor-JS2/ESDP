@@ -4,7 +4,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const EditableStatusSelect = ({
   value: initialValue,
-  row: { index, original: { role } },
+  row: {
+    index,
+    original: { _id, role },
+  },
   updateSelectData,
 }) => {
   const [selectValue, setValue] = useState(getValidSelectValue(initialValue));
@@ -22,7 +25,7 @@ const EditableStatusSelect = ({
   };
 
   const onBlur = () => {
-    updateSelectData(index, selectValue);
+    updateSelectData(_id, selectValue);
   };
 
   useEffect(() => {
