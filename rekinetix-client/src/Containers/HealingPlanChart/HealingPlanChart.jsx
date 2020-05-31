@@ -77,22 +77,6 @@ const HealingPlanChart = ({
     cancelProcedureDeleting();
   };
 
-  // const updateProcedureStatus = (rowIndex, optionValue) => {
-  //   console.log(rowIndex, optionValue);
-  //   setChartData((prevState) =>
-  //     prevState.map((row, index) => {
-  //       if (index === rowIndex) {
-  //         return {
-  //           ...prevState[rowIndex],
-  //           status: optionValue,
-  //         };
-  //       } else {
-  //         return row;
-  //       }
-  //     }),
-  //   );
-  // };
-
   const columns = useMemo(
     () => [
       {
