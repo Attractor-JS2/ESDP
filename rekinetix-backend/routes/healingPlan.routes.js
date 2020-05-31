@@ -10,6 +10,8 @@ router.post('/', healingPlanController.create);
 
 router.patch('/:id', healingPlanController.addProcedure);
 
+router.patch('/procedure/:procedureId', healingPlanController.editProcedureStatus);
+
 router.delete('/procedure/:id', healingPlanController.deleteProcedure);
 
 module.exports = router;

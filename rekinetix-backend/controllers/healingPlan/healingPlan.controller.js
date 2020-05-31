@@ -37,7 +37,7 @@ const findByPrimaryAssessment = async (req, res) => {
     const resultData = {
       ...healingPlanDoc.toObject(),
       procedures: [...procedureDocs],
-    }
+    };
 
     res.send(resultData);
   } catch (error) {
@@ -59,23 +59,40 @@ const findById = async (req, res) => {
     const resultData = {
       ...healingPlanDoc.toObject(),
       procedures: [...procedureDocs],
-    }
+    };
 
     res.send(resultData);
   } catch (error) {
     res.sendStatus(500);
   }
-}
+};
 
 const addProcedure = async (req, res) => {
   const { body, params } = req;
   const { id } = params;
   try {
-    const procedureData = getProcedureData(body, id)
+    const procedureData = getProcedureData(body, id);
     const procedureDoc = await Procedure.create(procedureData);
-    res.status(201).send({ id: procedureDoc.id });
+    return res.status(201).send({ id: procedureDoc.id });
   } catch (error) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
+  }
+};
+
+const editProcedureStatus = async (req, res) => {
+  const { body, params } = req;
+  const { procedureId } = params;
+  const { status } = body;
+
+  try {
+    const procedureDoc = await Procedure.findById(procedureId);
+    if (!procedureDoc) return res.sendStatus(404);
+
+    procedureDoc.status = status;
+    await procedureDoc.save();
+    return res.sendStatus(201);
+  } catch (error) {
+    return res.sendStatus(500);
   }
 };
 
@@ -84,14 +101,14 @@ const deleteProcedure = async (req, res) => {
 
   try {
     const procedureDoc = await Procedure.findById(id);
-    if (procedureDoc && procedureDoc.status === "запланировано") {
+    if (procedureDoc && procedureDoc.status === 'запланировано') {
       await procedureDoc.remove();
-      res.sendStatus(204);
+      return res.sendStatus(204);
     } else {
-      res.sendStatus(400);
+      return res.sendStatus(400);
     }
   } catch (error) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 };
 
@@ -100,6 +117,7 @@ const healingPlanController = {
   findByPrimaryAssessment,
   findById,
   addProcedure,
+  editProcedureStatus,
   deleteProcedure,
 };
 
