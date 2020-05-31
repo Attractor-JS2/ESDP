@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useLocation } from 'react-router';
+import queryString from 'query-string';
 import Container from '@material-ui/core/Container';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 
@@ -47,6 +48,7 @@ const HealingPlanChart = ({
   const [deletedProcedureId, setToDelete] = useState(null);
   const { planId } = useParams();
   const { search } = useLocation();
+  const searchParams = queryString.parse(search);
 
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
@@ -122,9 +124,10 @@ const HealingPlanChart = ({
   );
 
   useEffect(() => {
-    console.log(primaryAssessment);
     if (planId) {
       onFetchPlanById(planId);
+    } else if (searchParams.primaryAssessment) {
+      onFetchPlanByAssessment(searchParams.primaryAssessment);
     } else if (
       patient &&
       patient.primaryAssessment &&

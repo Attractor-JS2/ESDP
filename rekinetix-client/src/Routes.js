@@ -24,7 +24,7 @@ const Routes = ({ user }) => {
 
       <Route path="/patients/primary-assessments/new" component={PrimaryAssessment} />
 
-      <Route path="/patients/healing-plans/new" component={HealingPlan} />
+      <Route path="/patients/healing-plans/new" exact component={HealingPlan} />
       <Route path="/patients/healing-plans" exact component={HealingPlanChart} />
       <Route path="/patients/healing-plans/:planId" component={HealingPlanChart} />
 
