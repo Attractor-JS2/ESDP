@@ -84,7 +84,7 @@ const populateRowsWithAttendance = (rows, attendance) => {
       ({ procedure }) => procedure._id === _id,
     );
     if (curProcedureDynamics) {
-      const {procedureDynamic} = curProcedureDynamics;
+      const { procedureDynamic } = curProcedureDynamics;
       return {
         ...row,
         [formattedDate]: DailyDynamicsTypes[procedureDynamic],
@@ -113,9 +113,13 @@ const getStageRows = (stageNumber, planProcedures, attendances) => {
 };
 
 const getDynamicAndPainScaleRows = (attendances) => {
-  const conditionRow = { targetArea: 'Состояние пациента' };
+  const conditionRow = {
+    targetArea: 'Состояние пациента',
+    role: 'PATIENT_DYNAMIC',
+  };
   const painScaleBeforeRow = { targetArea: 'Шкала боли до' };
   const painScaleAfterRow = { targetArea: 'Шкала боли после' };
+
   return attendances.reduce(
     (rows, curAttendance) => {
       const {

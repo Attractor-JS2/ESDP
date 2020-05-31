@@ -5,7 +5,7 @@ import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 
 import './HealingPlanChart.css';
 import Table from './Table/Table';
-import DynamicBadges from './Table/DynamicBadges/DynamicBadges';
+import DynamicIndicators from './Table/DynamicIndicators/DynamicIndicators';
 import AddActionButton from './Table/AddActionButton/AddActionButton';
 import DeleteActionButton from './Table/DeleteActionButton/DeleteActionButton';
 import EditableStatusSelect from './Table/EditableStatusSelect/EditableStatusSelect';
@@ -146,7 +146,7 @@ const HealingPlanChart = ({
       id: title,
       Header: title,
       accessor: `${title}`,
-      Cell: ({ cell: { value } }) => <DynamicBadges values={value} />,
+      Cell: DynamicIndicators,
     }));
     setHeaderTitles(dynamicColumns);
   }, [attendances]);
