@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router';
 import Container from '@material-ui/core/Container';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 
@@ -16,6 +17,7 @@ import {
   fetchPlanByPrimaryAssessment,
   removeProcedureFromPlan,
   updateProcedureStatus,
+  fetchPlanById,
 } from '../../store/actions/healingPlan';
 import {
   fetchAttendancesByHealingPlan,
@@ -30,7 +32,8 @@ const HealingPlanChart = ({
   attendances,
   patient,
   medic,
-  onFetchHealingPlan,
+  onFetchPlanByAssessment,
+  onFetchPlanById,
   onFetchAttendances,
   onProcedureDelete,
   onUpdateProcedureStatus,
@@ -42,6 +45,7 @@ const HealingPlanChart = ({
   const [currentStage, setCurrentStage] = useState('');
   const [isProcedureBeingDeleted, setIsDeleting] = useState(false);
   const [deletedProcedureId, setToDelete] = useState(null);
+  const { planId } = useParams();
 
   const getRowGroupHeader = (rowTitle) => ({
     id: rowTitle,
@@ -117,8 +121,16 @@ const HealingPlanChart = ({
   );
 
   useEffect(() => {
-    onFetchHealingPlan(patient.primaryAssessment._id);
-  }, [patient]);
+    if (planId) {
+      onFetchPlanById(planId);
+    } else if (
+      patient &&
+      patient.primaryAssessment &&
+      patient.primaryAssessment._id
+    ) {
+      onFetchPlanByAssessment(patient.primaryAssessment._id);
+    }
+  }, [patient, planId]);
 
   useEffect(() => {
     if (healingPlan && healingPlan._id) {
@@ -205,8 +217,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchHealingPlan: (primaryAssessmentId) =>
+  onFetchPlanByAssessment: (primaryAssessmentId) =>
     dispatch(fetchPlanByPrimaryAssessment(primaryAssessmentId)),
+  onFetchPlanById: (healingPlanId) => dispatch(fetchPlanById(healingPlanId)),
   onFetchAttendances: (healingPlanId) =>
     dispatch(fetchAttendancesByHealingPlan(healingPlanId)),
   onProcedureDelete: (stage, procedureName) =>
