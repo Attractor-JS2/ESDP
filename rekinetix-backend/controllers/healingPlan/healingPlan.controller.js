@@ -26,7 +26,10 @@ const findByPrimaryAssessment = async (req, res) => {
   const filter = { primaryAssessment: req.query.primaryAssessment };
 
   try {
-    const healingPlanDoc = await HealingPlan.findOne(filter);
+    const healingPlanDoc = await HealingPlan.findOne(filter).populate({
+      path: 'medic',
+      select: { fullname: 1, _id: 0 },
+    });
     if (!healingPlanDoc) {
       return res.sendStatus(404);
     }
@@ -48,7 +51,10 @@ const findByPrimaryAssessment = async (req, res) => {
 const findById = async (req, res) => {
   const { id } = req.params;
   try {
-    const healingPlanDoc = await HealingPlan.findById(id);
+    const healingPlanDoc = await (await HealingPlan.findById(id)).populate({
+      path: 'medic',
+      select: { fullname: 1, _id: 0 },
+    });
     if (!healingPlanDoc) {
       return res.sendStatus(404);
     }
