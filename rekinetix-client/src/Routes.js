@@ -19,12 +19,16 @@ const ProtectedRoute = ({ isAllowed, ...props }) => (
 const Routes = ({ user }) => {
   return (
     <Switch>
-      <Route path="/primary-assessment" component={PrimaryAssessment} />
-      <Route path="/patients" component={Patient} />
-      <Route path="/attendance" component={Attendance} />
-      <Route path="/plan" component={HealingPlan} />
-      <Route path="/createPatient" component={PatientCardCreatingForm} />
-      <Route path="/plan-chart" component={HealingPlanChart} />
+      <Route path="/patients" exact component={Patient} />
+      <Route path="/patients/register" component={PatientCardCreatingForm} />
+
+      <Route path="/patients/primary-assessments/new" component={PrimaryAssessment} />
+
+      <Route path="/patients/healing-plans/new" component={HealingPlan} />
+      <Route path="/patients/healing-plans" exact component={HealingPlanChart} />
+      <Route path="/patients/healing-plans/:planId" component={HealingPlanChart} />
+
+      <Route path="/patients/healing-plans/:planId/attendances/new" component={Attendance} />
 
       <Route path="/" exact component={Login} />
       <ProtectedRoute
