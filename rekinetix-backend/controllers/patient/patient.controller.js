@@ -62,14 +62,26 @@ const findById = async (req, res) => {
     const latestPrimaryAssessment = await PrimaryAssessment.findOne(filter)
       .sort({ assessmentDate: 'desc' })
       .select('assessmentDate diagnosis');
-
-    const result = {
-      patient,
-      redFlags,
-      primaryAssessment: latestPrimaryAssessment,
-    };
-
-    return res.send(result);
+    if (latestPrimaryAssessment) {
+      const healingPlan = await HealingPlan.findOne({
+        primaryAssessment: latestPrimaryAssessment._id,
+      });
+      const result = {
+        patient,
+        redFlags,
+        primaryAssessment: latestPrimaryAssessment,
+        healingPlan: healingPlan,
+      };
+      return res.send(result);
+    } else {
+      const result = {
+        patient,
+        redFlags,
+        primaryAssessment: {},
+        healingPlan: {},
+      };
+      return res.send(result);
+    }
   } catch (error) {
     return res.sendStatus(500);
   }
