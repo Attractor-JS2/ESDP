@@ -3,7 +3,12 @@ import {NotificationManager} from "react-notifications";
 
 export const submitPrimaryAttendance = data => {
   return dispatch => {
-    console.log(data);
-    NotificationManager.success('Форма успешно отправлена')
+    axios.post('/primary-assessments', data)
+      .then(res => {
+        console.log(res);
+        NotificationManager.success('Форма успешно отправлена')
+      });
+    
+      
   };
 };
