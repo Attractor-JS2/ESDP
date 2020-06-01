@@ -14,7 +14,7 @@ const initialState = {
 const patients = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_PATIENTS_SUCCESS:
-      return { ...state, patientCards: action.patients, error: null };
+      return { ...state, patients: action.patients, error: null };
     case REGISTER_PATIENT_SUCCESS:
       return { ...state, error: null };
     case FETCH_PATIENT_INFO_SUCCESS:
