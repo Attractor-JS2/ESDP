@@ -19,7 +19,6 @@ const connect = () => {
                 password: 'testuser',
                 role: 'admin',
               });
-              console.log('yessss')
               resolve(res);
             });
   

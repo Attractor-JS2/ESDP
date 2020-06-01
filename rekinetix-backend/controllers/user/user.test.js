@@ -48,7 +48,15 @@ describe('User creating function', () => {
         expect(res.body.message).toEqual('Success');
       })
   });
-  
+  test('Should successfully log into new user', async () => {
+    await request(app).post('/users/sessions')
+      .send({...user})
+      .then(res => {
+        expect(res.body.token).toBeTruthy();
+        expect(res.body.fullname).toEqual(user.fullname);
+        token = res.body.token;
+      })
+  });
   test('Should delete user', async () => {
     await request(app).delete('/users/sessions')
       .set('x-access-token', token)
