@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('./config');
+const User = require('./models/User');
 const connect = () => {
   return new Promise((resolve, reject) => {
     
@@ -10,11 +11,21 @@ const connect = () => {
       mockgoose.prepareStorage()
         .then(() => {
           mongoose.connect(config.db.getDbPath(), {useNewUrlParser: true, useCreateIndex: true})
-            .then((res, err) => {
+            .then(async (res, err) => {
               if (err) return reject(err);
+              await User.create({
+                fullname: 'testuser',
+                username: 'testuser',
+                password: 'testuser',
+                role: 'admin',
+              });
+              console.log('yessss')
               resolve(res);
-            })
-        });
+            });
+  
+          
+    
+          });
     } else {
       mongoose.connect(config.db.getDbPath(), {useNewUrlParser: true, useCreateIndex: true})
         .then((res, err) => {
