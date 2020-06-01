@@ -1,14 +1,19 @@
-import {FETCH_PATIENT_CARDS_SUCCESS} from "../actions/actionTypes";
+import {FETCH_PATIENT_CARDS_SUCCESS, SEND_PATIENT_CARDS_SUCCESS, FETCH_PATIENT_INFO_SUCCESS} from "../actions/actionTypes";
 
 const initialState = {
   patientCards: [],
-  currentCard: {}
-};
+  patient: {},
+  newPatient: null
+}; 
 
-const patientCards = (state = initialState, action) => {
-  switch (action.type) {
+const patientCards = (state = initialState, actions) => {
+  switch (actions.type) {
     case FETCH_PATIENT_CARDS_SUCCESS:
-      return {...state, patientCards: action.cards};
+      return {...state, patientCards: actions.patientCards};
+    case SEND_PATIENT_CARDS_SUCCESS: 
+      return {...state, newPatient: null };
+    case FETCH_PATIENT_INFO_SUCCESS:
+      return {...state, patient: actions.patient};
     default:
       return state;
   
