@@ -12,7 +12,6 @@ class PatientRecord extends Component {
         <Formik
           initialValues={{
             patientName: '',
-            medicName: 'Мария Ивановна',
             patientAddress: '',
             dateOfBirth: new Date(),
             patientGender: 'Мужчина',
@@ -27,12 +26,6 @@ class PatientRecord extends Component {
         >
           {({ values, setFieldValue }) => (
             <Form>
-              <div>ФИО принимающего специалиста:</div>
-              <Field name="medicName" as="select">
-                <option value="Мария Ивановна">Мария Ивановна</option>
-                <option value="Генадий Головкин">Генадий Головкин</option>
-                <option value="Евгений Петровичь">Евгений Петровичь</option>
-              </Field>
               <Field
                 className="mt-2 mb-2"
                 placeholder="ФИО пациента"
