@@ -50,22 +50,33 @@ const PatientFullInfo = ({
                 ? primaryAssessment.diagnosis
                 : ''}
             </DialogContentText>
+
             <DialogActions>
-              <Typography>
-                <RouterNavLink to="/plan" exact>
-                  План лечения
-                </RouterNavLink>
-              </Typography>
-              <Typography>
-                <RouterNavLink to="/plan-chart" exact>
-                  Таблица плана лечения
-                </RouterNavLink>
-              </Typography>
-              <Typography>
-                <RouterNavLink to="/" exact>
-                  Протокол первичного приема
-                </RouterNavLink>
-              </Typography>
+              {primaryAssessment && primaryAssessment._id ? (
+                <>
+                  <Typography>
+                    <RouterNavLink to="/plan" exact>
+                      План лечения
+                    </RouterNavLink>
+                  </Typography>
+                  <Typography>
+                    <RouterNavLink to="/plan-chart" exact>
+                      Таблица плана лечения
+                    </RouterNavLink>
+                  </Typography>
+                  <Typography>
+                    <RouterNavLink to="/" exact>
+                      Протокол первичного приема
+                    </RouterNavLink>
+                  </Typography>
+                </>
+              ) : (
+                <Typography>
+                  <RouterNavLink to="/patients/primary-assessments/new" exact>
+                    Выполнить первичный осмотр
+                  </RouterNavLink>
+                </Typography>
+              )}
             </DialogActions>
           </>
         ) : null}

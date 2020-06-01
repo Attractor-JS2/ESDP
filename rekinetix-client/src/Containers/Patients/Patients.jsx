@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 import PatientCard from '../../components/PatientCard/PatientCard';
 import { fetchAllPatients } from '../../store/actions/patients';
 import PatientFullInfo from './PatientFullInfo/PatientFullInfo';
-import { Grid, Paper, Typography } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
-import { NavLink as ReacRouterNavLink } from 'react-router-dom';
 
 const Patients = ({ patients, onFetchAllPatients }) => {
   const [open, setOpen] = useState(false);
@@ -41,7 +42,7 @@ const Patients = ({ patients, onFetchAllPatients }) => {
             <Typography variant="h4" component="h1">Пациенты</Typography>
           </Grid>
           <Grid item>
-            <Link component={ReacRouterNavLink} to="/patients/register">
+            <Link component={RouterLink} to="/patients/register">
               <Typography>Зарегистрировать нового пациента</Typography>
             </Link>
           </Grid>
