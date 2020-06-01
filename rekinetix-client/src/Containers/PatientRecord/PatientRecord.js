@@ -4,8 +4,19 @@ import { Formik, Field, Form } from 'formik';
 import { Button, Input, Container } from 'reactstrap';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
+import * as yup from 'yup';
 
 import { registerNewPatient } from '../../store/actions/patients';
+
+const validationSchema = yup.object().shape({
+  fullname: yup.string().required(),
+  address: yup.string(),
+  birthday: yup.date().required(),
+  gender: yup.string(),
+  phone: yup.string(),
+  height: yup.string(),
+  weight: yup.string(),
+});
 
 const PatientRecord = ({ onRegisterPatient }) => {
   return (
@@ -22,6 +33,7 @@ const PatientRecord = ({ onRegisterPatient }) => {
           height: '',
           weight: '',
         }}
+        validationSchema={validationSchema}
         onSubmit={(values) => onRegisterPatient(values)}
       >
         {({ values, setFieldValue }) => (
@@ -87,7 +99,7 @@ const PatientRecord = ({ onRegisterPatient }) => {
               type="input"
               as={Input}
             />
-            <Button type="submit" variant="outlined" disabled={setFieldValue}>
+            <Button type="submit" variant="outlined">
               Сохранить
             </Button>
           </Form>
