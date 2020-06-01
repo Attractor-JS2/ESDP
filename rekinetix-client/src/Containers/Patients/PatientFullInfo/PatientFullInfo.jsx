@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
+import Link from '@material-ui/core/Link';
 
 import { fetchPatientInfo } from '../../../store/actions/patients';
 
@@ -56,7 +57,10 @@ const PatientFullInfo = ({
                 <>
                   <Typography>
                     {healingPlan && healingPlan._id ? (
-                      <RouterNavLink to={`/patients/healing-plans/${healingPlan._id}`} exact>
+                      <RouterNavLink
+                        to={`/patients/healing-plans/${healingPlan._id}`}
+                        exact
+                      >
                         План лечения
                       </RouterNavLink>
                     ) : (
@@ -73,6 +77,10 @@ const PatientFullInfo = ({
                   </RouterNavLink>
                 </Typography>
               )}
+
+              <Link component="button" onClick={handleClose}>
+                Отмена
+              </Link>
             </DialogActions>
           </>
         ) : null}
