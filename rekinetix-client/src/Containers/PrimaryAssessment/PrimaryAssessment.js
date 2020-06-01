@@ -31,7 +31,6 @@ class PatientCardCreatingForm extends Component {
         <Formik
           initialValues={{
             redFlags: [],
-            attendanceDate: Date.now(),
             complaints: '',
             anamnesisVitae: '',
             anamnesisMorbi: '',
@@ -51,21 +50,8 @@ class PatientCardCreatingForm extends Component {
           onSubmit={data => {
             this.props.submitForm(data)
           }}>
-          {({values, setFieldValue}) => (
+          {({values}) => (
             <Form>
-              <div className='mb-3'>
-                <div>Дата приема:</div>
-                <DatePicker
-                  value={values.attendanceDate}
-                  onChange={(val) => {
-                    if (val) val = val.toString();
-                    console.log(val);
-                    return setFieldValue('birthDate', val);
-                  }}
-                  disableCalendar
-                />
-              </div>
-              
               <div className='mb-3'>
                 <div> Красные флаги:</div>
                 {redFlags.map((redFlag, index) => {
