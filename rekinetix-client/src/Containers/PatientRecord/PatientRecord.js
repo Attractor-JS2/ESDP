@@ -1,17 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Input, Container } from 'reactstrap';
 import { Formik, Field, Form } from 'formik';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
+import {postsPatientCards} from '../../store/actions/patientCards';
+import {connect} from "react-redux";
 
-class PatientRecord extends Component {
-  render() {
+
+const PatientRecord = ({onNewPatient}) =>{
     return (
       <Container className="mb-5">
         <h3>Анкетные данные</h3>
         <Formik
           initialValues={{
+            fullname: '',
+            address: '',
+            birthday: new Date(),
+            gender: 'мужской',
             patientAge: '',
+            phone: '',
+            height: '',
+            weight: '',
           }}
             onSubmit={(values, { setSubmitting }) => onNewPatient(values, setSubmitting)}
         >
@@ -87,7 +96,7 @@ class PatientRecord extends Component {
         </Formik>
       </Container>
     );
-  }
+  
 }
 
 const mapDispatchToProps = dispatch => {
