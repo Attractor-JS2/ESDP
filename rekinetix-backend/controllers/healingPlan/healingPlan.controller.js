@@ -51,10 +51,10 @@ const findByPrimaryAssessment = async (req, res) => {
 const findById = async (req, res) => {
   const { id } = req.params;
   try {
-    const healingPlanDoc = await (await HealingPlan.findById(id)).populate({
+    const healingPlanDoc = await HealingPlan.findById(id).populate({
       path: 'medic',
       select: { fullname: 1, _id: 0 },
-    });
+    }).exec();
     if (!healingPlanDoc) {
       return res.sendStatus(404);
     }
