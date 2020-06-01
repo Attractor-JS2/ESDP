@@ -17,6 +17,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,
+      marginBottom: '30px'
     },
     title: {
       flexGrow: 1,

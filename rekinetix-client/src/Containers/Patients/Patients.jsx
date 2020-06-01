@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 
 import PatientCard from '../../components/PatientCard/PatientCard';
 import { fetchAllPatients } from '../../store/actions/patients';
 import PatientFullInfo from './PatientFullInfo/PatientFullInfo';
+import { Grid, Paper, Typography } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import { NavLink as ReacRouterNavLink } from 'react-router-dom';
 
 const Patients = ({ patients, onFetchAllPatients }) => {
   const [open, setOpen] = useState(false);
@@ -31,6 +35,18 @@ const Patients = ({ patients, onFetchAllPatients }) => {
         patientId={selectedPatientId}
       />
 
+      <Paper>
+        <Grid container spacing={2} direction="row" justify="space-between">
+          <Grid item>
+            <Typography variant="h4" component="h1">Пациенты</Typography>
+          </Grid>
+          <Grid item>
+            <Link component={ReacRouterNavLink} to="/patients/register">
+              <Typography>Зарегистрировать нового пациента</Typography>
+            </Link>
+          </Grid>
+        </Grid>
+      </Paper>
       {patients && Array.isArray(patients) && patients.length > 0
         ? patients.map((person) => {
             return (
