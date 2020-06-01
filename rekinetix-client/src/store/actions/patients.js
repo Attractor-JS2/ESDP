@@ -36,12 +36,17 @@ export const registerNewPatient = (patientData) => (dispatch) => {
 export const fetchAllPatients = () => {
   return (dispatch) => {
     axios.get('/patients/').then(
-      (res) => {
-        dispatch(fetchPatientsSuccess(res.data));
-      },
+      (res) => dispatch(fetchPatientsSuccess(res.data)),
       (error) => patientsRequestFailure(error),
     );
   };
+};
+
+export const fetchPatientsAttendingHealing = () => (dispatch) => {
+  axios.get('/patients?active=true').then(
+    (res) => dispatch(fetchPatientsSuccess(res.data)),
+    (error) => patientsRequestFailure(error),
+  );
 };
 
 export const fetchPatientInfo = (patientId) => (dispatch) => {
