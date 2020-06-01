@@ -5,7 +5,7 @@ const {
   getAttendanceData,
   sortProcedureDynamicsByPresence,
   getProcedureFullData,
-} = require('./utilities');
+} = require('./attendance.utilities');
 
 const findByHealingPlan = async (req, res) => {
   const filter = { healingPlan: req.query.healingPlan };
@@ -13,13 +13,35 @@ const findByHealingPlan = async (req, res) => {
   try {
     const attendancesDocs = await Attendance.find(filter)
       .populate({
-        path: 'procedures.procedure',
+        path: 'procedureDynamics.procedure',
         model: 'Procedure',
       })
       .sort({ attendanceDate: 'asc' });
     res.send(attendancesDocs);
   } catch (error) {
     res.sendStatus(500);
+  }
+};
+
+const findByHealingPlanLatestOne = async (req, res) => {
+  const filter = { healingPlan: req.query.healingPlan };
+
+  try {
+    const attendancesDoc = await Attendance.findOne(filter)
+      .sort({ attendanceDate: 'desc' })
+      .populate({
+        path: 'procedureDynamics.procedure',
+        model: 'Procedure',
+      });
+
+    if (!attendancesDoc) {
+      return res.sendStatus(404);
+    }
+
+    return res.send(attendancesDoc);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
   }
 };
 
@@ -63,6 +85,7 @@ const create = async (req, res) => {
 
 const attendanceController = {
   findByHealingPlan,
+  findByHealingPlanLatestOne,
   create,
 };
 

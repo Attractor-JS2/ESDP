@@ -2,11 +2,11 @@ const router = require('express').Router();
 
 const auth = require('../middleware/auth');
 const permit = require('../middleware/permit');
-const userController = require('../controllers/user/user');
+const userController = require('../controllers/user/user.controller');
 
 router.post(
   '/',
-  // [auth.verifyToken, permit('admin')],
+  [auth.verifyToken, permit('admin')],
   userController.createUser,
 );
 

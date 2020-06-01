@@ -16,9 +16,9 @@ const createUser = async (req, res) => {
 
   try {
     await user.save();
-    return res.status(201).send({ message: 'Success' });
+    res.status(201).send({ message: 'Success' });
   } catch (error) {
-    return res.status(400).send(error);
+    res.sendStatus(400);
   }
 };
 

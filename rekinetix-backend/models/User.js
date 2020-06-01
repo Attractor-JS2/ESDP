@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const config = require('../configs/auth.config');
+const config = require('../config');
 
 const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
@@ -53,7 +53,7 @@ UserSchema.methods.checkPassword = function checkPassword(password) {
 };
 
 UserSchema.methods.generateToken = function generateToken() {
-  this.token = jwt.sign({ userId: this._id }, config.secret, {
+  this.token = jwt.sign({ userId: this._id }, config.auth.secret, {
     expiresIn: '12h',
   });
 };
