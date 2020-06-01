@@ -9,8 +9,9 @@ import Patients from "./Containers/Patients/Patients";
 import PrimaryAssessment from "./Containers/PrimaryAssessment/PrimaryAssessment";
 import Login from "./Containers/Login/Login";
 import Register from "./Containers/Register/Register";
-import SiteMap from "./Containers/SiteMap/SiteMap";
 import PatientRecord from "./Containers/PatientRecord/PatientRecord";
+
+import SiteMap from "./Containers/SiteMap/SiteMap";
 
 const ProtectedRoute = ({ isAllowed, ...props }) => (
   isAllowed ? <Route {...props} /> : <Redirect to="/" />
@@ -19,8 +20,8 @@ const ProtectedRoute = ({ isAllowed, ...props }) => (
 const Routes = ({ user }) => {
   return (
     <Switch>
-      <Route path="/patients" exact component={Patient} />
-      <Route path="/patients/new" component={PatientCardCreatingForm} />
+      <Route path="/patients" exact component={Patients} />
+      <Route path="/patients/register" component={PatientRecord} />
 
       <Route path="/patients/primary-assessments/new" component={PrimaryAssessment} />
 
@@ -28,7 +29,7 @@ const Routes = ({ user }) => {
       <Route path="/patients/healing-plans" exact component={HealingPlanChart} />
       <Route path="/patients/healing-plans/:planId" component={HealingPlanChart} />
 
-      <Route path="/patients/healing-plans/:planId/attendances/new" component={Attendance} />
+      <Route path="/patients/attendances/new" component={Attendance} />
 
       <Route path="/" exact component={Login} />
       <ProtectedRoute
