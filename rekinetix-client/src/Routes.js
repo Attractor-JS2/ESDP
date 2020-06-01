@@ -1,16 +1,16 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Attendance from "./Containers/Attendance/Attendance";
 import HealingPlan from "./Containers/HealingPlan/HealingPlan";
 import HealingPlanChart from "./Containers/HealingPlanChart/HealingPlanChart";
-import Patient from "./Containers/Patient/Patient";
-import PatientCardCreatingForm from "./Containers/PatientCardCreatingForm/PatientCardCreatingForm";
+import Patients from "./Containers/Patients/Patients";
 import PrimaryAssessment from "./Containers/PrimaryAssessment/PrimaryAssessment";
 import Login from "./Containers/Login/Login";
 import Register from "./Containers/Register/Register";
 import SiteMap from "./Containers/SiteMap/SiteMap";
-import { connect } from "react-redux";
+import PatientRecord from "./Containers/PatientRecord/PatientRecord";
 
 const ProtectedRoute = ({ isAllowed, ...props }) => (
   isAllowed ? <Route {...props} /> : <Redirect to="/" />
@@ -20,7 +20,7 @@ const Routes = ({ user }) => {
   return (
     <Switch>
       <Route path="/patients" exact component={Patient} />
-      <Route path="/patients/register" component={PatientCardCreatingForm} />
+      <Route path="/patients/new" component={PatientCardCreatingForm} />
 
       <Route path="/patients/primary-assessments/new" component={PrimaryAssessment} />
 
