@@ -8,10 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
 import PatientCard from '../../components/PatientCard/PatientCard';
-import { fetchAllPatients } from '../../store/actions/patients';
+import {
+  fetchAllPatients,
+  resetPatientInfo,
+} from '../../store/actions/patients';
 import PatientFullInfo from './PatientFullInfo/PatientFullInfo';
 
-const Patients = ({ patients, onFetchAllPatients }) => {
+const Patients = ({ patients, onFetchAllPatients, onResetCurrentPatient }) => {
   const [open, setOpen] = useState(false);
   const [selectedPatientId, setPatient] = useState(null);
 
@@ -26,6 +29,8 @@ const Patients = ({ patients, onFetchAllPatients }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setPatient(null);
+    onResetCurrentPatient();
   };
 
   return (
@@ -39,7 +44,9 @@ const Patients = ({ patients, onFetchAllPatients }) => {
       <Paper>
         <Grid container spacing={2} direction="row" justify="space-between">
           <Grid item>
-            <Typography variant="h4" component="h1">Пациенты</Typography>
+            <Typography variant="h4" component="h1">
+              Пациенты
+            </Typography>
           </Grid>
           <Grid item>
             <Link component={RouterLink} to="/patients/register">
@@ -74,6 +81,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchAllPatients: () => dispatch(fetchAllPatients()),
+    onResetCurrentPatient: () => dispatch(resetPatientInfo()),
   };
 };
 

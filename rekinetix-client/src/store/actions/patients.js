@@ -7,6 +7,7 @@ import {
   REGISTER_PATIENT_SUCCESS,
   FETCH_PATIENT_INFO_SUCCESS,
   PATIENTS_REQUESTS_FAILURE,
+  RESET_PATIENT_INFO,
 } from './actionTypes';
 
 const fetchPatientsSuccess = (patients) => {
@@ -56,4 +57,8 @@ export const fetchPatientInfo = (patientId) => (dispatch) => {
     },
     (error) => patientsRequestFailure(error),
   );
+};
+
+export const resetPatientInfo = () => (dispatch) => {
+  dispatch({ type: RESET_PATIENT_INFO });
 };

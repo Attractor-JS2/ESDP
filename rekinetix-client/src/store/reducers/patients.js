@@ -3,6 +3,7 @@ import {
   REGISTER_PATIENT_SUCCESS,
   FETCH_PATIENT_INFO_SUCCESS,
   PATIENTS_REQUESTS_FAILURE,
+  RESET_PATIENT_INFO,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -21,6 +22,8 @@ const patients = (state = initialState, action) => {
       return { ...state, currentPatient: action.patient, error: null };
     case PATIENTS_REQUESTS_FAILURE:
       return { ...state, error: action.error };
+    case RESET_PATIENT_INFO:
+      return { ...state, currentPatient: {} };
     default:
       return state;
   }
