@@ -12,9 +12,8 @@ class PatientRecord extends Component {
         <Formik
           initialValues={{
             patientAge: '',
-          onSubmit={(data) => {
-            console.log(data);
           }}
+            onSubmit={(values, { setSubmitting }) => onNewPatient(values, setSubmitting)}
         >
           {({ values, setFieldValue }) => (
             <Form>
@@ -79,7 +78,10 @@ class PatientRecord extends Component {
                 type="input"
                 as={Input}
               />
-              <Button type="submit">Сохранить</Button>
+              <Button  type="submit"
+                    variant="outlined"
+                    disabled={setFieldValue}
+                    >Сохранить</Button>
             </Form>
           )}
         </Formik>
