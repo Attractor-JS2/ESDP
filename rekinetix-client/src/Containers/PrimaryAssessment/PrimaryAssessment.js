@@ -74,6 +74,7 @@ class PatientCardCreatingForm extends Component {
                 <Field
                   name="complaints"
                   as={FormTextarea}
+                  required
                   label='Жалобы пациента: '
                 />
               </div>
@@ -81,6 +82,7 @@ class PatientCardCreatingForm extends Component {
                 <Field
                   name="anamnesisVitae"
                   as={FormTextarea}
+                  required
                   label='Анамнез профессии и условий среды жизнедеятельности: '
                 />
               </div>
@@ -88,6 +90,7 @@ class PatientCardCreatingForm extends Component {
                 <Field
                   name="anamnesisMorbi"
                   as={FormTextarea}
+                  required
                   label='Анализ заболевания: '
                 />
               </div>
@@ -95,6 +98,7 @@ class PatientCardCreatingForm extends Component {
                 <Field
                   name="examinations"
                   as={FormTextarea}
+                  required
                   label='Данные инструментальных и лабораторных обследований: '
                 />
               </div>
@@ -102,7 +106,7 @@ class PatientCardCreatingForm extends Component {
               {
                 Object.keys(values.objectiveExam).map(bodyPart => (
                   <StatusAutocomplete key={bodyPart}
-                                      name={`statusPraesens.${bodyPart}`}
+                                      name={`objectiveExam.${bodyPart}`}
                                       values={values.objectiveExam[bodyPart]}
                                       label={values.objectiveExam[bodyPart].title}
                                       autocompleteOptions={statusProps}
@@ -114,6 +118,7 @@ class PatientCardCreatingForm extends Component {
               <div className='mb-3'>
                 <Field
                   name="diagnosis"
+                  required
                   as={FormTextarea}
                   label='Диагноз: '
                 />
