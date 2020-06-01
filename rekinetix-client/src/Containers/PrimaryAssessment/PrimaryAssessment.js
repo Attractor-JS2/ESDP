@@ -30,12 +30,13 @@ class PatientCardCreatingForm extends Component {
         <h3>Протокол первичного приема</h3>
         <Formik
           initialValues={{
+            patient: '5ec8c2016160a123f858a402',
             redFlags: [],
             complaints: '',
             anamnesisVitae: '',
             anamnesisMorbi: '',
             examinations: '',
-            statusPraesens: {
+            objectiveExam: {
               foot: {title: 'Стопа', D: '', S: '', additionalInfo: ''},
               knee: {title: 'Колени', D: '', S: '', additionalInfo: ''},
               hip: {title: 'Тазобедренный сустав', D: '', S: '', additionalInfo: ''},
@@ -45,7 +46,7 @@ class PatientCardCreatingForm extends Component {
               shoulderGirdel: {title: 'Плечо/лопатка', D: '', S: '', additionalInfo: ''},
               headAndNeck: {title: 'Шея, голова', D: '', S: '', additionalInfo: ''}
             },
-            diagnosis: [],
+            diagnosis: '',
           }}
           onSubmit={data => {
             this.props.submitForm(data)
@@ -99,24 +100,31 @@ class PatientCardCreatingForm extends Component {
               </div>
               
               {
-                Object.keys(values.statusPraesens).map(bodyPart => (
+                Object.keys(values.objectiveExam).map(bodyPart => (
                   <StatusAutocomplete key={bodyPart}
                                       name={`statusPraesens.${bodyPart}`}
-                                      values={values.statusPraesens[bodyPart]}
-                                      label={values.statusPraesens[bodyPart].title}
+                                      values={values.objectiveExam[bodyPart]}
+                                      label={values.objectiveExam[bodyPart].title}
                                       autocompleteOptions={statusProps}
                   />
                 ))
                 
               }
+  
+              <div className='mb-3'>
+                <Field
+                  name="diagnosis"
+                  as={FormTextarea}
+                  label='Диагноз: '
+                />
+              </div>
               
-              
-              <ModifiedInput
-                name="diagnosis"
-                autocompleteOptions={diagnosis}
-                label="Диагноз: "
-                values={values.diagnosis}
-              />
+              {/*<ModifiedInput*/}
+              {/*  name="diagnosis"*/}
+              {/*  autocompleteOptions={diagnosis}*/}
+              {/*  label="Диагноз: "*/}
+              {/*  values={values.diagnosis}*/}
+              {/*/>*/}
               
               <Button type="submit">Сохранить</Button>
             </Form>
