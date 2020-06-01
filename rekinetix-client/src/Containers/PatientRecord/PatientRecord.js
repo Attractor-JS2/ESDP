@@ -90,4 +90,11 @@ class PatientRecord extends Component {
   }
 }
 
-export default PatientRecord;
+const mapDispatchToProps = dispatch => {
+  return {
+    onNewPatient: (patientData, formikIsSubmittingSetter) =>
+    dispatch(
+      postsPatientCards(patientData, formikIsSubmittingSetter),
+    ),
+}}
+export default connect(null, mapDispatchToProps)(PatientRecord);
