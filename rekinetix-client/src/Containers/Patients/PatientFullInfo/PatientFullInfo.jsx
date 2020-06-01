@@ -35,12 +35,20 @@ const PatientFullInfo = ({
             </DialogContentText>
             <DialogContentText>Пол: {patient.gender}</DialogContentText>
             <DialogContentText>
+              Рост: {patient && patient.height ? patient.height : ''}
+            </DialogContentText>
+            <DialogContentText>
+              Вес: {patient && patient.weight ? patient.weight : ''}
+            </DialogContentText>
+            <DialogContentText>
               {'Красные флаги: '}
               {redFlags && redFlags.map(({ title }) => title).join(', ')}
             </DialogContentText>
             <DialogContentText>
               {'Диагноз: '}
-              {primaryAssessment.diagnosis && primaryAssessment.diagnosis}
+              {primaryAssessment && primaryAssessment.diagnosis
+                ? primaryAssessment.diagnosis
+                : ''}
             </DialogContentText>
             <DialogActions>
               <Typography>
