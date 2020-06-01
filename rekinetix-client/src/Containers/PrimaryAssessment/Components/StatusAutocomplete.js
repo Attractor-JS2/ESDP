@@ -19,6 +19,7 @@ const ModifiedInput = (props) => {
               <div className='w-25'>
                 <span className="mr-4">D: </span>
                 <Field
+                  required
                   name={`${props.name}[D]`}
                   component={FormikAutocomplete}
                   debug
