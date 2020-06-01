@@ -46,7 +46,7 @@ const Header = ({ onLogoutUser, user }) => {
                 <RouterNavLink className={classes.menuLink} to="/createPatient" exact>
                   Создать пациента
                 </RouterNavLink>
-                <RouterNavLink className={classes.menuLink} to="/patient" exact>
+                <RouterNavLink className={classes.menuLink} to="/patients" exact>
                   Пациенты
                 </RouterNavLink>
                 <RouterNavLink className={classes.menuLink} to="/attendance" exact>
