@@ -17,7 +17,7 @@ const PatientFullInfo = ({
   onFetchPatient,
   currentPatient,
 }) => {
-  const { patient, redFlags, primaryAssessment } = currentPatient;
+  const { patient, redFlags, primaryAssessment, healingPlan } = currentPatient;
   return (
     <Dialog
       open={open}
@@ -55,19 +55,15 @@ const PatientFullInfo = ({
               {primaryAssessment && primaryAssessment._id ? (
                 <>
                   <Typography>
-                    <RouterNavLink to="/plan" exact>
-                      План лечения
-                    </RouterNavLink>
-                  </Typography>
-                  <Typography>
-                    <RouterNavLink to="/plan-chart" exact>
-                      Таблица плана лечения
-                    </RouterNavLink>
-                  </Typography>
-                  <Typography>
-                    <RouterNavLink to="/" exact>
-                      Протокол первичного приема
-                    </RouterNavLink>
+                    {healingPlan && healingPlan._id ? (
+                      <RouterNavLink to={`/patients/healing-plans/${healingPlan._id}`} exact>
+                        План лечения
+                      </RouterNavLink>
+                    ) : (
+                      <RouterNavLink to="/patients/healing-plans/new" exact>
+                        Создать план лечения
+                      </RouterNavLink>
+                    )}
                   </Typography>
                 </>
               ) : (
