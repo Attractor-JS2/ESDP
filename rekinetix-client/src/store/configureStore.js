@@ -7,7 +7,7 @@ import { loadStateFromLocalStorage, saveStateToLocalStorage } from "./localStora
 import healingPlanReducer from "./reducers/healingPlan";
 import attendance from "./reducers/attendance";
 import attendances from "./reducers/attendances";
-import patientCardsReducer from "./reducers/patientCards";
+import patientsReducer from "./reducers/patients";
 import usersReducer from "./reducers/users";
 
 
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   healingPlan: healingPlanReducer,
   attendance: attendance,
   attendances: attendances,
-  patientCards: patientCardsReducer,
+  patients: patientsReducer,
   users: usersReducer,
   router: connectRouter(history),
 });
