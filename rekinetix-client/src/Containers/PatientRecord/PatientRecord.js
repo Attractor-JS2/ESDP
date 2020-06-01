@@ -11,15 +11,7 @@ class PatientRecord extends Component {
         <h3>Анкетные данные</h3>
         <Formik
           initialValues={{
-            patientName: '',
-            patientAddress: '',
-            dateOfBirth: new Date(),
-            patientGender: 'Мужчина',
             patientAge: '',
-            patientContactPhone: '',
-            patientHeight: '',
-            patientWeight: '',
-          }}
           onSubmit={(data) => {
             console.log(data);
           }}
