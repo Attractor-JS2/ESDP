@@ -26,13 +26,10 @@ import {
 } from '../../store/actions/attendances';
 import utilities from './utilities/utilities';
 
-import mockPatient from './mockPatientData';
-
 const HealingPlanChart = ({
   healingPlan,
   attendances,
-  patient,
-  medic,
+  currentPatient,
   onFetchPlanByAssessment,
   onFetchPlanById,
   onFetchAttendances,
@@ -129,13 +126,13 @@ const HealingPlanChart = ({
     } else if (searchParams.primaryAssessment) {
       onFetchPlanByAssessment(searchParams.primaryAssessment);
     } else if (
-      patient &&
-      patient.primaryAssessment &&
-      patient.primaryAssessment._id
+      currentPatient &&
+      currentPatient.primaryAssessment &&
+      currentPatient.primaryAssessment._id
     ) {
-      onFetchPlanByAssessment(patient.primaryAssessment._id);
+      onFetchPlanByAssessment(currentPatient.primaryAssessment._id);
     }
-  }, [patient, planId]);
+  }, [currentPatient, planId, onFetchPlanByAssessment]);
 
   useEffect(() => {
     if (healingPlan && healingPlan._id) {
@@ -194,10 +191,8 @@ const HealingPlanChart = ({
         />
 
         <PatientInfo
-          patient={patient.patient.fullname}
-          medic={medic}
-          diagnosis={patient.primaryAssessment.diagnosis}
-          redFlags={patient.redFlags}
+          currentPatient={currentPatient}
+          healingPlan={healingPlan}
         />
 
         {chartData && chartData.length > 0 && (
@@ -216,7 +211,7 @@ const HealingPlanChart = ({
 };
 
 const mapStateToProps = (state) => ({
-  patient: mockPatient, // Временный мок
+  currentPatient: state.patients.currentPatient,
   healingPlan: state.healingPlan.healingPlan,
   attendances: state.attendances.attendances,
 });
