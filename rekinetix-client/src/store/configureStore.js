@@ -6,7 +6,7 @@ import { createBrowserHistory } from "history";
 import { loadStateFromLocalStorage, saveStateToLocalStorage } from "./localStorage";
 import healingPlanReducer from "./reducers/healingPlan";
 import attendance from "./reducers/attendance";
-import patientCardsReducer from "./reducers/patientCards";
+import patientsReducer from "./reducers/patients";
 import usersReducer from "./reducers/users";
 
 
@@ -17,7 +17,7 @@ export const history = createBrowserHistory();
 const rootReducer = combineReducers({
   healingPlan: healingPlanReducer,
   attendance: attendance,
-  patientCards: patientCardsReducer,
+  patients: patientsReducer,
   users: usersReducer,
   router: connectRouter(history),
 });
