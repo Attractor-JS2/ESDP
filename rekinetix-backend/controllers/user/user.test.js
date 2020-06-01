@@ -7,7 +7,9 @@ const express = require('express');
 
 beforeAll((done) => {
   conn.connect()
-    .then(() => done())
+    .then(async () => {
+      done();
+    })
     .catch((err) => done(err));
 });
 afterAll((done) => {
@@ -16,7 +18,6 @@ afterAll((done) => {
     .catch(err => done(err))
 });
 
-
 const app = express();
 const users = require("../../routes/user.routes");
 const bodyParser = require('body-parser');
@@ -24,28 +25,31 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use("/users", users);
 app.use(express.json());
-const testUser = {"fullname": "Test User", "username": "testuser", "password": "testuser"};
+const user = {"fullname": "User", "username": "user", "password": "user"};
+const admin = {"username": "testuser", "password": "testuser", "fullname": "testuser"};
 let token;
 
 
 describe('User creating function', () => {
+  test('Should log in', async () => {
+    await request(app).post('/users/sessions')
+      .send({...admin})
+      .then(res => {
+        expect(res.body.token).toBeTruthy();
+        expect(res.body.fullname).toEqual(admin.fullname);
+        token = res.body.token;
+      })
+  });
   test('Should create user with correct data', async () => {
     await request(app).post('/users')
-      .send({...testUser})
+      .set('x-access-token', token)
+      .send({...user})
       .then((res) => {
         expect(res.body.message).toEqual('Success');
       })
   });
-  test('Should log in', async () => {
-    await request(app).post('/users/sessions')
-      .send({...testUser})
-      .then(res => {
-        expect(res.body.token).toBeTruthy();
-        expect(res.body.fullname).toEqual(testUser.fullname);
-        token = res.body.token;
-      })
-  });
-  test('Should delete user', async() => {
+  
+  test('Should delete user', async () => {
     await request(app).delete('/users/sessions')
       .set('x-access-token', token)
       .send()
