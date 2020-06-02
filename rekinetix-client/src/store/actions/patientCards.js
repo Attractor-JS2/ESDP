@@ -22,7 +22,7 @@ export const sendPatientData = patientData => {
     axios.post('/patientCards', {patientData})
       .then(() => {
         NotificationManager.success('Форма успешно отправлена');
-        dispatch(push('/patient'));
+        dispatch(push('/patients'));
       })
   }
 };
