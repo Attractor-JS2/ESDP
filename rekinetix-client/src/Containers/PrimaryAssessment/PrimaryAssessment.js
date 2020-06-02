@@ -3,11 +3,10 @@ import {Button, Container, Row} from "reactstrap";
 import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
 import ModifiedInput from "./Components/ModifiedInput";
-import DatePicker from 'react-date-picker';
-import FormTextarea from "../../components/Forms/FormTextarea/FormTextarea";
+import FormTextarea from "../Course/components/FormTextarea";
 import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
-import {submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
+import {getRedFlags, submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
 
 const patient = {
   patientName: "John Doe",
@@ -16,6 +15,11 @@ const patient = {
 
 
 class PatientCardCreatingForm extends Component {
+  componentDidMount() {
+    this.props.getRedFlags();
+  }
+  
+  
   render() {
     const redFlags = ["Сахарный диабет", "Асцит", "Аневризмы", "Красный флаг 4", 'Красный флаг 5', 'Красный флаг 6', 'Красный флаг 7', 'Красный флаг 8', 'Красный флаг 9'];
     const diagnosis = ["Диагноз 1", "Диагноз 2", "Диагноз 3"];
@@ -142,7 +146,8 @@ class PatientCardCreatingForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitForm: (data) => dispatch(submitPrimaryAttendance(data))
+    submitForm: (data) => dispatch(submitPrimaryAttendance(data)),
+    getRedFlags: () => dispatch(getRedFlags())
   };
 };
 
