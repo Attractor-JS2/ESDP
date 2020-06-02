@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink as RouterNavLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -55,26 +55,35 @@ const PatientFullInfo = ({
             <DialogActions>
               {primaryAssessment && primaryAssessment._id ? (
                 <>
-                  <Typography>
-                    {healingPlan && healingPlan._id ? (
-                      <RouterNavLink
-                        to={`/patients/healing-plans/${healingPlan._id}`}
-                        exact
-                      >
-                        План лечения
-                      </RouterNavLink>
-                    ) : (
-                      <RouterNavLink to="/patients/healing-plans/new" exact>
+                  {healingPlan && healingPlan._id ? (
+                    <>
+                      <Typography>
+                        <RouterLink
+                          to={`/patients/healing-plans/${healingPlan._id}`}
+                          exact
+                        >
+                          План лечения
+                        </RouterLink>
+                      </Typography>
+                      <Typography>
+                        <RouterLink to={`/patients/attendances/new`} exact>
+                          Отчёт о приёме
+                        </RouterLink>
+                      </Typography>
+                    </>
+                  ) : (
+                    <Typography>
+                      <RouterLink to="/patients/healing-plans/new" exact>
                         Создать план лечения
-                      </RouterNavLink>
-                    )}
-                  </Typography>
+                      </RouterLink>
+                    </Typography>
+                  )}
                 </>
               ) : (
                 <Typography>
-                  <RouterNavLink to="/patients/primary-assessments/new" exact>
+                  <RouterLink to="/patients/primary-assessments/new" exact>
                     Выполнить первичный осмотр
-                  </RouterNavLink>
+                  </RouterLink>
                 </Typography>
               )}
 
