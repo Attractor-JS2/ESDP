@@ -5,7 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 const EditableStatusSelect = ({
   value: initialValue,
   row: {
-    index,
     original: { _id, role },
   },
   updateSelectData,
