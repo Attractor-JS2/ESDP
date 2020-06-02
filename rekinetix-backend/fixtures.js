@@ -46,7 +46,7 @@ connection.once('open', async () => {
   dropCollection(db, 'attendances');
   dropCollection(db, 'redflagtypes');
   dropCollection(db, 'stagetypes');
-
+  
   try {
     const testUser = await User.create({
       fullname: 'testuser',
