@@ -9,6 +9,7 @@ import attendance from "./reducers/attendance";
 import attendances from "./reducers/attendances";
 import patientsReducer from "./reducers/patients";
 import usersReducer from "./reducers/users";
+import primaryAssessmentReducer from "./reducers/primaryAssessment";
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   attendances: attendances,
   patients: patientsReducer,
   users: usersReducer,
+  primaryAssessment: primaryAssessmentReducer,
   router: connectRouter(history),
 });
 
