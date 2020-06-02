@@ -21,7 +21,7 @@ class PatientCardCreatingForm extends Component {
   
   
   render() {
-    const redFlags = ["Сахарный диабет", "Асцит", "Аневризмы", "Красный флаг 4", 'Красный флаг 5', 'Красный флаг 6', 'Красный флаг 7', 'Красный флаг 8', 'Красный флаг 9'];
+    const redFlags = this.props.redFlags.map(redFlag => redFlag.title);
     const diagnosis = ["Диагноз 1", "Диагноз 2", "Диагноз 3"];
     const statusProps = ['Состояние 1', 'Состояние 2', 'Состояние 3'];
     
@@ -144,6 +144,12 @@ class PatientCardCreatingForm extends Component {
   };
 }
 
+const mapStateToProps = state => {
+  return {
+    redFlags: state.primaryAssessment.redFlags
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     submitForm: (data) => dispatch(submitPrimaryAttendance(data)),
@@ -151,4 +157,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(PatientCardCreatingForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PatientCardCreatingForm);
