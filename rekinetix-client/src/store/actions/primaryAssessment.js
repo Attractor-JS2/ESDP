@@ -5,7 +5,7 @@ export const getRedFlags = () => {
   return dispatch => {
     axios.get('/suggestions/red-flag-types')
       .then(res => {
-        console.log(res.data);
+        dispatch({type: 'GET_RED_FLAGS_SUCCESS', redFlags: res.data})
       })
   }
 };
