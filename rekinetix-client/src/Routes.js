@@ -21,7 +21,7 @@ const Routes = ({ user }) => {
   return (
     <Switch>
       <Route path="/patients" exact component={Patients} />
-      <Route path="/patients/register" component={PatientRecord} />
+      <Route path="/patients/new" component={PatientRecord} />
 
       <Route path="/patients/primary-assessments/new" component={PrimaryAssessment} />
 

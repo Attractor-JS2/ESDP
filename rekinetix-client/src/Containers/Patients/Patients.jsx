@@ -49,7 +49,7 @@ const Patients = ({ patients, onFetchAllPatients, onResetCurrentPatient }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <Link component={RouterLink} to="/patients/register">
+            <Link component={RouterLink} to="/patients/new">
               <Typography>Зарегистрировать нового пациента</Typography>
             </Link>
           </Grid>
