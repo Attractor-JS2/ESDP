@@ -2,11 +2,10 @@ import React, {Component} from "react";
 import {Button, Container, Row} from "reactstrap";
 import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
-import ModifiedInput from "./Components/ModifiedInput";
-import FormTextarea from "../Course/components/FormTextarea";
 import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
 import {getRedFlags, submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
+import FormTextarea from "../../components/Forms/FormTextarea/FormTextarea";
 
 const patient = {
   patientName: "John Doe",
@@ -34,7 +33,6 @@ class PatientCardCreatingForm extends Component {
         <h3>Протокол первичного приема</h3>
         <Formik
           initialValues={{
-            patient: '5ec8c2016160a123f858a402',
             redFlags: [],
             complaints: '',
             anamnesisVitae: '',
@@ -53,7 +51,8 @@ class PatientCardCreatingForm extends Component {
             diagnosis: '',
           }}
           onSubmit={data => {
-            this.props.submitForm(data)
+            const patient = new URLSearchParams(this.props.location.search).get("patient");
+            this.props.submitForm({...data, patient})
           }}>
           {({values}) => (
             <Form>
@@ -127,13 +126,6 @@ class PatientCardCreatingForm extends Component {
                   label='Диагноз: '
                 />
               </div>
-              
-              {/*<ModifiedInput*/}
-              {/*  name="diagnosis"*/}
-              {/*  autocompleteOptions={diagnosis}*/}
-              {/*  label="Диагноз: "*/}
-              {/*  values={values.diagnosis}*/}
-              {/*/>*/}
               
               <Button type="submit">Сохранить</Button>
             </Form>
