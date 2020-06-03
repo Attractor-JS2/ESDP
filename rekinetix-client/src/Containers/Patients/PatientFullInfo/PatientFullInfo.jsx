@@ -81,7 +81,7 @@ const PatientFullInfo = ({
                 </>
               ) : (
                 <Typography>
-                  <RouterLink to="/patients/primary-assessments/new" exact>
+                  <RouterLink to={'/patients/primary-assessments/new?patient=' + patient._id} exact>
                     Выполнить первичный осмотр
                   </RouterLink>
                 </Typography>
