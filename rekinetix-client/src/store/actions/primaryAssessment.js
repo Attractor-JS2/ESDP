@@ -1,4 +1,5 @@
 import axios from '../../axiosBackendInstance';
+import { push } from 'connected-react-router';
 import {NotificationManager} from "react-notifications";
 
 export const getRedFlags = () => {
@@ -14,9 +15,9 @@ export const getRedFlags = () => {
 export const submitPrimaryAttendance = data => {
   return dispatch => {
     axios.post('/primary-assessments', data)
-      .then(res => {
-        console.log(res);
-        NotificationManager.success('Форма успешно отправлена')
+      .then(() => {
+        NotificationManager.success('Форма успешно отправлена');
+        dispatch(push('/'));
       });
     
       
