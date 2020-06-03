@@ -37,7 +37,7 @@ const Routes = ({ user }) => {
 
       <Route path="/patients/attendances/new" component={Attendance} />
 
-      <Route path="/" exact component={Login} />
+      <Route path="/login" exact component={Login} />
       <ProtectedRoute
         path="/register"
         component={Register}
