@@ -2,29 +2,6 @@ const HealingPlan = require('../../models/HealingPlan');
 const Procedure = require('../../models/Procedure');
 const { getProcedureData } = require('./healingPlan.utilities');
 
-const findByPrimaryAssessment = async (req, res) => {
-  const filter = { primaryAssessment: req.query.primaryAssessment };
-
-  try {
-    const healingPlanDoc = await HealingPlan.findOne(filter);
-    if (!healingPlanDoc) {
-      return res.sendStatus(404);
-    }
-
-    const proceduresFilter = { healingPlan: healingPlanDoc.id };
-    const procedureDocs = await Procedure.find(proceduresFilter);
-
-    const resultData = {
-      ...healingPlanDoc.toObject(),
-      procedures: [...procedureDocs],
-    }
-
-    res.send(resultData);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-};
-
 const create = async (req, res) => {
   const { body, userId } = req;
   const { primaryAssessment, procedures } = body;
@@ -45,15 +22,83 @@ const create = async (req, res) => {
   }
 };
 
+const findByPrimaryAssessment = async (req, res) => {
+  const filter = { primaryAssessment: req.query.primaryAssessment };
+
+  try {
+    const healingPlanDoc = await HealingPlan.findOne(filter).populate({
+      path: 'medic',
+      select: { fullname: 1, _id: 0 },
+    });
+    if (!healingPlanDoc) {
+      return res.sendStatus(404);
+    }
+
+    const proceduresFilter = { healingPlan: healingPlanDoc.id };
+    const procedureDocs = await Procedure.find(proceduresFilter);
+
+    const resultData = {
+      ...healingPlanDoc.toObject(),
+      procedures: [...procedureDocs],
+    };
+
+    res.send(resultData);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+};
+
+const findById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const healingPlanDoc = await HealingPlan.findById(id).populate({
+      path: 'medic',
+      select: { fullname: 1, _id: 0 },
+    }).exec();
+    if (!healingPlanDoc) {
+      return res.sendStatus(404);
+    }
+
+    const proceduresFilter = { healingPlan: healingPlanDoc.id };
+    const procedureDocs = await Procedure.find(proceduresFilter);
+
+    const resultData = {
+      ...healingPlanDoc.toObject(),
+      procedures: [...procedureDocs],
+    };
+
+    res.send(resultData);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+};
+
 const addProcedure = async (req, res) => {
   const { body, params } = req;
   const { id } = params;
   try {
-    const procedureData = getProcedureData(body, id)
+    const procedureData = getProcedureData(body, id);
     const procedureDoc = await Procedure.create(procedureData);
-    res.status(201).send({ id: procedureDoc.id });
+    return res.status(201).send({ id: procedureDoc.id });
   } catch (error) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
+  }
+};
+
+const editProcedureStatus = async (req, res) => {
+  const { body, params } = req;
+  const { procedureId } = params;
+  const { status } = body;
+
+  try {
+    const procedureDoc = await Procedure.findById(procedureId);
+    if (!procedureDoc) return res.sendStatus(404);
+
+    procedureDoc.status = status;
+    await procedureDoc.save();
+    return res.sendStatus(201);
+  } catch (error) {
+    return res.sendStatus(500);
   }
 };
 
@@ -62,21 +107,23 @@ const deleteProcedure = async (req, res) => {
 
   try {
     const procedureDoc = await Procedure.findById(id);
-    if (procedureDoc && procedureDoc.status === "запланировано") {
+    if (procedureDoc && procedureDoc.status === 'запланировано') {
       await procedureDoc.remove();
-      res.sendStatus(204);
+      return res.sendStatus(204);
     } else {
-      res.sendStatus(400);
+      return res.sendStatus(400);
     }
   } catch (error) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 };
 
 const healingPlanController = {
-  findByPrimaryAssessment,
   create,
+  findByPrimaryAssessment,
+  findById,
   addProcedure,
+  editProcedureStatus,
   deleteProcedure,
 };
 

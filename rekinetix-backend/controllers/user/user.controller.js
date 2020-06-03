@@ -23,20 +23,24 @@ const createUser = async (req, res) => {
 };
 
 const signIn = async (req, res) => {
-  const user = await User.findOne({ username: req.body.username });
-  if (!user) {
-    return res.status(400).send({ error: 'Wrong login or password' });
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(400).send({ error: 'Wrong login or password' });
+    }
+  
+    const isMatch = await user.checkPassword(req.body.password);
+    if (!isMatch) {
+      return res.status(400).send({ error: 'Wrong login or password' });
+    }
+  
+    user.generateToken();
+    const savedData = await user.save();
+  
+    return res.status(200).send(getResponseSafeData(savedData));
+  } catch (error) {
+    return res.sendStatus(500);
   }
-
-  const isMatch = await user.checkPassword(req.body.password);
-  if (!isMatch) {
-    return res.status(400).send({ error: 'Wrong login or password' });
-  }
-
-  user.generateToken();
-  const savedData = await user.save();
-
-  return res.status(200).send(getResponseSafeData(savedData));
 };
 
 const signOut = async (req, res) => {
@@ -44,13 +48,17 @@ const signOut = async (req, res) => {
   const success = { message: 'Success' };
   if (!token) return res.send(success);
 
-  const user = await User.findOne({ token });
-  if (!user) return res.send(success);
+  try {
+    const user = await User.findOne({ token });
+    if (!user) return res.send(success);
+    user.generateToken();
+    await user.save();
+    return res.send(success);
+  } catch (error) {
+    return res.sendStatus(500);
+  }  
 
-  user.generateToken();
-  await user.save();
 
-  return res.send(success);
 };
 
 const userController = {

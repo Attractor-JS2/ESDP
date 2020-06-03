@@ -23,8 +23,3 @@ export const fetchAttendanceData = () => (dispatch) => {
     (error) => console.log(error)
   );
 };
-
-export const proceedToAttendance = (data) => (dispatch) => {
-  dispatch(fetchAttendanceSuccess(data));
-  dispatch(push('/attendance'));
-};

@@ -1,13 +1,19 @@
-import { FETCH_HEALING_PLAN_SUCCESS } from '../actions/actionTypes';
+import {
+  FETCH_HEALING_PLAN_SUCCESS,
+  FETCH_HEALING_PLAN_FAILURE,
+} from '../actions/actionTypes';
 
 const initialState = {
   healingPlan: {},
+  error: null,
 };
 
 const healingPlan = (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_HEALING_PLAN_SUCCESS:
-      return { ...state, healingPlan: { ...payload } };
+      return { ...state, healingPlan: { ...payload }, error: null };
+    case FETCH_HEALING_PLAN_FAILURE:
+      return { ...state, error: payload };
     default:
       return state;
   }

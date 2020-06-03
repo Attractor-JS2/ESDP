@@ -12,6 +12,9 @@ const PatientSchema = new Schema(
       type: Date,
       required: true,
     },
+    patientAge: {
+      type: Number
+    },
     gender: {
       type: String,
       required: true,

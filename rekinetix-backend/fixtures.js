@@ -231,7 +231,7 @@ connection.once('open', async () => {
       {
         healingPlan: healingPlans[0].id,
         medic: testUser.id,
-        attendanceDate: new Date(2020, 5, 27).toISOString(),
+        attendanceDate: new Date(2020, 4, 27).toISOString(),
         procedureDynamics: [
           {
             procedure: procedures[0].id,
@@ -271,7 +271,7 @@ connection.once('open', async () => {
       {
         healingPlan: healingPlans[0].id,
         medic: testUser.id,
-        attendanceDate: new Date(2020, 5, 26).toISOString(),
+        attendanceDate: new Date(2020, 4, 26).toISOString(),
         procedureDynamics: [
           {
             procedure: procedures[0].id,

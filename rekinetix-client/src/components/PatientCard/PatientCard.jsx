@@ -36,6 +36,7 @@ export default function PatientCard(props) {
           <CardContent>
             <Typography>Имя: {props.name}</Typography>
             <Typography>Дата рождения: {formattedDate}</Typography>
+            <Typography>Пол: {props.gender}</Typography>
           </CardContent>
         </Card>
       </div>

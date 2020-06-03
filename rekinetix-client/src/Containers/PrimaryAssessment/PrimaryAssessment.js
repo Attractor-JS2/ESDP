@@ -4,7 +4,7 @@ import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
 import ModifiedInput from "./Components/ModifiedInput";
 import DatePicker from 'react-date-picker';
-import FormTextarea from "../Course/components/FormTextarea";
+import FormTextarea from "../../components/Forms/FormTextarea/FormTextarea";
 import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
 import {submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
