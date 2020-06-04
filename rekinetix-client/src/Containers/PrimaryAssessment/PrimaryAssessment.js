@@ -13,7 +13,7 @@ const patient = {
 };
 
 
-class PatientCardCreatingForm extends Component {
+class PrimaryAssesssment extends Component {
   componentDidMount() {
     this.props.getRedFlags();
   }
@@ -149,4 +149,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PatientCardCreatingForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PrimaryAssesssment);
