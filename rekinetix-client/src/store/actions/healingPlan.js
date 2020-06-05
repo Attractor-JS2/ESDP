@@ -1,7 +1,7 @@
-import { push } from 'connected-react-router';
-import { NotificationManager } from 'react-notifications';
+import { push } from "connected-react-router";
+import { NotificationManager } from "react-notifications";
 
-import axios from '../../axiosBackendInstance';
+import axios from "../../axiosBackendInstance";
 import {
   FETCH_HEALING_PLAN_SUCCESS,
   FETCH_HEALING_PLAN_FAILURE,
@@ -9,18 +9,32 @@ import {
   ADD_PROCEDURE_TO_PLAN_FAILURE,
   REMOVE_PROCEDURE_FROM_PLAN_SUCCESS,
   REMOVE_PROCEDURE_FROM_PLAN_FAILURE,
-} from './actionTypes';
+  SEND_HEALING_PLAN_SUCCESS,
+} from "./actionTypes";
 
-export const submitForm = (form) => {
-  return (dispatch) => {
-    axios.post('/healingPlan', { healingPlan: form }).then((res) => {
-      console.log(res); // сервер в качестве ответа добавляет обычную строку об успешном создании
-      NotificationManager.success('Форма успешно отправлена'); // триггер успешного оповещения
-      dispatch(push('/')); // редирект на главную
-    });
-  };
+const sendHealingPlanSuccess = () => {
+  return { type: SEND_HEALING_PLAN_SUCCESS };
 };
+// export const submitForm = (form) => {
+//   return (dispatch) => {
+//     axios.post("/healingPlan", { healingPlan: form }).then((res) => {
+//       console.log(res); // сервер в качестве ответа добавляет обычную строку об успешном создании
+//       NotificationManager.success("Форма успешно отправлена"); // триггер успешного оповещения
+//       dispatch(push("/")); // редирект на главную
+//     });
+//   };
+// };
 
+export const sendHealingPlan = (healingPlanData) => (dispatch) => {
+  axios.post("/healing-plans", healingPlanData).then((res) => {
+    console.log(res.data.id);
+    dispatch(sendHealingPlanSuccess());
+    NotificationManager.success("Форма успешно отправлена");
+    if (res.data.id) {
+      dispatch(push(`/patient/healing-plans/${res.data.id}`));
+    }
+  });
+};
 const fetchPlanSuccess = (healingPlan) => ({
   type: FETCH_HEALING_PLAN_SUCCESS,
   payload: healingPlan,
@@ -34,14 +48,14 @@ const fetchPlanFailure = (error) => ({
 export const fetchPlanByPrimaryAssessment = (assessmentId) => (dispatch) => {
   axios.get(`/healing-plans?primaryAssessment=${assessmentId}`).then(
     (res) => dispatch(fetchPlanSuccess(res.data)),
-    (error) => fetchPlanFailure(error),
+    (error) => fetchPlanFailure(error)
   );
 };
 
 export const fetchPlanById = (healingPlanId) => (dispatch) => {
   axios.get(`/healing-plans/${healingPlanId}`).then(
     (res) => dispatch(fetchPlanSuccess(res.data)),
-    (error) => fetchPlanFailure(error),
+    (error) => fetchPlanFailure(error)
   );
 };
 
@@ -53,7 +67,7 @@ const addProcedureFailure = (error) => ({
 
 export const addProcedureToPlan = (procedureData, modalCloseHandler) => (
   dispatch,
-  getState,
+  getState
 ) => {
   const { _id } = getState().healingPlan.healingPlan;
   axios.patch(`/healing-plans/${_id}`, procedureData).then(
@@ -62,7 +76,7 @@ export const addProcedureToPlan = (procedureData, modalCloseHandler) => (
       modalCloseHandler();
       dispatch(fetchPlanById(_id));
     },
-    (error) => dispatch(addProcedureFailure(error)),
+    (error) => dispatch(addProcedureFailure(error))
   );
 };
 
@@ -77,7 +91,7 @@ const removeProcedureFailure = (error) => ({
 
 export const removeProcedureFromPlan = (procedureId) => (
   dispatch,
-  getState,
+  getState
 ) => {
   const { _id } = getState().healingPlan.healingPlan;
   axios.delete(`/healing-plans/procedure/${procedureId}`).then(
@@ -85,17 +99,17 @@ export const removeProcedureFromPlan = (procedureId) => (
       dispatch(removeProcedureSuccess());
       dispatch(fetchPlanById(_id));
     },
-    (error) => dispatch(removeProcedureFailure(error)),
+    (error) => dispatch(removeProcedureFailure(error))
   );
 };
 
 export const updateProcedureStatus = (procedureID, status) => (
   dispatch,
-  getState,
+  getState
 ) => {
   const { _id } = getState().healingPlan.healingPlan;
   axios.patch(`/healing-plans/procedure/${procedureID}`, { status }).then(
     () => dispatch(fetchPlanById(_id)),
-    (error) => console.log(error),
+    (error) => console.log(error)
   );
 };
