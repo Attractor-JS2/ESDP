@@ -23,6 +23,36 @@ const AttendancePlan = (props) => {
                         <div className="d-flex">
                           {!CURRENT_FIELD.procedureIsNew ? (
                             <Field
+                              className="ml-1 mt-2"
+                              name={CURRENT_FIELD.procedureArea}
+                              disabled={!CURRENT_FIELD.procedureIsNew}
+                              value={CURRENT_FIELD.procedureArea}
+                              component={Input}
+                            />
+                          ) : (
+                            <Autocomplete
+                              className="ml-2 mt-2"
+                              name={`${props.stageName}[${index}].procedureArea`}
+                              options={props.availablePlace}
+                              onChange={(event, value) =>
+                                arrayHelpers.form.setFieldValue(
+                                  `${props.stageName}[${index}].procedureArea`,
+                                  value,
+                                )
+                              }
+                              getOptionLabel={(option) => option}
+                              style={{ width: 262 }}
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  label="Назначение"
+                                  variant="outlined"
+                                />
+                              )}
+                            />
+                          )}
+                          {!CURRENT_FIELD.procedureIsNew ? (
+                            <Field
                               className="mt-2"
                               size="35"
                               name={CURRENT_FIELD.procedureName}
@@ -47,36 +77,6 @@ const AttendancePlan = (props) => {
                                 <TextField
                                   {...params}
                                   label="Название процедуры"
-                                  variant="outlined"
-                                />
-                              )}
-                            />
-                          )}
-                          {!CURRENT_FIELD.procedureIsNew ? (
-                            <Field
-                              className="ml-1 mt-2"
-                              name={CURRENT_FIELD.procedureArea}
-                              disabled={!CURRENT_FIELD.procedureIsNew}
-                              value={CURRENT_FIELD.procedureArea}
-                              component={Input}
-                            />
-                          ) : (
-                            <Autocomplete
-                              className="ml-2 mt-2"
-                              name={`${props.stageName}[${index}].procedureArea`}
-                              options={props.availablePlace}
-                              onChange={(event, value) =>
-                                arrayHelpers.form.setFieldValue(
-                                  `${props.stageName}[${index}].procedureArea`,
-                                  value,
-                                )
-                              }
-                              getOptionLabel={(option) => option}
-                              style={{ width: 262 }}
-                              renderInput={(params) => (
-                                <TextField
-                                  {...params}
-                                  label="Назначение"
                                   variant="outlined"
                                 />
                               )}

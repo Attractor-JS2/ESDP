@@ -26,7 +26,7 @@ class Attendance extends Component {
         <h3>Отчет по приёму {this.getMomentLocale(new Date())}</h3>
         <p className="mt-2 mb-2" name="patientName">
           {' '}
-          Пациент: {this.props.currentPatient.fullnname}
+          Пациент: {this.props.currentPatient.fullname}
         </p>
         <p className="mb-2" name="medicName">
           Врач: {this.props.user.fullname}
