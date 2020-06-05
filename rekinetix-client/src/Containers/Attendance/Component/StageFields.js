@@ -122,17 +122,12 @@ const StageFields = (props) => {
                           return arrayHelpers.remove(index);
                         }}
                       />
-                      <TextField
-                        label="Комментарии"
-                        name={`${stageName}.${index}.comments`}
-                        value={CURRENT_FIELD.comments}
-                        onChange={(event, value) =>
-                          arrayHelpers.form.setFieldValue(
-                            `${stageName}[${index}].comments`,
-                            value,
-                          )
-                        }
+
+                      <Field
+                        name={`${props.stageName}[${index}].comments`}
+                        placeholder="Комментарии"
                         fullWidth
+                        as={TextField}
                       />
                     </div>
                   );
