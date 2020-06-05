@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
       fontSize: '12px',
       color: 'red',
       marginLeft: '50px',
-    },
+    }
   }),
 );
 
@@ -43,54 +43,29 @@ const Header = ({ onLogoutUser, user }) => {
               <Typography variant="h6" className={classes.title}>
                 <RouterNavLink
                   className={classes.menuLink}
-                  to="/patients/primary-assessments/new"
-                  exact
-                >
-                  Первичный осмотр
-                </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
-                  to="/patients/new"
-                  exact
-                >
-                  Создать пациента
-                </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
                   to="/patients"
                   exact
                 >
                   Пациенты
                 </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
-                  to="/patients/attendances/new"
-                  exact
-                >
-                  Отчет по приёму
-                </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
-                  to="/patients/healing-plans/new"
-                  exact
-                >
-                  План лечения{' '}
-                </RouterNavLink>
-                <RouterNavLink
-                  className={classes.menuLink}
-                  to="/patients/healing-plans"
-                  exact
-                >
-                  Таблица плана
-                </RouterNavLink>
-                <RouterNavLink className={classes.menuLink} to="/siteMap" exact>
-                  Карта сайта
-                </RouterNavLink>
               </Typography>
-              {user && user.token && (
+              {user && user.role === 'admin' && (
+                <RouterNavLink className={classes.menuLink} to="/register" exact>
+                  <Button color="inherit">
+                    Создать нового пользователя
+                  </Button>
+                </RouterNavLink>
+              )}
+              {user && user.token ? (
                 <Button color="inherit" onClick={onLogoutUser}>
                   Выйти
                 </Button>
+              ) : (
+                <RouterNavLink className={classes.menuLink} to="/login" exact>
+                  <Button color="inherit">
+                    Войти
+                  </Button>
+                </RouterNavLink>
               )}
             </Toolbar>
           </Container>
