@@ -6,7 +6,9 @@ import { Formik, Field, FieldArray, Form } from 'formik';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { availableProcedures, availableHealingPlaces } from './procedures';
-import AttendancePlan from './Component/AttendancePlan';
+import StageFields from './Component/StageFields';
+
+import painScaleImage from '../../assets/images/painscale.jpg';
 
 const procedureSchema = {
   procedureName: '',
@@ -58,7 +60,7 @@ class Attendance extends Component {
         >
           {({ values, setFieldValue }) => (
             <Form>
-              <AttendancePlan
+              <StageFields
                 stageTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
                 stageName="firstStage"
                 attendance={values.firstStage}
@@ -66,7 +68,7 @@ class Attendance extends Component {
                 availablePlace={availableHealingPlaces['firstStage']}
                 stage="firstStage"
               />
-              <AttendancePlan
+              <StageFields
                 stageTitle="Этап 2: Мобилизационнные мероприятия"
                 stageName="secondStage"
                 attendance={values.secondStage}
@@ -74,7 +76,7 @@ class Attendance extends Component {
                 availablePlace={availableHealingPlaces['secondStage']}
                 stage="secondStage"
               />
-              <AttendancePlan
+              <StageFields
                 stageTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
                 stageName="thirdStage"
                 attendance={values.thirdStage}
@@ -82,7 +84,7 @@ class Attendance extends Component {
                 availablePlace={availableHealingPlaces['thirdStage']}
                 stage="thirdStage"
               />
-              <AttendancePlan
+              <StageFields
                 stageTitle="Этап 4: Восстановление функций в МФЛ"
                 stageName="fourthStage"
                 attendance={values.fourthStage}
@@ -90,7 +92,7 @@ class Attendance extends Component {
                 availablePlace={availableHealingPlaces['fourthStage']}
                 stage="fourthStage"
               />
-              <AttendancePlan
+              <StageFields
                 stageTitle="Этап 5: Профилактика"
                 stageName="fifthStage"
                 availableProcedures={availableProcedures['fifthStage']}
@@ -137,7 +139,7 @@ class Attendance extends Component {
               <img
                 className="d-block mb-3"
                 style={{ height: 100, width: 400 }}
-                src="./painscale.jpg"
+                src={painScaleImage}
                 alt=""
               />
               <Field
