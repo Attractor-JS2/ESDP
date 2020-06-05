@@ -1,32 +1,34 @@
 import React from 'react';
-import { Field, FieldArray } from 'formik';
-import { Button, Input } from 'reactstrap';
+import { FieldArray, Field } from 'formik';
+import { Button } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import './StageFields.css';
 
 const StageFields = (props) => {
+  const { stageName, stageTitle, availablePlace, availableProcedures } = props;
   return (
-    <FieldArray name={props.stageName}>
+    <FieldArray name={stageName}>
       {(arrayHelpers) => {
         return (
           <div>
             <div className="mb-3 mt-2">
-              <p>{props.stageTitle}</p>
-              {arrayHelpers.form.values[props.stageName].map(
+              <p>{stageTitle}</p>
+              {arrayHelpers.form.values[stageName].map(
                 (procedureName, index) => {
                   const CURRENT_FIELD =
-                    arrayHelpers.form.values[props.stageName][index];
+                    arrayHelpers.form.values[stageName][index];
                   return (
-                    <div key={`${index}`} className="d-flex">
+                    <div key={`${index}`} className="d-flex flex-wrap">
                       <div className="d-flex">
                         <Autocomplete
                           className="ml-2 mt-2"
-                          name={`${props.stageName}[${index}].procedureArea`}
-                          options={props.availablePlace}
+                          name={`${stageName}[${index}].procedureArea`}
+                          options={availablePlace}
                           onChange={(event, value) =>
                             arrayHelpers.form.setFieldValue(
-                              `${props.stageName}[${index}].procedureArea`,
+                              `${stageName}[${index}].procedureArea`,
                               value,
                             )
                           }
@@ -43,11 +45,11 @@ const StageFields = (props) => {
 
                         <Autocomplete
                           className="mt-2"
-                          name={`${props.stageName}[${index}].procedureName`}
-                          options={props.availableProcedures}
+                          name={`${stageName}[${index}].procedureName`}
+                          options={availableProcedures}
                           onChange={(event, value) =>
                             arrayHelpers.form.setFieldValue(
-                              `${props.stageName}[${index}].procedureName`,
+                              `${stageName}[${index}].procedureName`,
                               value,
                             )
                           }
@@ -67,12 +69,12 @@ const StageFields = (props) => {
                             <input
                               className="d-flex pl-2 mb-1"
                               type="radio"
-                              name={`${props.stageName}[${index}].procedureDynamic`}
+                              name={`${stageName}[${index}].procedureDynamic`}
                               value="0"
                               checked={CURRENT_FIELD.procedureDynamic === 0}
                               onChange={() =>
                                 arrayHelpers.form.setFieldValue(
-                                  `${props.stageName}[${index}].procedureDynamic`,
+                                  `${stageName}[${index}].procedureDynamic`,
                                   0,
                                 )
                               }
@@ -83,12 +85,12 @@ const StageFields = (props) => {
                             <input
                               className="d-flex pl-2 mb-1"
                               type="radio"
-                              name={`${props.stageName}[${index}].dynamicsData`}
+                              name={`${stageName}[${index}].dynamicsData`}
                               value="1"
                               checked={CURRENT_FIELD.procedureDynamic === 1}
                               onChange={() =>
                                 arrayHelpers.form.setFieldValue(
-                                  `${props.stageName}[${index}].procedureDynamic`,
+                                  `${stageName}[${index}].procedureDynamic`,
                                   1,
                                 )
                               }
@@ -99,12 +101,12 @@ const StageFields = (props) => {
                             <input
                               className="d-flex pl-2 mb-1"
                               type="radio"
-                              name={`${props.stageName}[${index}].dynamicsData`}
+                              name={`${stageName}[${index}].dynamicsData`}
                               value="2"
                               checked={CURRENT_FIELD.procedureDynamic === 2}
                               onChange={() =>
                                 arrayHelpers.form.setFieldValue(
-                                  `${props.stageName}[${index}].procedureDynamic`,
+                                  `${stageName}[${index}].procedureDynamic`,
                                   2,
                                 )
                               }
@@ -119,6 +121,18 @@ const StageFields = (props) => {
                         onClick={() => {
                           return arrayHelpers.remove(index);
                         }}
+                      />
+                      <TextField
+                        label="Комментарии"
+                        name={`${stageName}.${index}.comments`}
+                        value={CURRENT_FIELD.comments}
+                        onChange={(event, value) =>
+                          arrayHelpers.form.setFieldValue(
+                            `${stageName}[${index}].comments`,
+                            value,
+                          )
+                        }
+                        fullWidth
                       />
                     </div>
                   );

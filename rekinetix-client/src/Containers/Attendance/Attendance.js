@@ -14,7 +14,7 @@ const procedureSchema = {
   procedureName: '',
   procedureArea: '',
   procedureDynamic: 1,
-  procedureIsNew: true,
+  comments: 'test',
 };
 
 class Attendance extends Component {
@@ -63,41 +63,32 @@ class Attendance extends Component {
               <StageFields
                 stageTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
                 stageName="firstStage"
-                attendance={values.firstStage}
                 availableProcedures={availableProcedures['firstStage']}
                 availablePlace={availableHealingPlaces['firstStage']}
-                stage="firstStage"
               />
               <StageFields
                 stageTitle="Этап 2: Мобилизационнные мероприятия"
                 stageName="secondStage"
-                attendance={values.secondStage}
                 availableProcedures={availableProcedures['secondStage']}
                 availablePlace={availableHealingPlaces['secondStage']}
-                stage="secondStage"
               />
               <StageFields
                 stageTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
                 stageName="thirdStage"
-                attendance={values.thirdStage}
                 availableProcedures={availableProcedures['thirdStage']}
                 availablePlace={availableHealingPlaces['thirdStage']}
-                stage="thirdStage"
               />
               <StageFields
                 stageTitle="Этап 4: Восстановление функций в МФЛ"
                 stageName="fourthStage"
-                attendance={values.fourthStage}
                 availableProcedures={availableProcedures['fourthStage']}
                 availablePlace={availableHealingPlaces['fourthStage']}
-                stage="fourthStage"
               />
               <StageFields
                 stageTitle="Этап 5: Профилактика"
                 stageName="fifthStage"
                 availableProcedures={availableProcedures['fifthStage']}
                 availablePlace={availableHealingPlaces['fifthStage']}
-                stage="fifthStage"
               />
               <FieldArray name="patientDynamic">
                 {(arrayHelpers) => (
