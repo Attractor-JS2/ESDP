@@ -1,15 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import Link from '@material-ui/core/Link';
+import React from "react";
+import { connect } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Link from "@material-ui/core/Link";
 
-import { fetchPatientInfo } from '../../../store/actions/patients';
+import { fetchPatientInfo } from "../../../store/actions/patients";
 
 const PatientFullInfo = ({
   open,
@@ -36,20 +36,20 @@ const PatientFullInfo = ({
             </DialogContentText>
             <DialogContentText>Пол: {patient.gender}</DialogContentText>
             <DialogContentText>
-              Рост: {patient && patient.height ? patient.height : ''}
+              Рост: {patient && patient.height ? patient.height : ""}
             </DialogContentText>
             <DialogContentText>
-              Вес: {patient && patient.weight ? patient.weight : ''}
+              Вес: {patient && patient.weight ? patient.weight : ""}
             </DialogContentText>
             <DialogContentText>
-              {'Красные флаги: '}
-              {redFlags && redFlags.map(({ title }) => title).join(', ')}
+              {"Красные флаги: "}
+              {redFlags && redFlags.map(({ title }) => title).join(", ")}
             </DialogContentText>
             <DialogContentText>
-              {'Диагноз: '}
+              {"Диагноз: "}
               {primaryAssessment && primaryAssessment.diagnosis
                 ? primaryAssessment.diagnosis
-                : ''}
+                : ""}
             </DialogContentText>
 
             <DialogActions>
@@ -60,20 +60,29 @@ const PatientFullInfo = ({
                       <Typography>
                         <RouterLink
                           to={`/patients/healing-plans/${healingPlan._id}`}
-                          exact
+                          exact="true"
                         >
                           План лечения
                         </RouterLink>
                       </Typography>
                       <Typography>
-                        <RouterLink to={`/patients/attendances/new`} exact>
+                        <RouterLink
+                          to={`/patients/attendances/new`}
+                          exact="true"
+                        >
                           Отчёт о приёме
                         </RouterLink>
                       </Typography>
                     </>
                   ) : (
                     <Typography>
-                      <RouterLink to="/patients/healing-plans/new" exact>
+                      <RouterLink
+                        to={
+                          "/patients/healing-plans/new?primaryAssessment=" +
+                          primaryAssessment._id
+                        }
+                        exact="true"
+                      >
                         Создать план лечения
                       </RouterLink>
                     </Typography>
@@ -81,7 +90,12 @@ const PatientFullInfo = ({
                 </>
               ) : (
                 <Typography>
-                  <RouterLink to={'/patients/primary-assessments/new?patient=' + patient._id} exact>
+                  <RouterLink
+                    to={
+                      "/patients/primary-assessments/new?patient=" + patient._id
+                    }
+                    exact="true"
+                  >
                     Выполнить первичный осмотр
                   </RouterLink>
                 </Typography>
