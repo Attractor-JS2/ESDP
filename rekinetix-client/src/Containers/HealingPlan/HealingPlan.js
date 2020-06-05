@@ -82,7 +82,6 @@ class HealingPlan extends Component {
         <h3>План лечения</h3>
         <Formik
           initialValues={{
-            primaryAssessment: "5ecf7a45594ef97b4261bf03",
             procedures: {
               firstStage: [],
               secondStage: [],
@@ -96,9 +95,16 @@ class HealingPlan extends Component {
             Object.keys(data.procedures).forEach((procedure) => {
               procedures.push(...data.procedures[procedure]);
             });
-            console.log(procedures);
 
-            this.props.sendHealingPlan({ ...data, procedures });
+            const primaryAssessment = new URLSearchParams(
+              this.props.location.search
+            ).get("primaryAssessment");
+
+            this.props.sendHealingPlan({
+              ...data,
+              procedures,
+              primaryAssessment,
+            });
           }}
         >
           {({ values }) => (

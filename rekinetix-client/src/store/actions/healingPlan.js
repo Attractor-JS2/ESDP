@@ -15,23 +15,13 @@ import {
 const sendHealingPlanSuccess = () => {
   return { type: SEND_HEALING_PLAN_SUCCESS };
 };
-// export const submitForm = (form) => {
-//   return (dispatch) => {
-//     axios.post("/healingPlan", { healingPlan: form }).then((res) => {
-//       console.log(res); // сервер в качестве ответа добавляет обычную строку об успешном создании
-//       NotificationManager.success("Форма успешно отправлена"); // триггер успешного оповещения
-//       dispatch(push("/")); // редирект на главную
-//     });
-//   };
-// };
-
 export const sendHealingPlan = (healingPlanData) => (dispatch) => {
   axios.post("/healing-plans", healingPlanData).then((res) => {
     console.log(res.data.id);
     dispatch(sendHealingPlanSuccess());
     NotificationManager.success("Форма успешно отправлена");
     if (res.data.id) {
-      dispatch(push(`/patient/healing-plans/${res.data.id}`));
+      dispatch(push(`/patients/healing-plans/${res.data.id}`));
     }
   });
 };

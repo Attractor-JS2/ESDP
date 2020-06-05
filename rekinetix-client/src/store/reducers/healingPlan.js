@@ -1,7 +1,6 @@
 import {
   FETCH_HEALING_PLAN_SUCCESS,
   FETCH_HEALING_PLAN_FAILURE,
-  SEND_HEALING_PLAN_SUCCESS,
 } from "../actions/actionTypes";
 import { CardActions } from "@material-ui/core";
 
