@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {fetchAttendanceData, sendAttendanceData} from "../../store/actions/attendance";
+import { createAttendance } from "../../store/actions/attendances";
 import {Button, Input, Container} from "reactstrap";
 import {Formik, Field, FieldArray, Form} from "formik";
 import moment from "moment";
@@ -11,12 +11,12 @@ import AttendancePlan from "./Component/AttendancePlan";
 
 class Attendance extends Component {
 
-  componentDidMount() {
-    this.props.onfetchAttendanceData();
-  }
-  componentWillUnmount() {
-      this.props.onfetchAttendanceData();
-  }
+  // componentDidMount() {
+  //   this.props.onfetchAttendanceData();
+  // }
+  // componentWillUnmount() {
+  //     this.props.onfetchAttendanceData();
+  // }
 
   getMomentLocale(date) {
     return moment(date).locale('ru').format('L');
@@ -175,8 +175,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onfetchAttendanceData: () => dispatch(fetchAttendanceData()),
-    sendAttendanceData: (data) => dispatch(sendAttendanceData(data))
+    createAttendance: (data) => dispatch(createAttendance(data))
   }
 };
 
