@@ -51,47 +51,48 @@ class Attendance extends Component {
             },
           }}
           onSubmit={async (data, { resetForm }) => {
-            await this.props.sendAttendanceData(data);
-            await resetForm({});
+            console.log(data)
+            // await this.props.sendAttendanceData(data);
+            // await resetForm({});
           }}
         >
           {({ values, setFieldValue }) => (
             <Form>
               <AttendancePlan
-                attendanceTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
-                attendanceName="firstStage"
+                stageTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
+                stageName="firstStage"
                 attendance={values.firstStage}
                 availableProcedures={availableProcedures['firstStage']}
                 availablePlace={availableHealingPlaces['firstStage']}
                 stage="firstStage"
               />
               <AttendancePlan
-                attendanceTitle="Этап 2: Мобилизационнные мероприятия"
-                attendanceName="secondStage"
+                stageTitle="Этап 2: Мобилизационнные мероприятия"
+                stageName="secondStage"
                 attendance={values.secondStage}
                 availableProcedures={availableProcedures['secondStage']}
                 availablePlace={availableHealingPlaces['secondStage']}
                 stage="secondStage"
               />
               <AttendancePlan
-                attendanceTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
-                attendanceName="thirdStage"
+                stageTitle="Этап 3: Нейро-мышечная Активация и стабилизация"
+                stageName="thirdStage"
                 attendance={values.thirdStage}
                 availableProcedures={availableProcedures['thirdStage']}
                 availablePlace={availableHealingPlaces['thirdStage']}
                 stage="thirdStage"
               />
               <AttendancePlan
-                attendanceTitle="Этап 4: Восстановление функций в МФЛ"
-                attendanceName="fourthStage"
+                stageTitle="Этап 4: Восстановление функций в МФЛ"
+                stageName="fourthStage"
                 attendance={values.fourthStage}
                 availableProcedures={availableProcedures['fourthStage']}
                 availablePlace={availableHealingPlaces['fourthStage']}
                 stage="fourthStage"
               />
               <AttendancePlan
-                attendanceTitle="Этап 5: Профилактика"
-                attendanceName="fifthStage"
+                stageTitle="Этап 5: Профилактика"
+                stageName="fifthStage"
                 availableProcedures={availableProcedures['fifthStage']}
                 availablePlace={availableHealingPlaces['fifthStage']}
                 stage="fifthStage"
