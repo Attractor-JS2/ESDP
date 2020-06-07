@@ -10,6 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Button from '@material-ui/core/Button';
 
 import './Table.css';
+import utilities from '../utilities/utilities';
 
 const Table = ({
   columns,
@@ -57,53 +58,13 @@ const Table = ({
     },
   );
 
-  const getProcedureFromRow = (title, area) => ({
-    procedureName: title,
-    procedureArea: area,
-    procedureDynamic: 1,
-    procedureIsNew: false,
-  });
-
-  const attendanceDTO = {
-    attendanceDate: new Date().toISOString(),
-    patientName: 'Петров Иван Сидорович',
-    medicName: 'Сидоров Петр Иванович',
-    firstStage: [],
-    secondStage: [],
-    thirdStage: [],
-    fourthStage: [],
-    fifthStage: [],
-    patientDynamic: 1,
-    beforeAttendance: {
-      comments: '',
-      pain: '5',
-    },
-    afterAttendance: {
-      comments: '',
-      pain: '5',
-    },
-  };
-
-  const getDataByIndexes = (array, indexes) =>
-    array.filter((_, id) => indexes.includes(id));
-
-  const mapRowsToAttendance = (rows) =>
-    rows.reduce((acc, { stage, rowTitle, procedureArea }) => {
-      const newProcedure = getProcedureFromRow(rowTitle, procedureArea);
-      acc[stage] = [...acc[stage], newProcedure];
-      return acc;
-    }, attendanceDTO);
-
-  const sendDataToAttendance = () => {
-    const selectedRows = getDataByIndexes(
-      data,
-      Object.keys(selectedRowIds).map((x) => parseInt(x, 10)),
+  const sendDataToAttendance = (rowIds, tableData) => {
+    const attendance = utilities.getAttendanceValuesFromTable(
+      rowIds,
+      tableData,
     );
-    const procedureRows = selectedRows.filter(
-      ({ purpose }) => purpose && purpose === 'procedureData',
-    );
-    const attendance = mapRowsToAttendance(procedureRows);
-    handleProceed(attendance);
+    console.dir(attendance);
+    // handleProceed(attendance);
   };
 
   return (
@@ -112,7 +73,7 @@ const Table = ({
         {Object.keys(selectedRowIds).length > 0 && (
           <Button
             variant="contained"
-            onClick={sendDataToAttendance}
+            onClick={(e) => sendDataToAttendance(selectedRowIds, data)}
           >
             Создать приём
           </Button>
