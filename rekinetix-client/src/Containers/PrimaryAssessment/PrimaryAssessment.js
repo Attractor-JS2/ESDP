@@ -13,6 +13,8 @@ import {fetchPatientInfo} from "../../store/actions/patients";
 class PrimaryAssesssment extends Component {
   componentDidMount() {
     this.props.getRedFlags();
+    const patient = new URLSearchParams(this.props.location.search).get("patient");
+    this.props.fetchPatientInfo(patient);
   }
   
   
@@ -141,7 +143,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     submitForm: (data) => dispatch(submitPrimaryAttendance(data)),
-    getRedFlags: () => dispatch(getRedFlags())
+    getRedFlags: () => dispatch(getRedFlags()),
+    fetchPatientInfo: (id) => dispatch(fetchPatientInfo(id))
   };
 };
 
