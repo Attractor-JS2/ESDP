@@ -7,11 +7,7 @@ import StatusAutocomplete from "./Components/StatusAutocomplete";
 import {getRedFlags, submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
 import FormTextarea from "../../components/Forms/FormTextarea/FormTextarea";
 import {statusProps} from "./PrimaryAssessment.autocompleteTypes";
-
-const patient = {
-  patientName: "John Doe",
-  birthDate: "Wed Dec 12 2012 00:00:00 GMT+0600 (East Kazakhstan Time)"
-};
+import {fetchPatientInfo} from "../../store/actions/patients";
 
 
 class PrimaryAssesssment extends Component {
@@ -22,12 +18,12 @@ class PrimaryAssesssment extends Component {
   
   render() {
     const redFlags = this.props.redFlags.map(redFlag => redFlag.title);
-    
+    const patient = this.props.patient;
     return (
       <Container className="mt-5">
         <Row className='mb-5 d-flex justify-content-between border-bottom border-dark'>
-          <span>Имя Пациента: {patient.patientName}</span>
-          <span>Дата рождения: {new Date(patient.birthDate).toLocaleDateString()}</span>
+          <span>Имя Пациента: {patient && patient.fullname}</span>
+          <span>Дата рождения: {patient && new Date(patient.birthday).toLocaleDateString()}</span>
         </Row>
         <h3>Протокол первичного приема</h3>
         <Formik
@@ -137,7 +133,8 @@ class PrimaryAssesssment extends Component {
 
 const mapStateToProps = state => {
   return {
-    redFlags: state.primaryAssessment.redFlags
+    redFlags: state.primaryAssessment.redFlags,
+    patient: state.patients.currentPatient.patient
   };
 };
 
