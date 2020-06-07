@@ -29,7 +29,7 @@ const getProcedureFullData = (procedure, healingPlanId) => {
     procedureArea: procedureArea,
     procedureName: procedureName,
     comments: comments,
-    status: status,
+    status: status || 'действует',
     procedureQuantity: procedureQuantity,
     healingPlan: healingPlanId || healingPlan,
   };
