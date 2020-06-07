@@ -37,7 +37,13 @@ const initialFormikValues = {
 };
 
 const Attendance = (props) => {
-  const { currentPatient, user, createAttendance, attendance } = props;
+  const {
+    currentPatient,
+    user,
+    createAttendance,
+    attendance,
+    healingPlan,
+  } = props;
 
   const getMomentLocale = (date) => {
     return moment(date).locale('ru').format('L');
@@ -75,7 +81,10 @@ const Attendance = (props) => {
             : { ...initialFormikValues }
         }
         onSubmit={(data) => {
-          submitHandler(data, currentPatient.healingPlan._id);
+          const planId = currentPatient.healingPlan
+            ? currentPatient.healingPlan._id
+            : healingPlan._id;
+          submitHandler(data, planId);
         }}
       >
         {({ values, setFieldValue }) => (
@@ -217,6 +226,7 @@ const Attendance = (props) => {
 const mapStateToProps = (state) => {
   return {
     currentPatient: state.patients.currentPatient,
+    healingPlan: state.healingPlan.healingPlan,
     user: state.users.user,
     attendance: state.attendances.attendance,
   };

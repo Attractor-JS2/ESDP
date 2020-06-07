@@ -2,7 +2,6 @@ import {
   FETCH_HEALING_PLAN_SUCCESS,
   FETCH_HEALING_PLAN_FAILURE,
 } from "../actions/actionTypes";
-import { CardActions } from "@material-ui/core";
 
 const initialState = {
   healingPlan: {},

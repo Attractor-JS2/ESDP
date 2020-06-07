@@ -17,7 +17,6 @@ const sendHealingPlanSuccess = () => {
 };
 export const sendHealingPlan = (healingPlanData) => (dispatch) => {
   axios.post("/healing-plans", healingPlanData).then((res) => {
-    console.log(res.data.id);
     dispatch(sendHealingPlanSuccess());
     NotificationManager.success("Форма успешно отправлена");
     if (res.data.id) {
