@@ -5,7 +5,8 @@ import {
   FETCH_ATTENDANCES_SUCCESS,
   FETCH_ATTENDANCES_FAILURE,
   SEND_ATTENDANCE_DATA_SUCCESS,
-  SEND_ATTENDANCE_DATA_FAILURE
+  SEND_ATTENDANCE_DATA_FAILURE,
+  PROVIDE_DATA_TO_ATTENDANCE,
 } from './actionTypes';
 
 const fetchAttendancesSuccess = (attendances) => ({
@@ -24,8 +25,13 @@ export const fetchAttendancesByHealingPlan = (healingPlanId) => (dispatch) => {
   );
 };
 
+const provideDataToAttendance = (attendanceData) => ({
+  type: PROVIDE_DATA_TO_ATTENDANCE,
+  payload: attendanceData,
+});
+
 export const proceedToAttendance = (data) => (dispatch) => {
-  dispatch(fetchAttendancesSuccess(data));
+  dispatch(provideDataToAttendance(data));
   dispatch(push('/attendance'));
 };
 
