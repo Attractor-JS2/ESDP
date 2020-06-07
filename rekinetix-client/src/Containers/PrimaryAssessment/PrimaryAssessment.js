@@ -23,12 +23,12 @@ class PrimaryAssesssment extends Component {
     const redFlags = this.props.redFlags.map(redFlag => redFlag.title);
     const patient = this.props.patient;
     return (
-      <Container className="mt-4">
-        <Row className='mb-4 d-flex justify-content-between border-bottom '>
+      <Container className="mt-4 mb-4">
+        <div className='mb-4 d-flex justify-content-between border-bottom '>
           <Typography color='textSecondary'>Имя Пациента: {patient && patient.fullname}</Typography>
           <Typography color='textSecondary'>Дата
             рождения: {patient && new Date(patient.birthday).toLocaleDateString()}</Typography>
-        </Row>
+        </div>
         <h3>Протокол первичного приема</h3>
         <Formik
           initialValues={{
