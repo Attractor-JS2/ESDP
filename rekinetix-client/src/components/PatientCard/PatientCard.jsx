@@ -3,15 +3,14 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
-import CardMedia from "@material-ui/core/CardMedia";
-import defaultImage from "../../assets/defaultImage/default-photo.jpeg";
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: 500,
     display: "flex",
     textAlign: "left",
     margin: 10,
+    backgroundColor: 'rgba(245, 245, 245, 0.6)',
+    fontWeight: 'bold'
   },
   media: {
     height: 100,
@@ -19,6 +18,8 @@ const useStyles = makeStyles(() => ({
   },
   container: {
     padding: 2,
+    width: '30%',
+    cursor: 'pointer'
   },
 }));
 export default function PatientCard(props) {
@@ -28,11 +29,6 @@ export default function PatientCard(props) {
     <div className={classes.container} onClick={props.onClick}>
       <div>
         <Card className={classes.root}>
-          <CardMedia
-            className={classes.media}
-            image={defaultImage}
-            title="Paella dish"
-          />
           <CardContent>
             <Typography>Имя: {props.name}</Typography>
             <Typography>Дата рождения: {formattedDate}</Typography>
