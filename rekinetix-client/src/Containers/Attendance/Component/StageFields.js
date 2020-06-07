@@ -122,9 +122,9 @@ const StageFields = (props) => {
                           return arrayHelpers.remove(index);
                         }}
                       />
-
+                      
                       <Field
-                        name={`${props.stageName}[${index}].comments`}
+                        name={`${stageName}[${index}].comments`}
                         placeholder="Комментарии"
                         fullWidth
                         as={TextField}

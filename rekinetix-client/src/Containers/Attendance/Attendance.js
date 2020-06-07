@@ -9,12 +9,14 @@ import { availableProcedures, availableHealingPlaces } from './procedures';
 import StageFields from './Component/StageFields';
 
 import painScaleImage from '../../assets/images/painscale.jpg';
+import utilities from './utilities';
 
 const procedureSchema = {
   procedureName: '',
   procedureArea: '',
   procedureDynamic: 1,
   comments: 'test',
+  procedureIsNew: true,
 };
 
 class Attendance extends Component {
@@ -23,15 +25,15 @@ class Attendance extends Component {
   }
 
   render() {
+    const { currentPatient, user, createAttendance } = this.props;
     return (
       <Container className="mt-5">
         <h3>Отчет по приёму {this.getMomentLocale(new Date())}</h3>
         <p className="mt-2 mb-2" name="patientName">
-          {' '}
-          Пациент: {this.props.currentPatient.fullname}
+          Пациент: {currentPatient.fullname || ''}
         </p>
         <p className="mb-2" name="medicName">
-          Врач: {this.props.user.fullname}
+          Врач: {user && user.fullname ? user.fullname : ''}
         </p>
 
         <Formik
@@ -42,7 +44,7 @@ class Attendance extends Component {
             thirdStage: [procedureSchema],
             fourthStage: [procedureSchema],
             fifthStage: [procedureSchema],
-            patientDynamic: [],
+            patientDynamic: 1,
             beforeAttendance: {
               comments: '',
               pain: 0,
@@ -53,7 +55,8 @@ class Attendance extends Component {
             },
           }}
           onSubmit={async (data, { resetForm }) => {
-            console.log(data)
+            const attendance = utilities.getAttendance(data);
+            console.dir(attendance);
             // await this.props.sendAttendanceData(data);
             // await resetForm({});
           }}
@@ -180,7 +183,6 @@ class Attendance extends Component {
                   Сохранить
                 </Button>
               </div>
-              {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
             </Form>
           )}
         </Formik>
@@ -190,7 +192,6 @@ class Attendance extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    attendance: state.attendance,
     currentPatient: state.patients.currentPatient,
     user: state.users.user,
   };
