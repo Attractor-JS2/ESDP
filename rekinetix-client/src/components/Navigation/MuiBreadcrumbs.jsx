@@ -38,7 +38,7 @@ const MuiBreadcrumbs = () => {
     <Container>
       <nav>
         <Paper>
-          <Breadcrumbs aria-label="breadcrumb">
+          <Breadcrumbs aria-label="breadcrumb" style={{boxSizing: 'border-box', padding: 10, backgroundColor: 'rgba(240, 240, 240, 0.2)'}}>
             {pathNames.map((value, index) => {
               const isLast = index === pathNames.length - 1;
               const link = `/${pathNames.slice(0, index + 1).join('/')}`;
