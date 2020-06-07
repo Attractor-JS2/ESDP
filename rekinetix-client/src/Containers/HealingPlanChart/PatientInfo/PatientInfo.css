@@ -1,4 +1,19 @@
 .PatientInfo-paper {
-  padding: 10px;
-  height: 100%;
+    padding: 10px;
+    height: 100%;
+}
+
+.MuiChip-label {
+    white-space: pre-wrap !important;
+}
+
+.redFlagItem {
+    padding: 7px!important;
+    max-width: 100%;
+    height: auto!important;
+    margin-bottom: 5px
+}
+.redFlagsList {
+  max-height: 100px;
+  overflow-x: scroll;
 }
