@@ -10,6 +10,7 @@ import ru from 'date-fns/locale/ru';
 import {registerNewPatient} from '../../store/actions/patients';
 import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import Select from "@material-ui/core/Select";
 
 registerLocale('ru', ru);
 
@@ -45,7 +46,7 @@ const PatientRecord = ({onRegisterPatient}) => {
           <Form>
             <Field
               className="mt-2 mb-2 w-25"
-              placeholder="ФИО пациента"
+              label="ФИО пациента"
               name="fullname"
               type="input"
               as={TextField}
@@ -62,7 +63,7 @@ const PatientRecord = ({onRegisterPatient}) => {
             </div>
             
             <div className='mb-3'>
-              <Typography color='textSecondary'>Дата рождения пациента</Typography>
+              <Typography color='primary'>Дата рождения пациента</Typography>
               <DatePicker
                 locale='ru'
                 id="birthday"
@@ -78,48 +79,56 @@ const PatientRecord = ({onRegisterPatient}) => {
             </div>
             
             <div>
-              
               <Field
-                className="mb-2 w-25"
-                placeholder="Возраст пациента"
+                className="mb-4 w-25"
+                label="Возраст пациента"
                 name="patientAge"
                 type="input"
+                disabled
                 as={TextField}
               />
             </div>
             
-            <div> Пол пациента</div>
-            <Field label="Пол пациента" name="gender" as="select">
-              <option value="мужской">Мужчина</option>
-              <option value="женский">Женщина</option>
-            </Field>
-            <Field
-              className="mb-2"
-              placeholder="Контактный телефон пациента"
-              name="phone"
-              type="input"
-              as={Input}
-            />
-            <Field
-              className="mb-2"
-              placeholder="Рост пациента"
-              name="height"
-              type="input"
-              as={Input}
-            />
-            <Field
-              className="mb-2"
-              placeholder="Вес пациента"
-              name="weight"
-              type="input"
-              as={Input}
-            />
+            <div className='mb-3'>
+              <Typography color='primary'>
+                Пол пациента
+              </Typography>
+              <Field label="Пол пациента" name="gender" as={Select}>
+                <option value="мужской">Мужчина</option>
+                <option value="женский">Женщина</option>
+              </Field>
+            </div>
+            
+            <div>
+              <Field
+                className="mb-3 w-25"
+                label="Контактный телефон пациента"
+                name="phone"
+                type="input"
+                as={TextField}
+              />
+            </div>
+            <div>
+              <Field
+                className="mb-3 w-25"
+                label="Рост пациента"
+                name="height"
+                type="input"
+                as={TextField}
+              />
+            </div>
+            <div>
+              <Field
+                className="mb-3 w-25"
+                label="Вес пациента"
+                name="weight"
+                type="input"
+                as={TextField}
+              />
+            </div>
             <Button type="submit" variant="outlined">
               Сохранить
             </Button>
-            <pre>
-              {JSON.stringify(values, null, 2)}
-            </pre>
           </Form>
         )}
       </Formik>
