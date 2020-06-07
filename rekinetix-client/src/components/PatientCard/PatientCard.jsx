@@ -19,7 +19,8 @@ const useStyles = makeStyles(() => ({
   container: {
     padding: 2,
     width: '30%',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginRight: 15
   },
 }));
 export default function PatientCard(props) {

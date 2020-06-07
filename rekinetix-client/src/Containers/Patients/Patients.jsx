@@ -56,7 +56,7 @@ const Patients = ({patients, onFetchAllPatients, onResetCurrentPatient}) => {
           </Grid>
         </Grid>
       </Paper>
-      <div className='d-flex justify-content-between flex-wrap'>
+      <div className='d-flex justify-content-start flex-wrap'>
         {patients && Array.isArray(patients) && patients.length > 0
           ? patients.map((person) => {
             return (
