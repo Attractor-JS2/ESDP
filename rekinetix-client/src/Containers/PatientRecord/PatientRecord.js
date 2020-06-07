@@ -26,7 +26,7 @@ const validationSchema = yup.object().shape({
 
 const PatientRecord = ({onRegisterPatient}) => {
   return (
-    <Container className="mb-5">
+    <Container className="mb-5 mt-3">
       <h3>Анкетные данные</h3>
       <Formik
         initialValues={{
@@ -113,7 +113,8 @@ const PatientRecord = ({onRegisterPatient}) => {
                 className="mb-3 w-25"
                 label="Рост пациента"
                 name="height"
-                type="input"
+                inputProps={{ min: "1", step: "1" }}
+                type="number"
                 as={TextField}
               />
             </div>
@@ -122,7 +123,8 @@ const PatientRecord = ({onRegisterPatient}) => {
                 className="mb-3 w-25"
                 label="Вес пациента"
                 name="weight"
-                type="input"
+                inputProps={{ min: "1", step: "1" }}
+                type="number"
                 as={TextField}
               />
             </div>
