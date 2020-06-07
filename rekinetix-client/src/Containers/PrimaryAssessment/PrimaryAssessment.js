@@ -8,6 +8,7 @@ import {getRedFlags, submitPrimaryAttendance} from "../../store/actions/primaryA
 import FormTextarea from "../../components/Forms/FormTextarea/FormTextarea";
 import {statusProps} from "./PrimaryAssessment.autocompleteTypes";
 import {fetchPatientInfo} from "../../store/actions/patients";
+import Typography from "@material-ui/core/Typography";
 
 
 class PrimaryAssesssment extends Component {
@@ -22,10 +23,11 @@ class PrimaryAssesssment extends Component {
     const redFlags = this.props.redFlags.map(redFlag => redFlag.title);
     const patient = this.props.patient;
     return (
-      <Container className="mt-5">
-        <Row className='mb-5 d-flex justify-content-between border-bottom border-dark'>
-          <span>Имя Пациента: {patient && patient.fullname}</span>
-          <span>Дата рождения: {patient && new Date(patient.birthday).toLocaleDateString()}</span>
+      <Container className="mt-4">
+        <Row className='mb-4 d-flex justify-content-between border-bottom '>
+          <Typography color='textSecondary'>Имя Пациента: {patient && patient.fullname}</Typography>
+          <Typography color='textSecondary'>Дата
+            рождения: {patient && new Date(patient.birthday).toLocaleDateString()}</Typography>
         </Row>
         <h3>Протокол первичного приема</h3>
         <Formik
@@ -53,21 +55,25 @@ class PrimaryAssesssment extends Component {
           }}>
           {({values}) => (
             <Form>
-              <div className='mb-3'>
-                <div> Красные флаги:</div>
-                {redFlags.map((redFlag, index) => {
-                  return (
-                    <label key={index}>
-                      <Field
-                        type="checkbox"
-                        name="redFlags"
-                        as={Checkbox}
-                        value={redFlag}
-                      />
-                      <span>{redFlag} </span>
-                    
-                    </label>)
-                })}
+              <div className='mb-3 mt-3'>
+                <Typography color='primary'>
+                  Красные флаги:
+                </Typography>
+                <div style={{maxHeight: '100px', overflowX: 'scroll'}}>
+                  {redFlags.map((redFlag, index) => {
+                    return (
+                      <label key={index}>
+                        <Field
+                          type="checkbox"
+                          name="redFlags"
+                          as={Checkbox}
+                          value={redFlag}
+                        />
+                        <span>{redFlag} </span>
+                      
+                      </label>)
+                  })}
+                </div>
               </div>
               
               <div className='mb-3'>
@@ -114,7 +120,7 @@ class PrimaryAssesssment extends Component {
                 ))
                 
               }
-  
+              
               <div className='mb-3'>
                 <Field
                   name="diagnosis"
