@@ -6,6 +6,7 @@ import {Checkbox} from "@material-ui/core";
 import StatusAutocomplete from "./Components/StatusAutocomplete";
 import {getRedFlags, submitPrimaryAttendance} from "../../store/actions/primaryAssessment";
 import FormTextarea from "../../components/Forms/FormTextarea/FormTextarea";
+import {statusProps} from "./PrimaryAssessment.autocompleteTypes";
 
 const patient = {
   patientName: "John Doe",
@@ -21,8 +22,6 @@ class PrimaryAssesssment extends Component {
   
   render() {
     const redFlags = this.props.redFlags.map(redFlag => redFlag.title);
-    const diagnosis = ["Диагноз 1", "Диагноз 2", "Диагноз 3"];
-    const statusProps = ['Состояние 1', 'Состояние 2', 'Состояние 3'];
     
     return (
       <Container className="mt-5">
@@ -112,7 +111,7 @@ class PrimaryAssesssment extends Component {
                                       name={`objectiveExam.${bodyPart}`}
                                       values={values.objectiveExam[bodyPart]}
                                       label={values.objectiveExam[bodyPart].title}
-                                      autocompleteOptions={statusProps}
+                                      autocompleteOptions={statusProps[bodyPart]}
                   />
                 ))
                 
