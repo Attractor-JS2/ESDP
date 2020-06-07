@@ -217,11 +217,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPlanByAssessment: (primaryAssessmentId) =>
-    dispatch(fetchPlanByPrimaryAssessment(primaryAssessmentId)),
-  fetchPlanById: (healingPlanId) => dispatch(fetchPlanById(healingPlanId)),
-  fetchAttendances: (healingPlanId) =>
-    dispatch(fetchAttendancesByHealingPlan(healingPlanId)),
+  fetchPlanByAssessment: (assessmentId) =>
+    dispatch(fetchPlanByPrimaryAssessment(assessmentId)),
+  fetchPlanById: (planId) => dispatch(fetchPlanById(planId)),
+  fetchAttendances: (planId) => dispatch(fetchAttendancesByHealingPlan(planId)),
   removeProcedure: (stage, procedureName) =>
     dispatch(removeProcedureFromPlan(stage, procedureName)),
   proceedToAttendance: (attendanceData) =>

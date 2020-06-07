@@ -63,8 +63,7 @@ const Table = ({
       rowIds,
       tableData,
     );
-    console.dir(attendance);
-    // handleProceed(attendance);
+    handleProceed(attendance);
   };
 
   return (

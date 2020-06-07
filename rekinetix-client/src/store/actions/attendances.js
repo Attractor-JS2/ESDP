@@ -32,7 +32,7 @@ const provideDataToAttendance = (attendanceData) => ({
 
 export const proceedToAttendance = (data) => (dispatch) => {
   dispatch(provideDataToAttendance(data));
-  dispatch(push('/attendance'));
+  dispatch(push('/patients/attendances/new'));
 };
 
 const sendAttendanceSuccess = () => ({ type: SEND_ATTENDANCE_DATA_SUCCESS });

@@ -37,7 +37,7 @@ const initialFormikValues = {
 };
 
 const Attendance = (props) => {
-  const { currentPatient, user, createAttendance } = props;
+  const { currentPatient, user, createAttendance, attendance } = props;
   const dispatch = useDispatch();
 
   const getMomentLocale = (date) => {
@@ -60,14 +60,19 @@ const Attendance = (props) => {
     <Container className="mt-5">
       <h3>Отчет по приёму {getMomentLocale(new Date())}</h3>
       <p className="mt-2 mb-2" name="patientName">
-        Пациент: {currentPatient && currentPatient.patient ? currentPatient.patient.fullname : ''}
+        Пациент:{' '}
+        {currentPatient && currentPatient.patient
+          ? currentPatient.patient.fullname
+          : ''}
       </p>
       <p className="mb-2" name="medicName">
         Врач: {user ? user.fullname : ''}
       </p>
 
       <Formik
-        initialValues={initialFormikValues}
+        initialValues={
+          Object.keys(attendance).length > 0 ? attendance : initialFormikValues
+        }
         onSubmit={(data, { resetForm }) => {
           submitHandler(data, currentPatient.healingPlan._id);
           dispatch(resetForm);
@@ -213,6 +218,7 @@ const mapStateToProps = (state) => {
   return {
     currentPatient: state.patients.currentPatient,
     user: state.users.user,
+    attendance: state.attendances.attendance,
   };
 };
 
