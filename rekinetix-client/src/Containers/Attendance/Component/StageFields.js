@@ -101,7 +101,7 @@ const StageFields = (props) => {
                           disabled={!procedureIsNew}
                           label="Комментарии"
                           variant="outlined"
-                          as={TextField}
+                          component={TextField}
                         />
 
                         <div className="d-flex pl-2 mb-1">
