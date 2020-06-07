@@ -1,12 +1,16 @@
 const getStageProcedureDynamics = (procedures, stageNumber) => {
   if (procedures && procedures.length > 0) {
-    return procedures.map(({ procedureDynamic, ...rest }) => ({
-      procedureDynamic,
-      procedure: {
-        ...rest,
-        stage: stageNumber,
-      },
-    }));
+    return procedures
+      .filter(
+        ({ procedureArea, procedureName }) => procedureArea && procedureName,
+      )
+      .map(({ procedureDynamic, ...rest }) => ({
+        procedureDynamic,
+        procedure: {
+          ...rest,
+          stage: stageNumber,
+        },
+      }));
   } else {
     return [];
   }
