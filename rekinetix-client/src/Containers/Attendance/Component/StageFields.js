@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldArray, Field } from 'formik';
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -16,52 +16,95 @@ const StageFields = (props) => {
             <div className="mb-3 mt-2">
               <p>{stageTitle}</p>
               {arrayHelpers.form.values[stageName].map(
-                (procedureName, index) => {
+                ({ procedureIsNew }, index) => {
                   const CURRENT_FIELD =
                     arrayHelpers.form.values[stageName][index];
                   return (
                     <div key={`${index}`} className="d-flex flex-wrap">
                       <div className="d-flex">
-                        <Autocomplete
-                          className="ml-2 mt-2"
-                          name={`${stageName}[${index}].procedureArea`}
-                          options={availablePlace}
-                          onChange={(event, value) =>
-                            arrayHelpers.form.setFieldValue(
-                              `${stageName}[${index}].procedureArea`,
-                              value,
-                            )
-                          }
-                          getOptionLabel={(option) => option}
-                          style={{ width: 262 }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Назначение"
-                              variant="outlined"
-                            />
-                          )}
-                        />
+                        {!procedureIsNew ? (
+                          <Field
+                            className="mt-2"
+                            size="35"
+                            name={CURRENT_FIELD.procedureArea}
+                            disabled={!procedureIsNew}
+                            value={CURRENT_FIELD.procedureArea}
+                            label="Назначение"
+                            variant="outlined"
+                            component={TextField}
+                          />
+                        ) : (
+                          <Autocomplete
+                            className="ml-2 mt-2"
+                            name={`${stageName}[${index}].procedureArea`}
+                            options={availablePlace}
+                            onChange={(event, value) =>
+                              arrayHelpers.form.setFieldValue(
+                                `${stageName}[${index}].procedureArea`,
+                                value,
+                              )
+                            }
+                            getOptionLabel={(option) => option}
+                            style={{ width: 262 }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Назначение"
+                                variant="outlined"
+                              />
+                            )}
+                          />
+                        )}
 
-                        <Autocomplete
+                        {!procedureIsNew ? (
+                          <Field
+                            className="mt-2"
+                            size="35"
+                            name={CURRENT_FIELD.procedureName}
+                            disabled={!procedureIsNew}
+                            value={CURRENT_FIELD.procedureName}
+                            label="Название процедуры"
+                            variant="outlined"
+                            component={TextField}
+                          />
+                        ) : (
+                          <Autocomplete
+                            freeSolo={!procedureIsNew}
+                            disabled={!procedureIsNew}
+                            className="mt-2"
+                            name={`${stageName}[${index}].procedureName`}
+                            options={availableProcedures}
+                            onChange={(event, value) =>
+                              arrayHelpers.form.setFieldValue(
+                                `${stageName}[${index}].procedureName`,
+                                value,
+                              )
+                            }
+                            defaultValue={
+                              !procedureIsNew
+                                ? CURRENT_FIELD.procedureName
+                                : null
+                            }
+                            getOptionLabel={(option) => option}
+                            style={{ width: 262 }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Название процедуры"
+                                variant="outlined"
+                              />
+                            )}
+                          />
+                        )}
+
+                        <Field
                           className="mt-2"
-                          name={`${stageName}[${index}].procedureName`}
-                          options={availableProcedures}
-                          onChange={(event, value) =>
-                            arrayHelpers.form.setFieldValue(
-                              `${stageName}[${index}].procedureName`,
-                              value,
-                            )
-                          }
-                          getOptionLabel={(option) => option}
-                          style={{ width: 262 }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Название процедуры"
-                              variant="outlined"
-                            />
-                          )}
+                          name={`${stageName}[${index}].comments`}
+                          disabled={!procedureIsNew}
+                          placeholder="Комментарии"
+                          label="Комментарии"
+                          variant="outlined"
+                          as={TextField}
                         />
 
                         <div className="d-flex pl-2 mb-1">
@@ -121,13 +164,6 @@ const StageFields = (props) => {
                         onClick={() => {
                           return arrayHelpers.remove(index);
                         }}
-                      />
-                      
-                      <Field
-                        name={`${stageName}[${index}].comments`}
-                        placeholder="Комментарии"
-                        fullWidth
-                        as={TextField}
                       />
                     </div>
                   );

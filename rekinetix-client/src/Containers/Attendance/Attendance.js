@@ -52,7 +52,8 @@ const Attendance = (props) => {
         healingPlanId,
         attendanceDate,
       );
-      createAttendance(attendance);
+      console.log(attendance);
+      // createAttendance(attendance);
     }
   };
 
@@ -71,7 +72,9 @@ const Attendance = (props) => {
 
       <Formik
         initialValues={
-          Object.keys(attendance).length > 0 ? attendance : initialFormikValues
+          Object.keys(attendance).length > 0
+            ? { ...attendance }
+            : { ...initialFormikValues }
         }
         onSubmit={(data, { resetForm }) => {
           submitHandler(data, currentPatient.healingPlan._id);
