@@ -5,9 +5,9 @@ import { Button, Input, Container } from 'reactstrap';
 import { Formik, Field, FieldArray, Form } from 'formik';
 import moment from 'moment';
 import 'moment/locale/ru';
+
 import { availableProcedures, availableHealingPlaces } from './procedures';
 import StageFields from './Component/StageFields';
-
 import painScaleImage from '../../assets/images/painscale.jpg';
 import utilities from './utilities';
 
@@ -52,8 +52,7 @@ const Attendance = (props) => {
         healingPlanId,
         attendanceDate,
       );
-      console.log(attendance);
-      // createAttendance(attendance);
+      createAttendance(attendance);
     }
   };
 

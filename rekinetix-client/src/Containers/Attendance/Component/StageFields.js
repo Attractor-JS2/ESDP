@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldArray, Field } from 'formik';
-import { Button, Input } from 'reactstrap';
+import { Button } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -25,7 +25,6 @@ const StageFields = (props) => {
                         {!procedureIsNew ? (
                           <Field
                             className="mt-2"
-                            size="35"
                             name={CURRENT_FIELD.procedureArea}
                             disabled={!procedureIsNew}
                             value={CURRENT_FIELD.procedureArea}
@@ -59,7 +58,6 @@ const StageFields = (props) => {
                         {!procedureIsNew ? (
                           <Field
                             className="mt-2"
-                            size="35"
                             name={CURRENT_FIELD.procedureName}
                             disabled={!procedureIsNew}
                             value={CURRENT_FIELD.procedureName}
