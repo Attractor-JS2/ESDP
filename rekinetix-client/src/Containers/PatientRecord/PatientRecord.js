@@ -67,6 +67,7 @@ const PatientRecord = ({onRegisterPatient}) => {
                 locale='ru'
                 id="birthday"
                 name="birthday"
+                dateFormat="dd/MM/yyyy"
                 selected={values.birthday}
                 onChange={(date) => {
                   const age = moment().diff(date, 'years');
