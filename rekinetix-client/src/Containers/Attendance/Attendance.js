@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { createAttendance } from '../../store/actions/attendances';
 import { Button, Input, Container } from 'reactstrap';
 import { Formik, Field, FieldArray, Form } from 'formik';
@@ -11,54 +11,66 @@ import StageFields from './Component/StageFields';
 import painScaleImage from '../../assets/images/painscale.jpg';
 import utilities from './utilities';
 
-const procedureSchema = {
+const getProcedureSchema = () => ({
   procedureName: '',
   procedureArea: '',
   procedureDynamic: 1,
   comments: '',
   procedureIsNew: true,
+});
+
+const initialFormikValues = {
+  firstStage: [getProcedureSchema()],
+  secondStage: [getProcedureSchema()],
+  thirdStage: [getProcedureSchema()],
+  fourthStage: [getProcedureSchema()],
+  fifthStage: [getProcedureSchema()],
+  patientDynamic: 1,
+  beforeAttendance: {
+    comments: '',
+    pain: 0,
+  },
+  afterAttendance: {
+    comments: '',
+    pain: 0,
+  },
 };
 
 const Attendance = (props) => {
   const { currentPatient, user, createAttendance } = props;
+  const dispatch = useDispatch();
 
   const getMomentLocale = (date) => {
     return moment(date).locale('ru').format('L');
+  };
+
+  const submitHandler = (formData, healingPlanId) => {
+    if (healingPlanId) {
+      const attendanceDate = new Date();
+      const attendance = utilities.getAttendance(
+        formData,
+        healingPlanId,
+        attendanceDate,
+      );
+      createAttendance(attendance);
+    }
   };
 
   return (
     <Container className="mt-5">
       <h3>Отчет по приёму {getMomentLocale(new Date())}</h3>
       <p className="mt-2 mb-2" name="patientName">
-        Пациент: {currentPatient.fullname || ''}
+        Пациент: {currentPatient && currentPatient.patient ? currentPatient.patient.fullname : ''}
       </p>
       <p className="mb-2" name="medicName">
-        Врач: {user && user.fullname ? user.fullname : ''}
+        Врач: {user ? user.fullname : ''}
       </p>
 
       <Formik
-        initialValues={{
-          attendanceDate: new Date(),
-          firstStage: [procedureSchema],
-          secondStage: [procedureSchema],
-          thirdStage: [procedureSchema],
-          fourthStage: [procedureSchema],
-          fifthStage: [procedureSchema],
-          patientDynamic: 1,
-          beforeAttendance: {
-            comments: '',
-            pain: 0,
-          },
-          afterAttendance: {
-            comments: '',
-            pain: 0,
-          },
-        }}
-        onSubmit={async (data, { resetForm }) => {
-          const attendance = utilities.getAttendance(data);
-          console.dir(attendance);
-          // await this.props.sendAttendanceData(data);
-          // await resetForm({});
+        initialValues={initialFormikValues}
+        onSubmit={(data, { resetForm }) => {
+          submitHandler(data, currentPatient.healingPlan._id);
+          dispatch(resetForm);
         }}
       >
         {({ values, setFieldValue }) => (

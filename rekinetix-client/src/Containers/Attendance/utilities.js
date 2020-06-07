@@ -34,9 +34,8 @@ const getProcedureDynamics = (formData) => {
   ];
 };
 
-const getAttendance = (formData, healingPlanId) => {
+const getAttendance = (formData, healingPlanId, attendanceDate) => {
   const {
-    attendanceDate,
     patientDynamic,
     beforeAttendance,
     afterAttendance,

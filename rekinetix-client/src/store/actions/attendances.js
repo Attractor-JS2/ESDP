@@ -5,6 +5,7 @@ import {
   FETCH_ATTENDANCES_SUCCESS,
   FETCH_ATTENDANCES_FAILURE,
   SEND_ATTENDANCE_DATA_SUCCESS,
+  SEND_ATTENDANCE_DATA_FAILURE
 } from './actionTypes';
 
 const fetchAttendancesSuccess = (attendances) => ({
@@ -30,7 +31,7 @@ export const proceedToAttendance = (data) => (dispatch) => {
 
 const sendAttendanceSuccess = () => ({ type: SEND_ATTENDANCE_DATA_SUCCESS });
 const sendAttendanceFailure = (error) => ({
-  type: FETCH_ATTENDANCES_FAILURE,
+  type: SEND_ATTENDANCE_DATA_FAILURE,
   payload: error,
 });
 
