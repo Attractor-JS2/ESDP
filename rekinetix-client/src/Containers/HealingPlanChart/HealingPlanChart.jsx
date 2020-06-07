@@ -30,12 +30,12 @@ const HealingPlanChart = ({
   healingPlan,
   attendances,
   currentPatient,
-  onFetchPlanByAssessment,
-  onFetchPlanById,
-  onFetchAttendances,
-  onProcedureDelete,
-  onUpdateProcedureStatus,
-  onProceedToAttendance,
+  fetchPlanByAssessment,
+  fetchPlanById,
+  fetchAttendances,
+  removeProcedure,
+  updateProcedureStatus,
+  proceedToAttendance,
 }) => {
   const [dateHeaderTitles, setHeaderTitles] = useState([]);
   const [chartData, setChartData] = useState([]);
@@ -77,7 +77,7 @@ const HealingPlanChart = ({
   };
 
   const procedureDeleteHandler = (procedureId) => {
-    onProcedureDelete(procedureId);
+    removeProcedure(procedureId);
     cancelProcedureDeleting();
   };
 
@@ -122,21 +122,21 @@ const HealingPlanChart = ({
 
   useEffect(() => {
     if (planId) {
-      onFetchPlanById(planId);
+      fetchPlanById(planId);
     } else if (searchParams.primaryAssessment) {
-      onFetchPlanByAssessment(searchParams.primaryAssessment);
+      fetchPlanByAssessment(searchParams.primaryAssessment);
     } else if (
       currentPatient &&
       currentPatient.primaryAssessment &&
       currentPatient.primaryAssessment._id
     ) {
-      onFetchPlanByAssessment(currentPatient.primaryAssessment._id);
+      fetchPlanByAssessment(currentPatient.primaryAssessment._id);
     }
-  }, [currentPatient, planId, onFetchPlanByAssessment]);
+  }, [currentPatient, planId, fetchPlanByAssessment]);
 
   useEffect(() => {
     if (healingPlan && healingPlan._id) {
-      onFetchAttendances(healingPlan._id);
+      fetchAttendances(healingPlan._id);
     }
   }, [healingPlan._id]);
 
@@ -201,8 +201,8 @@ const HealingPlanChart = ({
             data={chartData}
             addProcedureHandler={addProcedureHandler}
             proceedToDeleteProcedure={proceedToDeleteProcedure}
-            updateSelectData={onUpdateProcedureStatus}
-            handleProceed={onProceedToAttendance}
+            updateSelectData={updateProcedureStatus}
+            handleProceed={proceedToAttendance}
           />
         )}
       </Container>
@@ -217,16 +217,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchPlanByAssessment: (primaryAssessmentId) =>
+  fetchPlanByAssessment: (primaryAssessmentId) =>
     dispatch(fetchPlanByPrimaryAssessment(primaryAssessmentId)),
-  onFetchPlanById: (healingPlanId) => dispatch(fetchPlanById(healingPlanId)),
-  onFetchAttendances: (healingPlanId) =>
+  fetchPlanById: (healingPlanId) => dispatch(fetchPlanById(healingPlanId)),
+  fetchAttendances: (healingPlanId) =>
     dispatch(fetchAttendancesByHealingPlan(healingPlanId)),
-  onProcedureDelete: (stage, procedureName) =>
+  removeProcedure: (stage, procedureName) =>
     dispatch(removeProcedureFromPlan(stage, procedureName)),
-  onProceedToAttendance: (attendanceData) =>
+  proceedToAttendance: (attendanceData) =>
     dispatch(proceedToAttendance(attendanceData)),
-  onUpdateProcedureStatus: (procedureId, status) =>
+  updateProcedureStatus: (procedureId, status) =>
     dispatch(updateProcedureStatus(procedureId, status)),
 });
 
