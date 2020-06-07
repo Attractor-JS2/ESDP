@@ -99,7 +99,6 @@ const StageFields = (props) => {
                           className="mt-2"
                           name={`${stageName}[${index}].comments`}
                           disabled={!procedureIsNew}
-                          placeholder="Комментарии"
                           label="Комментарии"
                           variant="outlined"
                           as={TextField}

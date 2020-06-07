@@ -42,8 +42,12 @@ const sendAttendanceFailure = (error) => ({
 });
 
 export const createAttendance = (attendanceData) => (dispatch) => {
+  const { healingPlan } = attendanceData;
   axios.post('/attendances', attendanceData).then(
-    (response) => dispatch(sendAttendanceSuccess()),
+    (response) => {
+      dispatch(sendAttendanceSuccess());
+      dispatch(push(`/patients/healing-plans/${healingPlan}`));
+    },
     (error) => dispatch(sendAttendanceFailure(error)),
   );
 };

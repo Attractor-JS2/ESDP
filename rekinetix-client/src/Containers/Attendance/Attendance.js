@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { createAttendance } from '../../store/actions/attendances';
 import { Button, Input, Container } from 'reactstrap';
 import { Formik, Field, FieldArray, Form } from 'formik';
@@ -38,7 +38,6 @@ const initialFormikValues = {
 
 const Attendance = (props) => {
   const { currentPatient, user, createAttendance, attendance } = props;
-  const dispatch = useDispatch();
 
   const getMomentLocale = (date) => {
     return moment(date).locale('ru').format('L');
@@ -75,9 +74,8 @@ const Attendance = (props) => {
             ? { ...attendance }
             : { ...initialFormikValues }
         }
-        onSubmit={(data, { resetForm }) => {
+        onSubmit={(data) => {
           submitHandler(data, currentPatient.healingPlan._id);
-          dispatch(resetForm);
         }}
       >
         {({ values, setFieldValue }) => (
