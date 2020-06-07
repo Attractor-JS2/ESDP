@@ -1,12 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
-import { Button, Input, Container } from 'reactstrap';
+import {connect} from 'react-redux';
+import {Formik, Field, Form} from 'formik';
+import {Button, Input, Container} from 'reactstrap';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
+import {registerLocale} from 'react-datepicker';
 import * as yup from 'yup';
+import ru from 'date-fns/locale/ru';
+import {registerNewPatient} from '../../store/actions/patients';
+import {TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
-import { registerNewPatient } from '../../store/actions/patients';
+registerLocale('ru', ru);
 
 const validationSchema = yup.object().shape({
   fullname: yup.string().required(),
@@ -18,7 +23,7 @@ const validationSchema = yup.object().shape({
   weight: yup.string(),
 });
 
-const PatientRecord = ({ onRegisterPatient }) => {
+const PatientRecord = ({onRegisterPatient}) => {
   return (
     <Container className="mb-5">
       <h3>Анкетные данные</h3>
@@ -36,44 +41,53 @@ const PatientRecord = ({ onRegisterPatient }) => {
         validationSchema={validationSchema}
         onSubmit={(values) => onRegisterPatient(values)}
       >
-        {({ values, setFieldValue }) => (
+        {({values, setFieldValue}) => (
           <Form>
             <Field
-              className="mt-2 mb-2"
+              className="mt-2 mb-2 w-25"
               placeholder="ФИО пациента"
               name="fullname"
               type="input"
-              as={Input}
+              as={TextField}
             />
-            <Field
-              className="mb-2"
-              label="Адрес проживания пациента"
-              placeholder="Адрес проживания пациента"
-              name="address"
-              type="input"
-              as={Input}
-            />
-
-            <div>Дата рождения пациента</div>
-            <DatePicker
-              id="birthday"
-              name="birthday"
-              selected={values.birthday}
-              onChange={(date) => {
-                const age = moment().diff(date, 'years');
-                setFieldValue('birthday', date);
-                setFieldValue('patientAge', age + ' лет');
-              }}
-            />
-            <Field
-              className="mb-2"
-              placeholder="Возраст пациента"
-              name="patientAge"
-              type="input"
-              as={Input}
-            />
-
-            <div> Пол пациента </div>
+            <div>
+              
+              <Field
+                className="mb-4 w-25"
+                label="Адрес проживания пациента"
+                name="address"
+                type="input"
+                as={TextField}
+              />
+            </div>
+            
+            <div className='mb-3'>
+              <Typography color='textSecondary'>Дата рождения пациента</Typography>
+              <DatePicker
+                locale='ru'
+                id="birthday"
+                name="birthday"
+                selected={values.birthday}
+                onChange={(date) => {
+                  const age = moment().diff(date, 'years');
+                  setFieldValue('birthday', date);
+                  setFieldValue('patientAge', age + ' лет');
+                }}
+              />
+            </div>
+            
+            <div>
+              
+              <Field
+                className="mb-2 w-25"
+                placeholder="Возраст пациента"
+                name="patientAge"
+                type="input"
+                as={TextField}
+              />
+            </div>
+            
+            <div> Пол пациента</div>
             <Field label="Пол пациента" name="gender" as="select">
               <option value="мужской">Мужчина</option>
               <option value="женский">Женщина</option>
@@ -102,6 +116,9 @@ const PatientRecord = ({ onRegisterPatient }) => {
             <Button type="submit" variant="outlined">
               Сохранить
             </Button>
+            <pre>
+              {JSON.stringify(values, null, 2)}
+            </pre>
           </Form>
         )}
       </Formik>
