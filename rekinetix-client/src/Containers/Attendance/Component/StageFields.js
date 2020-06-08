@@ -1,13 +1,14 @@
 import React from 'react';
-import { FieldArray, Field } from 'formik';
-import { Button } from 'reactstrap';
+import {FieldArray, Field} from 'formik';
+import {Button} from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import './StageFields.css';
+import Radio from "@material-ui/core/Radio";
 
 const StageFields = (props) => {
-  const { stageName, stageTitle, availablePlace, availableProcedures } = props;
+  const {stageName, stageTitle, availablePlace, availableProcedures} = props;
   return (
     <FieldArray name={stageName}>
       {(arrayHelpers) => {
@@ -16,7 +17,7 @@ const StageFields = (props) => {
             <div className="mb-3 mt-2">
               <p>{stageTitle}</p>
               {arrayHelpers.form.values[stageName].map(
-                ({ procedureIsNew }, index) => {
+                ({procedureIsNew}, index) => {
                   const CURRENT_FIELD =
                     arrayHelpers.form.values[stageName][index];
                   return (
@@ -24,7 +25,7 @@ const StageFields = (props) => {
                       <div className="d-flex">
                         {!procedureIsNew ? (
                           <Field
-                            className="mt-2"
+                            className="mt-2 mr-1"
                             name={CURRENT_FIELD.procedureArea}
                             disabled={!procedureIsNew}
                             value={CURRENT_FIELD.procedureArea}
@@ -34,7 +35,7 @@ const StageFields = (props) => {
                           />
                         ) : (
                           <Autocomplete
-                            className="ml-2 mt-2"
+                            className="ml-2 mt-2 mr-1"
                             name={`${stageName}[${index}].procedureArea`}
                             options={availablePlace}
                             onChange={(event, value) =>
@@ -44,7 +45,7 @@ const StageFields = (props) => {
                               )
                             }
                             getOptionLabel={(option) => option}
-                            style={{ width: 262 }}
+                            style={{width: 262}}
                             renderInput={(params) => (
                               <TextField
                                 {...params}
@@ -54,10 +55,10 @@ const StageFields = (props) => {
                             )}
                           />
                         )}
-
+                        
                         {!procedureIsNew ? (
                           <Field
-                            className="mt-2"
+                            className="mt-2 mr-1"
                             name={CURRENT_FIELD.procedureName}
                             disabled={!procedureIsNew}
                             value={CURRENT_FIELD.procedureName}
@@ -69,7 +70,7 @@ const StageFields = (props) => {
                           <Autocomplete
                             freeSolo={!procedureIsNew}
                             disabled={!procedureIsNew}
-                            className="mt-2"
+                            className="mt-2 mr-1"
                             name={`${stageName}[${index}].procedureName`}
                             options={availableProcedures}
                             onChange={(event, value) =>
@@ -84,7 +85,7 @@ const StageFields = (props) => {
                                 : null
                             }
                             getOptionLabel={(option) => option}
-                            style={{ width: 262 }}
+                            style={{width: 262}}
                             renderInput={(params) => (
                               <TextField
                                 {...params}
@@ -94,7 +95,7 @@ const StageFields = (props) => {
                             )}
                           />
                         )}
-
+                        
                         <Field
                           className="mt-2"
                           name={`${stageName}[${index}].comments`}
@@ -103,11 +104,11 @@ const StageFields = (props) => {
                           variant="outlined"
                           component={TextField}
                         />
-
+                        
                         <div className="d-flex pl-2 mb-1">
-                          <label className="d-flex m-2 p-3">
-                            <input
-                              className="d-flex pl-2 mb-1"
+                          <label className="d-flex align-items-center m-1 p-2">
+                            <Radio
+                              className="d-flex pl-1 mb-1"
                               type="radio"
                               name={`${stageName}[${index}].procedureDynamic`}
                               value="0"
@@ -119,11 +120,13 @@ const StageFields = (props) => {
                                 )
                               }
                             />
+                            <span>
                             Хуже
+                            </span>
                           </label>
-                          <label className="d-flex m-2 p-3">
-                            <input
-                              className="d-flex pl-2 mb-1"
+                          <label className="d-flex align-items-center m-1 p-2">
+                            <Radio
+                              className="d-flex pl-2"
                               type="radio"
                               name={`${stageName}[${index}].dynamicsData`}
                               value="1"
@@ -135,11 +138,11 @@ const StageFields = (props) => {
                                 )
                               }
                             />
-                            Так же
+                            <span>Так же</span>
                           </label>
-                          <label className="d-flex m-2 p-3">
-                            <input
-                              className="d-flex pl-2 mb-1"
+                          <label className="d-flex align-items-center m-1 p-2">
+                            <Radio
+                              className="d-flex pl-2"
                               type="radio"
                               name={`${stageName}[${index}].dynamicsData`}
                               value="2"
@@ -151,7 +154,7 @@ const StageFields = (props) => {
                                 )
                               }
                             />
-                            Лучше
+                            <span>Лучше</span>
                           </label>
                         </div>
                       </div>
