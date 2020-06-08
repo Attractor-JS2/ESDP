@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Formik, Field, Form} from 'formik';
-import {Button, Input, Container} from 'reactstrap';
+import {Button, Container} from 'reactstrap';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import {registerLocale} from 'react-datepicker';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {createAttendance} from '../../store/actions/attendances';
-import {Button, Input, Container} from 'reactstrap';
+import {Button, Container} from 'reactstrap';
 import {Formik, Field, FieldArray, Form} from 'formik';
 import moment from 'moment';
 import 'moment/locale/ru';
