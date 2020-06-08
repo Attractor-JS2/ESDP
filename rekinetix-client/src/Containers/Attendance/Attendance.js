@@ -221,9 +221,6 @@ const Attendance = (props) => {
                 Сохранить
               </Button>
             </div>
-            <pre>
-              {JSON.stringify(values, null, 2)}
-            </pre>
           </Form>
         )}
       </Formik>
