@@ -13,7 +13,6 @@ import {
   resetPatientInfo,
 } from '../../store/actions/patients';
 import PatientFullInfo from './PatientFullInfo/PatientFullInfo';
-import {Button} from "@material-ui/core";
 
 const Patients = ({patients, onFetchAllPatients, onResetCurrentPatient}) => {
   const [open, setOpen] = useState(false);
