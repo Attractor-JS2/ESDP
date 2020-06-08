@@ -1,15 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createAttendance } from '../../store/actions/attendances';
-import { Button, Input, Container } from 'reactstrap';
-import { Formik, Field, FieldArray, Form } from 'formik';
+import {connect} from 'react-redux';
+import {createAttendance} from '../../store/actions/attendances';
+import {Button, Input, Container} from 'reactstrap';
+import {Formik, Field, FieldArray, Form} from 'formik';
 import moment from 'moment';
 import 'moment/locale/ru';
 
-import { availableProcedures, availableHealingPlaces } from './procedures';
+import {availableProcedures, availableHealingPlaces} from './procedures';
 import StageFields from './Component/StageFields';
 import painScaleImage from '../../assets/images/painscale.jpg';
 import utilities from './utilities';
+import {Select, TextField} from "@material-ui/core";
+import Radio from "@material-ui/core/Radio";
 
 const getProcedureSchema = () => ({
   procedureName: '',
@@ -44,11 +46,11 @@ const Attendance = (props) => {
     attendance,
     healingPlan,
   } = props;
-
+  
   const getMomentLocale = (date) => {
     return moment(date).locale('ru').format('L');
   };
-
+  
   const submitHandler = (formData, healingPlanId) => {
     if (healingPlanId) {
       const attendanceDate = new Date();
@@ -60,9 +62,9 @@ const Attendance = (props) => {
       createAttendance(attendance);
     }
   };
-
+  
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 mb-4">
       <h3>Отчет по приёму {getMomentLocale(new Date())}</h3>
       <p className="mt-2 mb-2" name="patientName">
         Пациент:{' '}
@@ -73,12 +75,12 @@ const Attendance = (props) => {
       <p className="mb-2" name="medicName">
         Врач: {user ? user.fullname : ''}
       </p>
-
+      
       <Formik
         initialValues={
           Object.keys(attendance).length > 0
-            ? { ...attendance }
-            : { ...initialFormikValues }
+            ? {...attendance}
+            : {...initialFormikValues}
         }
         onSubmit={(data) => {
           const planId = currentPatient.healingPlan
@@ -87,7 +89,7 @@ const Attendance = (props) => {
           submitHandler(data, planId);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({values, setFieldValue}) => (
           <Form>
             <StageFields
               stageTitle="Этап 1: Обезболивание/противовоспалительные мероприятия"
@@ -119,13 +121,13 @@ const Attendance = (props) => {
               availableProcedures={availableProcedures['fifthStage']}
               availablePlace={availableHealingPlaces['fifthStage']}
             />
-
+            
             <FieldArray name="patientDynamic">
               {(arrayHelpers) => (
                 <div className="d-flex p-2 mb-1">
-                  <p>Динамика со слов пациента: </p>
+                  <p className='pt-2'>Динамика со слов пациента: </p>
                   <label>
-                    <input
+                    <Radio
                       type="radio"
                       name="patientFeelings"
                       value="0"
@@ -135,7 +137,7 @@ const Attendance = (props) => {
                     Хуже
                   </label>
                   <label>
-                    <input
+                    <Radio
                       type="radio"
                       name={`patientFeelings`}
                       value="1"
@@ -145,7 +147,7 @@ const Attendance = (props) => {
                     Так же
                   </label>
                   <label>
-                    <input
+                    <Radio
                       type="radio"
                       name={`patientFeelings`}
                       value="2"
@@ -157,24 +159,25 @@ const Attendance = (props) => {
                 </div>
               )}
             </FieldArray>
-
+            
             <img
               className="d-block mb-3"
-              style={{ height: 100, width: 400 }}
+              style={{height: 100, width: 400}}
               src={painScaleImage}
               alt=""
             />
-
-            <Field
-              className="mb-3"
-              placeholder="Состояние пациента до приема/Жалобы"
-              name="beforeAttendance.comments"
-              type="input"
-              as={Input}
-            />
-
+            <div>
+              <Field
+                className="mb-3 w-50"
+                placeholder="Состояние пациента до приема/Жалобы"
+                name="beforeAttendance.comments"
+                type="input"
+                as={TextField}
+              />
+            </div>
+            
             <p className="d-inline-block pr-3">Шкала боли</p>
-            <Field name="beforeAttendance.pain" as="select">
+            <Field name="beforeAttendance.pain" as={Select}>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -187,17 +190,19 @@ const Attendance = (props) => {
               <option value="9">9</option>
               <option value="10">10</option>
             </Field>
-
-            <Field
-              className="mb-3"
-              placeholder="Состояние пациента после приема/Жалобы"
-              name="afterAttendance.comments"
-              type="input"
-              as={Input}
-            />
-
+            <div>
+              
+              <Field
+                className="mb-3 w-50"
+                placeholder="Состояние пациента после приема/Жалобы"
+                name="afterAttendance.comments"
+                type="input"
+                as={TextField}
+              />
+            </div>
+            
             <p className="d-inline-block pr-3">Шкала боли</p>
-            <Field name="afterAttendance.pain" as="select">
+            <Field name="afterAttendance.pain" as={Select}>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -210,12 +215,15 @@ const Attendance = (props) => {
               <option value="9">9</option>
               <option value="10">10</option>
             </Field>
-
+            
             <div className="d-flex justify-content-between">
               <Button type="submit" color="success">
                 Сохранить
               </Button>
             </div>
+            <pre>
+              {JSON.stringify(values, null, 2)}
+            </pre>
           </Form>
         )}
       </Formik>
