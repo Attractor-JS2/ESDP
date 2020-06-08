@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const Attendance = require('../../models/Attendance');
 const Procedure = require('../../models/Procedure');
 
@@ -27,18 +29,19 @@ const findByHealingPlanLatestOne = async (req, res) => {
   const filter = { healingPlan: req.query.healingPlan };
 
   try {
-    const attendancesDoc = await Attendance.findOne(filter)
+    const [attendancesDoc] = await Attendance.find(filter)
       .sort({ attendanceDate: 'desc' })
       .populate({
         path: 'procedureDynamics.procedure',
         model: 'Procedure',
-      });
+      })
+      .limit(1);
 
     if (!attendancesDoc) {
       return res.sendStatus(404);
     }
 
-    return res.send(attendancesDoc);
+    return res.send(attendancesDo);
   } catch (error) {
     console.log(error);
     return res.sendStatus(500);
@@ -47,7 +50,27 @@ const findByHealingPlanLatestOne = async (req, res) => {
 
 const create = async (req, res) => {
   const { body, userId } = req;
-  const { procedureDynamics, healingPlan } = body;
+  const { procedureDynamics, healingPlan, attendanceDate } = body;
+
+  try {
+    const [latestAttendance] = await Attendance.find({
+      healingPlan: healingPlan,
+    })
+      .sort({ attendanceDate: 'desc' })
+      .select('attendanceDate')
+      .limit(1);
+    if (latestAttendance) {
+      const isSameDate = moment(attendanceDate).isSame(
+        latestAttendance.attendanceDate,
+        'day',
+      );
+      if (isSameDate) {
+        return res.sendStatus(400);
+      }
+    }
+  } catch (error) {
+    res.sendStatus(500);
+  }
 
   try {
     const {
