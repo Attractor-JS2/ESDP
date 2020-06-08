@@ -23,7 +23,7 @@ const attendances = (state = initialState, { type, payload }) => {
     case SEND_ATTENDANCE_DATA_FAILURE:
       return { ...state, error: payload };
     case PROVIDE_DATA_TO_ATTENDANCE:
-      return { ...state, attendance: payload };
+      return { ...state, attendance: { ...payload } };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-export default {
+const getAttendanceDTO = () => ({
   firstStage: [],
   secondStage: [],
   thirdStage: [],
@@ -13,4 +13,6 @@ export default {
     comments: '',
     pain: 0,
   },
-};
+});
+
+export default getAttendanceDTO;

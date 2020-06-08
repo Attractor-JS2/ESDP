@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 
 import DailyDynamicsTypes from './DailyDynamicsTypes';
 import stageTypes from './stageTypes';
-import attendanceDTO from './attendanceDTO';
+import getAttendanceDTO from './attendanceDTO';
 
 const getFormattedDate = (dateIsoString) =>
   format(new Date(dateIsoString), 'yyyy-MM-dd');
@@ -140,7 +140,6 @@ const getDynamicAndPainScaleRows = (attendances) => {
   );
 };
 
-
 const getProcedureFromRow = (row) => ({
   _id: row._id,
   procedureName: row.procedureName,
@@ -154,12 +153,15 @@ const getDataByIndexes = (array, indexes) =>
   array.filter((_, id) => indexes.includes(id));
 
 const mapRowsToAttendance = (rows) =>
-  rows.reduce((acc, {stageNumber, ...rest}) => {
-    const mappedProcedure = getProcedureFromRow(rest);
-    const stageKey = stageTypes[stageNumber];
-    acc[stageKey].push(mappedProcedure);
-    return acc;
-  }, attendanceDTO);
+  rows.reduce(
+    (acc, { stageNumber, ...rest }) => {
+      const mappedProcedure = getProcedureFromRow(rest);
+      const stageKey = stageTypes[stageNumber];
+      acc[stageKey].push(mappedProcedure);
+      return acc;
+    },
+    { ...getAttendanceDTO() },
+  );
 
 const getAttendanceValuesFromTable = (selectedRowIds, tableData) => {
   const selectedRows = getDataByIndexes(
@@ -177,7 +179,7 @@ const utilities = {
   getDates,
   getStageRows,
   getDynamicAndPainScaleRows,
-  getAttendanceValuesFromTable
+  getAttendanceValuesFromTable,
 };
 
 export default utilities;
