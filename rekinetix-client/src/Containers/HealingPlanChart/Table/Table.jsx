@@ -82,8 +82,16 @@ const Table = ({
         <TableHead>
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              {headerGroup.headers.map((column, index) => (
+                <th className="Table-header" {...column.getHeaderProps()}>
+                  {index > 7 ? (
+                    <div>
+                      {column.render('Header')}
+                    </div>
+                  ) : (
+                    column.render('Header')
+                  )}
+                </th>
               ))}
             </TableRow>
           ))}
@@ -95,7 +103,7 @@ const Table = ({
               <TableRow {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <TableCell align="left" {...cell.getCellProps()}>
+                    <TableCell className="Table-cell" {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </TableCell>
                   );

@@ -3,6 +3,37 @@
   justify-content: center;
   padding: 30px 0;
 }
-.MuiTableCell-sizeSmall {
-  padding: 5px;
+.MuiTableCell-sizeSmall:nth-child(-n + 8) {
+  padding: 3px;
+}
+
+.MuiTableCell-sizeSmall:nth-child(n + 9) {
+  padding: 0;
+}
+
+.Table-header:nth-child(n + 7) {
+  box-sizing: border-box;
+  width: 46px;
+  height: 80px;
+}
+
+.Table-header:nth-child(n + 7) div {
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform-origin: 65% 85%;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  width: 46px;
+  white-space: nowrap;
+}
+
+.Table-cell:nth-child(-n + 7) {
+  text-align: left;
+}
+.Table-cell:nth-child(n + 7) {
+  box-sizing: border-box;
+  width: 46px;
+  text-align: center;
 }
