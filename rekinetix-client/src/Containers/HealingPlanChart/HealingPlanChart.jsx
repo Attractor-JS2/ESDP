@@ -195,16 +195,18 @@ const HealingPlanChart = ({
           healingPlan={healingPlan}
         />
 
-        {chartData && chartData.length > 0 && (
-          <Table
-            columns={columns}
-            data={chartData}
-            addProcedureHandler={addProcedureHandler}
-            proceedToDeleteProcedure={proceedToDeleteProcedure}
-            updateSelectData={updateProcedureStatus}
-            handleProceed={proceedToAttendance}
-          />
-        )}
+        <div className="HealingPlanChart-tableContainer">
+          {chartData && chartData.length > 0 && (
+            <Table
+              columns={columns}
+              data={chartData}
+              addProcedureHandler={addProcedureHandler}
+              proceedToDeleteProcedure={proceedToDeleteProcedure}
+              updateSelectData={updateProcedureStatus}
+              handleProceed={proceedToAttendance}
+            />
+          )}
+        </div>
       </Container>
     </ScopedCssBaseline>
   );
