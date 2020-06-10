@@ -46,18 +46,23 @@ connection.once('open', async () => {
   dropCollection(db, 'attendances');
   dropCollection(db, 'redflagtypes');
   dropCollection(db, 'stagetypes');
-  
+
   try {
     const testUser = await User.create({
-      fullname: 'testuser',
+      fullname: 'Петров Сергей',
       username: 'testuser',
       password: 'testuser',
       role: 'admin',
     });
 
-    const testPatients = await Patient.create([
+    const [
+      patientWIthPlan,
+      patientWithLessProcedures,
+      patientWithoutPlan,
+      patientWithoutAssessment,
+    ] = await Patient.create([
       {
-        fullname: 'Сидоров Иван Петрович',
+        fullname: 'Алексеев Иван Петрович',
         birthday: new Date(1970, 1, 2).toISOString(),
         gender: 'мужской',
         height: '178',
@@ -67,8 +72,26 @@ connection.once('open', async () => {
       },
       {
         fullname: 'Иванов Пётр Сергеевич',
-        birthday: new Date(1970, 1, 2).toISOString(),
+        birthday: new Date(1965, 1, 2).toISOString(),
         gender: 'мужской',
+        height: '178',
+        weight: '78',
+        phone: '77057778899',
+        address: 'Казыбек би 47, 51',
+      },
+      {
+        fullname: 'Борисов Петр Леонидович',
+        birthday: new Date(1975, 1, 2).toISOString(),
+        gender: 'мужской',
+        height: '178',
+        weight: '78',
+        phone: '77057778899',
+        address: 'Казыбек би 47, 51',
+      },
+      {
+        fullname: 'Баикеева Перизат Омирбековна',
+        birthday: new Date(1980, 1, 2).toISOString(),
+        gender: 'женский',
         height: '178',
         weight: '78',
         phone: '77057778899',
@@ -118,13 +141,13 @@ connection.once('open', async () => {
     const redFlags = await RedFlag.create(
       {
         title: 'Мочекаменная и желчекаменная болезни',
-        patient: testPatients[0].id,
+        patient: patientWIthPlan.id,
         active: true,
         createdBy: testUser.id,
       },
       {
         title: 'Сахарный диабет',
-        patient: testPatients[0].id,
+        patient: patientWIthPlan.id,
         active: true,
         createdBy: testUser.id,
       },
@@ -132,7 +155,7 @@ connection.once('open', async () => {
 
     const primaryAssessments = await PrimaryAssessment.create([
       {
-        patient: testPatients[0].id,
+        patient: patientWIthPlan.id,
         attendingDoctor: testUser.id,
         assessmentDate: new Date().toISOString(),
         complaints: 'Боли в пояснице',
@@ -145,7 +168,7 @@ connection.once('open', async () => {
           'Внутренняя ротация плеча. Тендиноз собственной связки надколенника. Верхний и нижний кросс синдром.',
       },
       {
-        patient: testPatients[1].id,
+        patient: patientWithoutPlan.id,
         attendingDoctor: testUser.id,
         assessmentDate: new Date().toISOString(),
         complaints: 'Боли в пояснице',
@@ -162,10 +185,6 @@ connection.once('open', async () => {
     const healingPlans = await HealingPlan.create([
       {
         primaryAssessment: primaryAssessments[0].id,
-        medic: testUser.id,
-      },
-      {
-        primaryAssessment: primaryAssessments[1].id,
         medic: testUser.id,
       },
     ]);
@@ -231,7 +250,127 @@ connection.once('open', async () => {
       {
         healingPlan: healingPlans[0].id,
         medic: testUser.id,
-        attendanceDate: new Date(2020, 4, 27).toISOString(),
+        attendanceDate: new Date(2020, 4, 20).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 4, 21).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 4, 22).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 4, 25).toISOString(),
         procedureDynamics: [
           {
             procedure: procedures[0].id,
@@ -275,7 +414,7 @@ connection.once('open', async () => {
         procedureDynamics: [
           {
             procedure: procedures[0].id,
-            procedureDynamic: 2,
+            procedureDynamic: 1,
           },
           {
             procedure: procedures[1].id,
@@ -283,7 +422,167 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[2].id,
-            procedureDynamic: 0,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 4, 27).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 5,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 4, 28).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 3,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 4, 29).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 5,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 3,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 1).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
           },
           {
             procedure: procedures[3].id,
@@ -305,7 +604,247 @@ connection.once('open', async () => {
         },
         afterAttendance: {
           comments: '',
-          pain: 5,
+          pain: 3,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 2).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 2,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 2,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 3).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 2,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 2,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 4).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 1,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 1,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 5).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 1,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 1,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 8).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 1,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 1,
+        },
+      },
+      {
+        healingPlan: healingPlans[0].id,
+        medic: testUser.id,
+        attendanceDate: new Date(2020, 5, 9).toISOString(),
+        procedureDynamics: [
+          {
+            procedure: procedures[0].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[1].id,
+            procedureDynamic: 1,
+          },
+          {
+            procedure: procedures[2].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[3].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[4].id,
+            procedureDynamic: 2,
+          },
+          {
+            procedure: procedures[5].id,
+            procedureDynamic: 1,
+          },
+        ],
+        patientDynamic: 1,
+        beforeAttendance: {
+          comments: '',
+          pain: 1,
+        },
+        afterAttendance: {
+          comments: '',
+          pain: 1,
         },
       },
     );
