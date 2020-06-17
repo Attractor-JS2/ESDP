@@ -20,7 +20,7 @@ const Routes = ({ user }) => {
   return (
     <Switch>
       <ProtectedRoute path="/" exact component={Patients}
-                      isAllowed={user.role}
+                      isAllowed={user && user.role}
       />
       <Route path="/patients" exact component={Patients} />
       <Route path="/patients/new" component={PatientRecord} />
