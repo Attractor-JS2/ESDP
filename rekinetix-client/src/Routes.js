@@ -14,18 +14,21 @@ import PatientRecord from "./Containers/PatientRecord/PatientRecord";
 import SiteMap from "./Containers/SiteMap/SiteMap";
 
 const ProtectedRoute = ({ isAllowed, ...props }) =>
-  isAllowed ? <Route {...props} /> : <Redirect to="/" />;
+  isAllowed ? <Route {...props} /> : <Redirect to="/login" />;
 
 const Routes = ({ user }) => {
   return (
     <Switch>
-      <Route path="/" exact component={Patients} />
+      <ProtectedRoute path="/" exact component={Patients}
+                      isAllowed={user}
+      />
       <Route path="/patients" exact component={Patients} />
       <Route path="/patients/new" component={PatientRecord} />
 
       <Route
         path="/patients/primary-assessments/new"
         component={PrimaryAssessment}
+       
       />
 
       <Route path="/patients/healing-plans/new" exact component={HealingPlan} />
