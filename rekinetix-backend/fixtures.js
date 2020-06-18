@@ -262,7 +262,7 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[2].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[3].id,
@@ -270,11 +270,11 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[4].id,
-            procedureDynamic: 1,
+            procedureDynamic: 0,
           },
           {
             procedure: procedures[5].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
         ],
         patientDynamic: 1,
@@ -334,7 +334,7 @@ connection.once('open', async () => {
         procedureDynamics: [
           {
             procedure: procedures[0].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[1].id,
@@ -346,7 +346,7 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[3].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[4].id,
@@ -354,7 +354,7 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[5].id,
-            procedureDynamic: 1,
+            procedureDynamic: 0,
           },
         ],
         patientDynamic: 1,
@@ -374,30 +374,30 @@ connection.once('open', async () => {
         procedureDynamics: [
           {
             procedure: procedures[0].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[1].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[2].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[3].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[4].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[5].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
         ],
-        patientDynamic: 1,
+        patientDynamic: 2,
         beforeAttendance: {
           comments: '',
           pain: 5,
@@ -422,7 +422,7 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[2].id,
-            procedureDynamic: 1,
+            procedureDynamic: 0,
           },
           {
             procedure: procedures[3].id,
@@ -430,7 +430,7 @@ connection.once('open', async () => {
           },
           {
             procedure: procedures[4].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[5].id,
@@ -454,15 +454,15 @@ connection.once('open', async () => {
         procedureDynamics: [
           {
             procedure: procedures[0].id,
-            procedureDynamic: 1,
+            procedureDynamic: 0,
           },
           {
             procedure: procedures[1].id,
-            procedureDynamic: 1,
+            procedureDynamic: 0,
           },
           {
             procedure: procedures[2].id,
-            procedureDynamic: 1,
+            procedureDynamic: 2,
           },
           {
             procedure: procedures[3].id,
