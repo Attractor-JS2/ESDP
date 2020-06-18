@@ -22,29 +22,40 @@ const Routes = ({ user }) => {
       <ProtectedRoute path="/" exact component={Patients}
                       isAllowed={user && user.role}
       />
-      <Route path="/patients" exact component={Patients} />
-      <Route path="/patients/new" component={PatientRecord} />
-
-      <Route
-        path="/patients/primary-assessments/new"
-        component={PrimaryAssessment}
-       
+  
+      <ProtectedRoute path="/patients" exact component={Patients}
+                      isAllowed={user && user.role}
+      />
+  
+      <ProtectedRoute path="/patients/new" exact component={PatientRecord}
+                      isAllowed={user && user.role}
+      />
+      <ProtectedRoute path="/patients/primary-assessments/new" exact component={PrimaryAssessment}
+                      isAllowed={user && user.role}
+      />
+  
+      <ProtectedRoute path="/patients/healing-plans/new" exact component={HealingPlan}
+                      isAllowed={user && user.role}
+      />
+  
+      <ProtectedRoute path="/patients/primary-assessments/new" exact component={PrimaryAssessment}
+                      isAllowed={user && user.role}
+      />
+  
+      <ProtectedRoute path="/patients/healing-plans/:planId" exact component={HealingPlanChart}
+                      isAllowed={user && user.role}
+      />
+  
+      <ProtectedRoute path="/patients/attendances/new" exact component={Attendance}
+                      isAllowed={user && user.role}
       />
 
-      <Route path="/patients/healing-plans/new" exact component={HealingPlan} />
-      <Route
-        path="/patients/healing-plans/:planId"
-        exact
-        component={HealingPlanChart}
-      />
-
-      <Route path="/patients/attendances/new" component={Attendance} />
 
       <Route path="/login" exact component={Login} />
       <ProtectedRoute
         path="/register"
         component={Register}
-        isAllowed={user && user.role === "admin"}
+        isAllowed={user && user.role && user.role === "admin"}
       />
 
       <Route path="/siteMap" component={SiteMap} />
